@@ -1,0 +1,160 @@
+<div class="product-detail-page calendar-page">
+  <div class="page-header-wrapper">
+    <div class="container">
+      <nz-page-header
+        class="product-page-header"
+        [nzTitle]="product.title"
+        [nzBackIcon]="backIcon"
+      >
+        <nz-page-header-extra>
+          <nz-tag nzColor="success">已上线</nz-tag>
+        </nz-page-header-extra>
+
+        <nz-page-header-content>
+          <div nz-row [nzGutter]="[32, 32]">
+            <div
+              nz-col
+              [nzXs]="24"
+              [nzSm]="24"
+              [nzMd]="8"
+              class="product-image"
+            >
+              <div class="app-icon-wrapper">
+                <img [src]="product.image" [alt]="product.title" />
+              </div>
+            </div>
+            <div
+              nz-col
+              [nzXs]="24"
+              [nzSm]="24"
+              [nzMd]="16"
+              class="product-description"
+            >
+              <p class="product-intro">{{ product.description }}</p>
+
+              <nz-divider></nz-divider>
+
+              <!-- <div class="platform-badges">
+                <a href="#" class="store-badge">
+                  <img
+                    src="assets/images/app-store-badge.png"
+                    alt="App Store"
+                  />
+                </a>
+                <a href="#" class="store-badge">
+                  <img
+                    src="assets/images/google-play-badge.png"
+                    alt="Google Play"
+                  />
+                </a>
+              </div> -->
+            </div>
+          </div>
+        </nz-page-header-content>
+      </nz-page-header>
+    </div>
+  </div>
+
+  <div class="product-content">
+    <div class="container">
+      <!-- 核心功能部分 -->
+      <div class="section features-section">
+        <h2 class="section-title">核心功能</h2>
+        <div nz-row [nzGutter]="[24, 24]">
+          <div
+            nz-col
+            [nzXs]="24"
+            [nzSm]="12"
+            [nzMd]="8"
+            *ngFor="let feature of features; let i = index"
+          >
+            <div class="feature-card card-hover">
+              <div class="feature-icon">
+                <nz-avatar
+                  [nzSize]="64"
+                  nzIcon="{{ featureIcons[i] }}"
+                ></nz-avatar>
+              </div>
+              <h3>{{ feature.title }}</h3>
+              <p>{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 应用截图部分 -->
+      <div class="section screenshots-section">
+        <h2 class="section-title">应用截图</h2>
+        <div class="screenshots-card">
+          <nz-carousel [nzEffect]="'fade'" [nzDots]="true" [nzAutoPlay]="true">
+            <div nz-carousel-content *ngFor="let screenshot of screenshots">
+              <div class="screenshot-wrapper">
+                <img [src]="screenshot" alt="应用截图" />
+              </div>
+            </div>
+          </nz-carousel>
+        </div>
+      </div>
+
+      <!-- 用户评价部分 -->
+      <!-- <div class="section reviews-section">
+        <h2 class="section-title">用户评价</h2>
+        <div nz-row [nzGutter]="[24, 24]">
+          <div
+            nz-col
+            [nzXs]="24"
+            [nzSm]="24"
+            [nzMd]="8"
+            *ngFor="let review of reviews"
+          >
+            <div class="review-card card-hover">
+              <nz-comment [nzAuthor]="review.author" [nzDatetime]="review.date">
+                <ng-template #nzContent>
+                  <p>{{ review.content }}</p>
+                  <nz-rate [ngModel]="review.rating" nzDisabled></nz-rate>
+                </ng-template>
+              </nz-comment>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- 下载CTA区域 -->
+  <div class="download-section">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="download-content">
+        <h2>立即下载万年历黄历通</h2>
+        <p>让您的日常生活更加便捷</p>
+
+        <!-- <div class="download-buttons">
+          <a href="#" class="store-button">
+            <img src="assets/images/app-store-badge.png" alt="App Store">
+          </a>
+          <a href="#" class="store-button">
+            <img src="assets/images/google-play-badge.png" alt="Google Play">
+          </a>
+        </div> -->
+
+        <!-- 隐私政策链接 -->
+        <div class="privacy-link-container">
+          <p>
+            下载前请阅读<a
+              [routerLink]="['/privacy/calendar']"
+              class="privacy-policy-link"
+              >《全能提词器隐私政策》</a
+            >，继续使用即表示您同意该政策。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #backIcon>
+    <a [routerLink]="['/products']">
+      <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+    </a>
+  </ng-template>
+</div>

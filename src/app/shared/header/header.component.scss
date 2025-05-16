@@ -1,0 +1,198 @@
+// @import '../../../styles.scss';
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  padding: 1rem 0;
+  
+  &.scrolled {
+    background-color: white;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    padding: 0.6rem 0;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s ease;
+      letter-spacing: 0.03em;
+      
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+  
+  // 桌面端菜单样式 - 靠右对齐
+  .desktop-menu {
+    display: block;
+    margin-left: auto;
+    
+    @media (max-width: 768px) {
+      display: none;
+    }
+    
+    ul {
+      background: transparent;
+      border-bottom: none;
+      display: flex;
+      justify-content: flex-end;
+      
+      // 重置NG-ZORRO的下划线样式
+      &::after {
+        display: none !important; // 隐藏NG-ZORRO默认的菜单下划线
+      }
+      
+      // 重置NG-ZORRO的ink-bar样式
+      .ant-menu-ink-bar {
+        display: none !important;
+      }
+      
+      li {
+        margin: 0 5px;
+        
+        &:last-child {
+          margin-right: 0;
+        }
+        
+        // 解决菜单项底部边框问题
+        &.ant-menu-item {
+          border-bottom: none !important;
+          
+          &::after {
+            display: none !important;
+          }
+        }
+        
+        a {
+          color: var(--text-color);
+          padding: 0 20px;
+          font-size: 1rem;
+          letter-spacing: 0.02em;
+          position: relative;
+          transition: all 0.2s ease;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            opacity: 0;
+          }
+          
+          &.active, &:hover {
+            color: var(--primary-color);
+            
+            &:after {
+              width: 70%;
+              opacity: 1;
+            }
+          }
+          
+          &.active {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+  
+  // 移动端菜单按钮
+  .mobile-menu-button {
+    display: none;
+    margin-left: auto; // 确保在移动端也是靠右的
+    
+    @media (max-width: 768px) {
+      display: block;
+    }
+    
+    button {
+      font-size: 1.5rem;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+// 抽屉菜单样式
+::ng-deep .ant-drawer-body {
+  padding: 0;
+  
+  .mobile-menu-list {
+    border-right: none;
+    width: 100%;
+    
+    li {
+      margin: 0;
+      padding: 0;
+      height: auto;
+      transition: background-color 0.2s ease;
+      line-height: normal;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+      
+      a {
+        display: block;
+        padding: 16px 24px;
+        font-size: 1rem;
+        color: var(--text-color);
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease;
+        white-space: normal;
+        line-height: 1.5;
+        
+        &:hover, &.active {
+          color: var(--primary-color);
+          border-left-color: var(--primary-color);
+        }
+      }
+    }
+  }
+}
+
+// 抽屉标题样式
+::ng-deep .ant-drawer-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 24px;
+}
+
+// 抽屉内容样式
+::ng-deep .ant-drawer-content {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+// 修复移动端抽屉中的菜单项样式
+::ng-deep .ant-menu-vertical .ant-menu-item {
+  height: auto;
+  line-height: 1.5;
+}

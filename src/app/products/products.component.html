@@ -1,0 +1,64 @@
+<div class="products-page">
+
+
+  <div class="container">
+    <!-- 产品列表 -->
+    <nz-list [nzGrid]="{ gutter: 24, xxl: 3, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }">
+      <div nz-row [nzGutter]="[24, 32]">
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" *ngFor="let product of products">
+          <nz-card 
+            nzHoverable 
+            [nzCover]="coverTemplate" 
+            [nzActions]="[actionDetail]"
+            class="product-card">
+            <nz-card-meta 
+              [nzTitle]="product.title"
+              [nzDescription]="product.description"
+              [nzAvatar]="avatarTemplate">
+            </nz-card-meta>
+            
+            <div class="product-features">
+              <nz-tag *ngFor="let feature of product.features.slice(0, 3)" nzColor="default">
+                {{ feature }}
+              </nz-tag>
+            </div>
+            
+            <ng-template #avatarTemplate>
+              <nz-avatar *ngIf="product.available" nzIcon="check-circle" nzColor="#52c41a"></nz-avatar>
+              <nz-avatar *ngIf="!product.available" nzIcon="clock-circle" nzColor="#faad14"></nz-avatar>
+            </ng-template>
+            
+            <ng-template #coverTemplate>
+              <div class="product-image-container">
+                <img [src]="product.image" [alt]="product.title">
+              </div>
+            </ng-template>
+            
+            <ng-template #actionDetail>
+              <a [routerLink]="['/products', product.id]">
+                <span nz-icon nzType="right-circle" nzTheme="outline"></span> 查看详情
+              </a>
+            </ng-template>
+          </nz-card>
+        </div>
+      </div>
+    </nz-list>
+    
+    <!-- 定制开发部分 -->
+    <nz-divider></nz-divider>
+    
+    <div class="custom-dev-section">
+      <nz-card nzBorderless>
+        <nz-card-meta
+          nzTitle="需要定制开发解决方案？"
+          nzDescription="我们提供专业的软件定制开发服务，根据您的需求打造专属应用">
+        </nz-card-meta>
+        <div class="mt-4">
+          <button nz-button nzType="primary" nzSize="large" [routerLink]="['/contact']">
+            <span nz-icon nzType="message" nzTheme="outline"></span>联系我们
+          </button>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<footer class="footer">
+    <div class="container">
+      <div nz-row [nzGutter]="[24, 32]">
+        <!-- 公司信息 -->
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
+          <div class="footer-logo">
+            <a [routerLink]="['/']" class="logo-text">卓瑞云创</a>
+          </div>
+          <p class="company-desc">
+            上海卓瑞云创信息技术有限公司，专注于移动应用与工具软件的开发，为用户提供专业、便捷的软件服务。
+          </p>
+        </div>
+        
+        <!-- 产品链接 -->
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="5">
+          <h3>产品</h3>
+          <ul class="footer-links">
+            <li><a [routerLink]="['/products/calendar']">万年历黄历通</a></li>
+            <li><a [routerLink]="['/products/teleprompter']">全能提词器</a></li>
+            <li><a [routerLink]="['/products']">查看全部</a></li>
+          </ul>
+        </div>
+        
+        <!-- 公司链接 -->
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="5">
+          <h3>关于我们</h3>
+          <ul class="footer-links">
+            <li><a [routerLink]="['/about']">公司介绍</a></li>
+            <li><a [routerLink]="['/contact']">联系我们</a></li>
+            <li><a [routerLink]="['/privacy']">隐私政策</a></li>
+          </ul>
+        </div>
+        
+        <!-- 联系方式 -->
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6">
+          <h3>联系我们</h3>
+          <p><i nz-icon nzType="environment" nzTheme="outline"></i> 上海市浦东新区</p>
+          <p><i nz-icon nzType="mail" nzTheme="outline"></i> contact&#64;zrgenesiscloud.com</p>
+          <p><i nz-icon nzType="phone" nzTheme="outline"></i> 021-12345678</p>
+          
+          <!-- 社交媒体图标 -->
+          <div class="social-icons">
+            <a href="#" target="_blank"><i nz-icon nzType="weibo" nzTheme="outline"></i></a>
+            <a href="#" target="_blank"><i nz-icon nzType="wechat" nzTheme="outline"></i></a>
+            <a href="#" target="_blank"><i nz-icon nzType="qq" nzTheme="outline"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <nz-divider></nz-divider>
+      
+      <!-- 版权信息 -->
+      <div class="copyright">
+        <p>&copy; {{currentYear}} 上海卓瑞云创信息技术有限公司. 保留所有权利.</p>
+        <!-- 添加备案号 -->
+        <p class="beian">
+          <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2025124821号-1</a>
+        </p>
+      </div>
+    </div>
+  </footer>

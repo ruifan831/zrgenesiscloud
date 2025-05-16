@@ -1,0 +1,257 @@
+.about-page {
+  background-color: var(--background-color-light);
+  
+  // 公司简介区域
+  .about-intro-section {
+    margin-top: -3rem;
+    margin-bottom: 4rem;
+    
+    .about-intro-card {
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    
+    .about-text {
+      h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+      }
+      
+      p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--text-color-secondary);
+        margin-bottom: 1.5rem;
+        
+        &:last-of-type {
+          margin-bottom: 2rem;
+        }
+      }
+    }
+    
+    .company-stats {
+      display: flex;
+      justify-content: flex-start;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .stat-number {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: var(--primary-color);
+          line-height: 1;
+          margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+          font-size: 0.9rem;
+          color: var(--text-color-secondary);
+        }
+      }
+    }
+    
+    .about-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      img {
+        width: 100%;
+        border-radius: 8px;
+        
+        &.shadow-img {
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+      }
+    }
+  }
+  
+  // 公司价值观区域
+  .values-section {
+    padding: 5rem 0;
+    background-color: white;
+    
+    .value-card {
+      height: 100%;
+      
+      ::ng-deep {
+        .ant-card-meta-avatar {
+          padding-right: 12px;
+          
+          span[nz-icon] {
+            font-size: 2rem;
+            color: var(--primary-color);
+          }
+        }
+        
+        .ant-card-meta-title {
+          font-size: 1.3rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        .ant-card-meta-description {
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+  
+  // 使命与愿景区域
+  .mission-vision-section {
+    padding: 5rem 0;
+    background-color: #f8f9fa;
+    
+    .mission-card,
+    .vision-card {
+      height: 100%;
+      
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-align: center;
+      }
+      
+      p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-color-secondary);
+        text-align: center;
+      }
+    }
+  }
+  
+  // 团队区域
+  .team-section {
+    padding: 5rem 0;
+    background-color: white;
+    
+    .team-card {
+      text-align: center;
+      height: 100%;
+      
+      .member-avatar {
+        margin: 1rem 0 1.5rem;
+        
+        nz-avatar {
+          border: 5px solid rgba(0,0,0,0.05);
+        }
+      }
+      
+      h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+      
+      .member-position {
+        font-size: 1rem;
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+      
+      .member-bio {
+        font-size: 0.95rem;
+        color: var(--text-color-secondary);
+        line-height: 1.6;
+      }
+    }
+  }
+  
+  // 加入我们区域
+  .join-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: url('/assets/images/pattern.png');
+      opacity: 0.1;
+    }
+    
+    .join-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      
+      h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: white;
+      }
+      
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: white;
+        opacity: 0.9;
+      }
+      
+      .join-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        
+        [nz-button] {
+          min-width: 150px;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .about-intro-section {
+      margin-top: -2rem;
+      
+      .about-text {
+        h2 {
+          font-size: 1.8rem;
+        }
+      }
+      
+      .company-stats {
+        justify-content: space-around;
+        gap: 1rem;
+      }
+    }
+    
+    .values-section,
+    .mission-vision-section,
+    .team-section,
+    .join-section {
+      padding: 3rem 0;
+    }
+    
+    .join-section {
+      .join-content {
+        h2 {
+          font-size: 1.8rem;
+        }
+        
+        .join-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+// 由于全局样式已经定义了主要的隐私政策样式，这里只保留特定的补充样式
+
+// 表格样式 - 如果不在全局样式中
+.sdk-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #eee;
+  }
+  
+  th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.last-updated {
+  text-align: center;
+  color: #757575;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+} 

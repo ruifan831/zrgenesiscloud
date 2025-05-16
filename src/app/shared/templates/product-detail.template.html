@@ -1,0 +1,50 @@
+<div class="product-detail-page">
+  <!-- 页头区域 -->
+  <div class="page-header-wrapper">
+    <div class="container">
+      <nz-page-header class="product-page-header" [nzTitle]="product.title" [nzBackIcon]="backIcon">
+        <nz-page-header-extra>
+          <nz-tag nzColor="success">已上线</nz-tag>
+        </nz-page-header-extra>
+        
+        <nz-page-header-content>
+          <div nz-row [nzGutter]="[32, 32]">
+            <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8" class="product-image">
+              <div class="app-icon-wrapper">
+                <img [src]="product.image" [alt]="product.title" class="app-icon">
+              </div>
+            </div>
+            <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="16" class="product-description">
+              <p class="product-intro">{{ product.description }}</p>
+              
+              <nz-divider></nz-divider>
+              
+              <div class="platform-badges">
+                <a href="#" class="store-badge">
+                  <img src="assets/images/app-store-badge.png" alt="App Store">
+                </a>
+                <a href="#" class="store-badge">
+                  <img src="assets/images/google-play-badge.png" alt="Google Play">
+                </a>
+              </div>
+            </div>
+          </div>
+        </nz-page-header-content>
+      </nz-page-header>
+    </div>
+  </div>
+  
+  <!-- 产品内容区域 -->
+  <div class="product-content">
+    <div class="container">
+      <!-- 各产品特性区域 -->
+      <!-- 下载CTA区域 -->
+    </div>
+  </div>
+
+  <ng-template #backIcon>
+    <a [routerLink]="['/products']">
+      <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+    </a>
+  </ng-template>
+</div> 

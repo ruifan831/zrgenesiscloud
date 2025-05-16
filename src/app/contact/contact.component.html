@@ -1,0 +1,181 @@
+<div class="contact-page">
+    <!-- 页面标题区域 -->
+    <div class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1>联系我们</h1>
+          <p>我们期待您的反馈，随时为您提供专业支持</p>
+        </div>
+      </div>
+      <div class="hero-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path fill="#ffffff" fill-opacity="1" d="M0,288L48,282.7C96,277,192,267,288,240C384,213,480,171,576,176C672,181,768,235,864,234.7C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+      </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <div class="container">
+      <div class="contact-section">
+        <div nz-row [nzGutter]="[32, 32]">
+          <!-- 联系信息卡片 -->
+          <div nz-col [nzXs]="24" [nzMd]="10">
+            <nz-card class="contact-info-card">
+              <h2 class="section-title-accent">联系方式</h2>
+              <p class="subtitle">我们随时准备为您解答疑问，提供帮助</p>
+              
+              <ul class="contact-list">
+                <li class="contact-item">
+                  <div class="icon-circle">
+                    <span nz-icon nzType="phone" nzTheme="outline"></span>
+                  </div>
+                  <div class="contact-detail">
+                    <h3>电话咨询</h3>
+                    <p>021-12345678</p>
+                    <p class="time-info">周一至周五 9:00-18:00</p>
+                  </div>
+                </li>
+                
+                <li class="contact-item">
+                  <div class="icon-circle">
+                    <span nz-icon nzType="mail" nzTheme="outline"></span>
+                  </div>
+                  <div class="contact-detail">
+                    <h3>邮件咨询</h3>
+                    <p>contact&#64;zrgenesiscloud.com</p>
+                    <p class="time-info">我们会在24小时内回复您</p>
+                  </div>
+                </li>
+                
+                <li class="contact-item">
+                  <div class="icon-circle">
+                    <span nz-icon nzType="environment" nzTheme="outline"></span>
+                  </div>
+                  <div class="contact-detail">
+                    <h3>公司地址</h3>
+                    <p>上海市浦东新区张江高科技园区</p>
+                    <p class="time-info">可提前预约参观</p>
+                  </div>
+                </li>
+              </ul>
+              
+              <div class="social-media">
+                <h3>关注我们</h3>
+                <div class="social-icons">
+                  <a class="social-icon" href="#">
+                    <span nz-icon nzType="wechat" nzTheme="fill"></span>
+                  </a>
+                  <a class="social-icon" href="#">
+                    <span nz-icon nzType="weibo" nzTheme="fill"></span>
+                  </a>
+                  <a class="social-icon" href="#">
+                    <span nz-icon nzType="zhihu" nzTheme="outline"></span>
+                  </a>
+                  <a class="social-icon" href="#">
+                    <span nz-icon nzType="linkedin" nzTheme="fill"></span>
+                  </a>
+                </div>
+              </div>
+            </nz-card>
+          </div>
+          
+          <!-- 联系表单卡片 -->
+          <div nz-col [nzXs]="24" [nzMd]="14">
+            <nz-card class="contact-form-card">
+              <h2 class="section-title-accent">发送消息</h2>
+              <p class="subtitle">请填写下面的表单，我们会尽快与您联系</p>
+              
+              <form [formGroup]="contactForm" (ngSubmit)="submitForm()" class="contact-form">
+                <div nz-row [nzGutter]="16">
+                  <div nz-col [nzXs]="24" [nzSm]="12">
+                    <nz-form-item>
+                      <nz-form-label>您的姓名</nz-form-label>
+                      <nz-form-control nzErrorTip="请输入您的姓名">
+                        <input nz-input formControlName="name" placeholder="请输入您的姓名" />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  
+                  <div nz-col [nzXs]="24" [nzSm]="12">
+                    <nz-form-item>
+                      <nz-form-label>电子邮箱</nz-form-label>
+                      <nz-form-control nzErrorTip="请输入有效的电子邮箱">
+                        <input nz-input formControlName="email" placeholder="请输入您的电子邮箱" />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                
+                <nz-form-item>
+                  <nz-form-label>联系电话</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input formControlName="phone" placeholder="请输入您的联系电话（选填）" />
+                  </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                  <nz-form-label>咨询类型</nz-form-label>
+                  <nz-form-control>
+                    <nz-select formControlName="type" nzPlaceHolder="请选择咨询类型">
+                      <nz-option nzValue="product" nzLabel="产品咨询"></nz-option>
+                      <nz-option nzValue="service" nzLabel="服务咨询"></nz-option>
+                      <nz-option nzValue="cooperation" nzLabel="商务合作"></nz-option>
+                      <nz-option nzValue="other" nzLabel="其他"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                  <nz-form-label>留言内容</nz-form-label>
+                  <nz-form-control nzErrorTip="请输入留言内容">
+                    <textarea nz-input formControlName="message" placeholder="请详细描述您的需求..." [nzAutosize]="{ minRows: 4, maxRows: 8 }"></textarea>
+                  </nz-form-control>
+                </nz-form-item>
+                
+                <div class="form-actions">
+                  <button nz-button nzType="primary" nzSize="large" [disabled]="contactForm.invalid" type="submit">
+                    <span nz-icon nzType="send" nzTheme="outline"></span>发送消息
+                  </button>
+                  <button nz-button nzSize="large" type="reset" (click)="contactForm.reset()">
+                    重置
+                  </button>
+                </div>
+              </form>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 地图区域 -->
+    <!-- <div class="map-section">
+      <div class="container">
+        <div class="map-wrapper">
+          <h2 class="section-title">我们的位置</h2>
+          <p class="subtitle">欢迎您来访我们的办公室</p>
+          <div class="map-container">
+            <img src="assets/images/map.jpg" alt="公司地图" class="map-image">
+          </div>
+        </div>
+      </div>
+    </div> -->
+    
+    <!-- FAQ部分 -->
+    <div class="faq-section">
+      <div class="container">
+        <h2 class="section-title">常见问题</h2>
+        <p class="subtitle">以下是我们收集的一些常见问题的解答</p>
+        
+        <div class="faq-grid">
+          <nz-card *ngFor="let faq of faqs" class="faq-card">
+            <div class="faq-header">
+              <span nz-icon nzType="question-circle" nzTheme="fill"></span>
+              <h3>{{ faq.question }}</h3>
+            </div>
+            <nz-divider></nz-divider>
+            <p>{{ faq.answer }}</p>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,1 +1,482 @@
-/* You can add global styles to this file, and also import other style files */
+// 这里导入全局字体、图标等，但不再导入ng-zorro-antd.css
+// 颜色变量从theme.less中获取，不再重复定义
+
+// 全局通用样式
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji';
+  }
+  
+  // 全局按钮样式
+  .btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: var(--border-radius-base);
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, 
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-decoration: none;
+  }
+  
+  // 容器通用样式
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1200px;
+  }
+  
+  // 部分自定义样式，避免与NG-ZORRO冲突
+  .section-title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .section-subtitle {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  // 响应式辅助类
+  @media (max-width: 768px) {
+    .hidden-xs {
+      display: none !important;
+    }
+  }
+
+/* Global shared styles */
+
+// 页面通用样式
+.page-container {
+  background-color: var(--background-color-light);
+  min-height: 100vh;
+}
+
+// 部分标题样式
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+  
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary-color);
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-color-secondary);
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// 通用部分容器
+.section {
+  margin-bottom: 5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// 卡片悬停效果
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  }
+}
+
+// 下载区域共享样式
+.download-section {
+  padding: 5rem 0;
+  text-align: center;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+  }
+  
+  .download-content {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+  }
+}
+
+// 隐私政策链接样式
+.privacy-link-container, .privacy-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    
+    a, a.privacy-policy-link {
+      text-decoration: underline;
+      font-weight: 600;
+      
+    }
+  }
+}
+
+// 响应式样式
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.6rem;
+  }
+  
+  .download-section {
+    padding: 3rem 0;
+    
+    .download-content {
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+/* 扩展全局样式，添加产品页共享样式 */
+
+// 产品页面共享样式
+.product-detail-page {
+  // 页头区域样式
+  .page-header-wrapper {
+    padding: 2rem 0;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+    
+    ::ng-deep .product-page-header {
+      .ant-page-header-heading-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
+    }
+    
+    .app-icon-wrapper {
+      padding: 1.5rem 0;
+      text-align: center;
+      
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+    }
+    
+    .product-intro {
+      font-size: 1.1rem;
+      color: var(--text-color-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    .platform-badges {
+      display: flex;
+      gap: 15px;
+      
+      .store-badge {
+        img {
+          height: 40px;
+        }
+      }
+    }
+  }
+  
+  .product-content {
+    padding: 3rem 0;
+  }
+  
+  .section {
+    margin-bottom: 5rem;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    position: relative;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: var(--primary-color);
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+  }
+  
+  // 功能卡片通用样式
+  .feature-card, .review-card, .use-case-card, .screenshots-card {
+    padding: 1.5rem;
+    height: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+  
+  // 卡片悬浮效果
+  .card-hover {
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+  }
+  
+  // 功能图标样式
+  .feature-icon {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    
+    span[nz-icon], nz-avatar {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+    }
+  }
+  
+  // 截图容器样式
+  .screenshot-wrapper {
+    padding: 1rem;
+    text-align: center;
+    
+    img {
+      max-height: 500px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+  }
+  
+  // 下载区域样式
+  .download-section {
+    padding: 5rem 0;
+    text-align: center;
+    position: relative;
+    
+    .download-content {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      
+      h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+    }
+  }
+  
+  // 下载按钮通用样式
+  .download-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    
+    .store-button {
+      display: inline-block;
+      
+      img {
+        height: 50px;
+      }
+    }
+  }
+  
+  // 隐私政策链接样式
+  .privacy-link-container {
+    text-align: center;
+    margin-top: 1.5rem;
+    
+    p {
+      font-size: 0.95rem;
+      
+      a {
+        text-decoration: underline;
+        font-weight: 600;
+        color: inherit;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .page-header-wrapper {
+      padding: 1rem 0;
+      
+      ::ng-deep .product-page-header {
+        .ant-page-header-heading-title {
+          font-size: 1.8rem;
+        }
+        
+        .ant-page-header-heading-extra {
+          margin-top: 0.5rem;
+        }
+      }
+      
+      .app-icon-wrapper {
+        padding: 1rem 0;
+      }
+    }
+    
+    .section {
+      margin-bottom: 3rem;
+    }
+    
+    .section-title {
+      font-size: 1.6rem;
+    }
+    
+    .product-content {
+      padding: 2rem 0;
+    }
+    
+    .download-section {
+      padding: 3rem 0;
+      
+      .download-content {
+        h2 {
+          font-size: 1.8rem;
+        }
+        
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+// 隐私政策页面样式
+.privacy-policy-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  a {
+    color: #1976d2;
+    word-break: break-all;
+  }
+}
+
+// 全局产品卡片基础样式
+.product-card {
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  padding: 1.5rem;
+}
+
+// 全局特性卡片基础样式
+.feature-card {
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+}
+
+// 额外的按钮容器样式
+.button-group {
+  display: flex;
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}

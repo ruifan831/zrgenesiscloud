@@ -1,0 +1,131 @@
+<div class="about-page">
+  <!-- 页面标题区域 -->
+  <div class="page-header-bg">
+    <div class="container">
+      <div class="page-header-content">
+        <h1>关于我们</h1>
+        <p>了解上海卓瑞云创信息技术有限公司</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 公司简介区域 -->
+  <div class="about-intro-section">
+    <div class="container">
+      <nz-card nzBorderless class="about-intro-card">
+        <div nz-row [nzGutter]="[32, 32]" nzAlign="middle">
+          <div nz-col [nzXs]="24" [nzMd]="12" >
+            <div class="about-text">
+              <h2 nz-typography nzType="secondary">我们的故事</h2>
+              <p nz-typography>上海卓瑞云创信息技术有限公司成立于2020年，是一家专注于移动应用开发和软件工具研发的科技公司。公司由一群拥有丰富技术经验和创新精神的软件工程师创立，致力于为用户提供高品质、实用性强的软件产品。</p>
+              <p nz-typography>成立以来，我们秉承"用心创造，精益求精"的理念，不断深耕软件开发领域，先后推出了"万年历黄历通"和"全能提词器"等备受用户欢迎的应用产品。</p>
+              
+              <!-- <div class="company-stats">
+                <div class="stat-item">
+                  <span class="stat-number">30+</span>
+                  <span class="stat-label">专业团队成员</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">15+</span>
+                  <span class="stat-label">软件产品</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">5M+</span>
+                  <span class="stat-label">全球用户</span>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div nz-col [nzXs]="24" [nzMd]="12" >
+            <div class="about-image">
+              <img src="assets/images/company-office.jpg" alt="公司办公环境" class="shadow-img">
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  
+  <!-- 公司价值观区域 -->
+  <div class="values-section">
+    <div class="container">
+      <h2 class="section-title">公司价值观</h2>
+      <p class="section-subtitle">我们坚守这些核心价值，指导我们的每一个决策</p>
+      
+      <div nz-row [nzGutter]="[24, 24]">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6" *ngFor="let value of values">
+          <nz-card class="value-card card-hover" [nzActions]="[]">
+            <nz-card-meta
+              [nzTitle]="value.title"
+              [nzDescription]="value.description"
+              [nzAvatar]="valueIconTemplate">
+            </nz-card-meta>
+            <ng-template #valueIconTemplate>
+              <span nz-icon [nzType]="value.icon" nzTheme="outline"></span>
+            </ng-template>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 使命与愿景区域 -->
+  <div class="mission-vision-section">
+    <div class="container">
+      <div nz-row [nzGutter]="[32, 32]">
+        <div nz-col [nzXs]="24" [nzMd]="12">
+          <nz-card class="mission-card">
+            <h2 nz-typography>我们的使命</h2>
+            <nz-divider></nz-divider>
+            <p nz-typography>通过技术创新与优质服务，为用户提供简单易用、功能强大的软件应用，解决实际问题，创造更高效、便捷的数字生活体验。</p>
+          </nz-card>
+        </div>
+        <div nz-col [nzXs]="24" [nzMd]="12">
+          <nz-card class="vision-card">
+            <h2 nz-typography>我们的愿景</h2>
+            <nz-divider></nz-divider>
+            <p nz-typography>成为移动应用和工具软件领域的领先企业，以卓越的产品质量和用户体验赢得用户信赖，推动软件技术的普及与应用。</p>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 团队区域 -->
+  <!-- <div class="team-section">
+    <div class="container">
+      <h2 class="section-title">我们的团队</h2>
+      <p class="section-subtitle">由一群热爱技术、追求卓越的专业人士组成</p>
+      
+      <div nz-row [nzGutter]="[24, 32]">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6" *ngFor="let member of team">
+          <nz-card class="team-card card-hover">
+            <div class="member-avatar">
+              <nz-avatar [nzSize]="120" [nzSrc]="member.image"></nz-avatar>
+            </div>
+            <h3 nz-typography>{{ member.name }}</h3>
+            <p class="member-position">{{ member.position }}</p>
+            <nz-divider></nz-divider>
+            <p class="member-bio">{{ member.bio }}</p>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
+  <!-- 加入我们区域 -->
+  <div class="join-section">
+    <div class="container">
+      <div class="join-content">
+        <h2>加入我们，共创未来</h2>
+        <p>我们正在寻找富有激情和创造力的人才，一起创造令人惊叹的产品</p>
+        <div class="join-buttons">
+          <a nz-button nzType="primary" nzSize="large" [routerLink]="['/contact']">
+            <span nz-icon nzType="team" nzTheme="outline"></span>加入团队
+          </a>
+          <a nz-button nzSize="large" [routerLink]="['/contact']">了解更多</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

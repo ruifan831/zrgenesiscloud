@@ -1,0 +1,184 @@
+// 保留特有的 host 样式
+:host {
+  display: block;
+}
+
+// Hero区域 - 保留特有样式
+.hero-section {
+  padding: 100px 0 80px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,235,224,0.9) 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('/assets/images/pattern.png');
+    opacity: 0.05;
+    z-index: 0;
+  }
+  
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero-content {
+    z-index: 2;
+    
+    .main-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      line-height: 1.2;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-color-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 80%;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      
+      [nz-button] {
+        min-width: 150px;
+      }
+    }
+  }
+  
+  .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 60px 0;
+    
+    .hero-content {
+      order: 1;
+      text-align: center;
+      
+      .main-title {
+        font-size: 2.2rem;
+      }
+      
+      .subtitle {
+        font-size: 1.1rem;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+    }
+    
+    .hero-image {
+      order: 0;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+// 产品卡片特有样式
+.products-section {
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    .product-icon {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        object-fit: cover;
+      }
+    }
+    
+    .product-info {
+      flex: 1;
+      
+      h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      
+      p {
+        margin-bottom: 1.5rem;
+        color: var(--text-color-secondary);
+      }
+      
+      .learn-more {
+        display: inline-flex;
+        align-items: center;
+        color: var(--primary-color);
+        font-weight: 500;
+        
+        i {
+          margin-left: 0.5rem;
+          transition: transform 0.3s ease;
+        }
+        
+        &:hover i {
+          transform: translateX(4px);
+        }
+      }
+    }
+  }
+}
+
+// 特性卡片特有样式
+.features-section {
+  .feature-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    
+    i {
+      font-size: 28px;
+      color: var(--primary-color);
+    }
+  }
+}
+
+// CTA按钮特有样式
+.download-section .cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  
+  [nz-button] {
+    min-width: 150px;
+  }
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}

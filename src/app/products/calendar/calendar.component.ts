@@ -39,8 +39,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class CalendarComponent implements OnInit {
   product = {
     id: 'calendar',
-    title: '万年历日历黄历天气节气',
-    description: '万年历日历黄历天气节气是一款功能全面的日历应用，将传统万年历、黄历与现代日程管理完美结合。无论是查询日期、农历、节气，还是安排日程、设置提醒，都能轻松完成。',
+    title: '全民万年黄历通',
+    description: '全民万年黄历通是一款功能全面的日历应用，将传统万年历、黄历与现代日程管理完美结合。无论是查询日期、农历、节气，还是安排日程、设置提醒，都能轻松完成。',
     image: 'assets/images/calendar.png',
     available: true
   };

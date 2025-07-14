@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《全民万年黄历通》隐私政策</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .privacy-policy-container {
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 1rem;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 2rem;
+            padding: 0.5rem;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid #3498db;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .sdk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sdk-table th,
+        .sdk-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .sdk-table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sdk-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .sdk-table tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        .sdk-table a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sdk-table a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            background-color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info strong {
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0 1rem;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .sdk-table {
+                font-size: 0.9rem;
+            }
+
+            .sdk-table th,
+            .sdk-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .contact-info strong {
+                min-width: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .privacy-policy-container {
+                padding: 1rem 0;
+            }
+
+            .container {
+                margin: 0 0.5rem;
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+                padding-left: 0.5rem;
+            }
+
+            ul {
+                padding-left: 1.5rem;
+            }
+
+            .sdk-table {
+                font-size: 0.8rem;
+            }
+
+            .sdk-table th,
+            .sdk-table td {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .contact-info {
+                padding: 1rem;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: none;
+                margin: 0;
+                padding: 1rem;
+            }
+
+            .sdk-table {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="privacy-policy-container">
+        <div class="container">
+            <h1>《全民万年黄历通》隐私政策</h1>
+            <p class="last-updated">最后更新日期：2025年5月25日</p>
+
+            <h2>一、引言</h2>
+            <p>
+                上海卓瑞云创信息技术有限公司（"我们"）非常重视您的隐私保护。本隐私政策适用于我们的"全民万年黄历通"应用，描述了我们如何收集、使用、存储和共享您的个人信息。
+            </p>
+
+            <h2>二、我们收集的信息</h2>
+            <p>为了向您提供日历、黄历和节气服务，我们可能会收集以下信息：</p>
+            <ul>
+                <li>
+                    <strong>设备信息：</strong>包括设备型号、操作系统版本、唯一设备标识符等信息。
+                </li>
+                <li>
+                    <strong>位置信息：</strong>用于提供基于位置的天气服务和节假日信息（您可以在设备设置中随时关闭此权限）。
+                </li>
+                <li>
+                    <strong>日历事件：</strong>用于提供提醒功能（仅存储在本地设备上）。
+                </li>
+                <li>
+                    <strong>使用数据：</strong>包括查看的内容、使用频率和使用时长等匿名统计信息。
+                </li>
+            </ul>
+
+            <h2>三、信息使用方式</h2>
+            <p>我们使用收集的信息主要用于：</p>
+            <ul>
+                <li>提供日历、黄历和节气等核心功能</li>
+                <li>分析用户偏好，优化应用体验</li>
+                <li>提供个性化的节日提醒和重要日期提示</li>
+                <li>处理应用内购买交易（如适用）</li>
+                <li>向您发送服务通知和更新信息</li>
+            </ul>
+
+            <h2>四、第三方SDK使用说明</h2>
+            <table class="sdk-table">
+                <tr>
+                    <th>SDK名称</th>
+                    <th>用途</th>
+                    <th>收集信息</th>
+                    <th>隐私政策</th>
+                </tr>
+                <tr>
+                    <td>穿山甲SDK</td>
+                    <td>广告服务</td>
+                    <td>设备信息、网络信息、位置信息、应用列表</td>
+                    <td><a href="https://www.csjplatform.com/privacy/partner?ad_info=3E4UrlLFAlQv5aDLyggGmxUxIbEjQAQPh6PI/EEbh0UUzrd65Msm60WPU8+hpH015k66OCm/7v20shmN8zn3DVxia6yxvx6wn190sDeGxyLIZb3ziGL6+cDmRcX7kHL5e7pW5zfabkL+qFRiZDybawr9zapyJXaoWCMABVdAEVQ=" target="_blank">查看隐私政策</a></td>
+                </tr>
+            </table>
+
+            <h2>五、用户内容发布规范</h2>
+            <p>（适用于应用内任何用户生成内容功能，如评论、分享等）</p>
+            <p>如应用提供内容发布或分享功能，用户不得利用基于深度学习、虚拟现实、生成式人工智能等新技术制作、上传、传播虚假信息或法律法规禁止的内容。</p>
+
+            <p>用户通过本应用创建或分享的内容（如自定义事件、备注等），需保证：</p>
+            <ul>
+                <li>不包含虚假新闻、侵权内容或误导性信息；</li>
+                <li>若涉及合成内容（如AI生成的节气图片等），需明确标注"合成内容"标识；</li>
+            </ul>
+            <p>我们有权对违反上述规范的内容采取删除、限制传播或封禁账号等措施。</p>
+
+            <h2>六、未成年人保护</h2>
+            <p>我们不会主动收集未成年人个人信息。若您是未满18周岁的用户，应在监护人指导下使用本应用。</p>
+            <p>监护人如发现未成年人未经同意使用本应用，可通过以下方式联系我们处理账号：</p>
+            <ul>
+                <li><strong>电话：</strong>15620075759</li>
+            </ul>
+            <p>我们将根据监护人要求，对账号功能采取必要限制措施（如关闭社交功能等）。</p>
+
+            <h2>七、政策更新</h2>
+            <p>我们可能会适时更新本政策，更新后的版本将通过应用内公告或官网公示。您继续使用服务即视为接受修订后的政策。</p>
+
+            <h2>八、联系我们</h2>
+            <p>
+                如您对本隐私政策有任何疑问、建议或投诉，您可以通过以下方式与我们联系：
+            </p>
+            <div class="contact-info">
+                <p><strong>开发者名称：</strong>上海卓瑞云创信息技术有限公司</p>
+                <p><strong>联系电话：</strong>15620075759</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

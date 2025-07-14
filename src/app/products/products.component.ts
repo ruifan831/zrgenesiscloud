@@ -36,7 +36,7 @@ export class ProductsComponent {
   products = [
     {
       id: 'calendar',
-      title: '万年历日历黄历天气节气',
+      title: '全民万年黄历通',
       description: '集日历、黄历、节气、节日于一体的多功能日历应用，帮助您合理安排生活与工作。',
       features: [
         '日历功能：查看日期、农历、节气、节日等信息',

@@ -1,0 +1,147 @@
+<div class="invite-page">
+  <!-- 主要内容区域 -->
+  <div class="invite-content">
+    <div class="container">
+      <div nz-row nzJustify="center">
+        <div
+          nz-col
+          [nzXs]="24"
+          [nzSm]="20"
+          [nzMd]="16"
+          [nzLg]="12"
+          [nzXl]="10"
+          [nzXXl]="8"
+        >
+          <nz-card class="invite-card">
+            <div class="invite-form-header">
+              <div class="invite-icon">
+                <i nz-icon nzType="gift" nzTheme="outline"></i>
+              </div>
+              <h2>邀请注册</h2>
+              <p>通过邀请码注册账号，享受专属优惠</p>
+            </div>
+
+            <form nz-form [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
+              <!-- 邀请码输入框 -->
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>邀请码</nz-form-label>
+                <nz-form-control [nzSpan]="18">
+                  <input
+                    nz-input
+                    formControlName="inviteCode"
+                    placeholder="邀请码"
+                    readonly
+                    class="readonly-input"
+                  />
+                  <div class="form-extra">
+                    <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+                    邀请码已自动填入，不可修改
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+              <!-- 手机号输入框 -->
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>手机号</nz-form-label>
+                <nz-form-control
+                  [nzSpan]="18"
+                  [nzValidateStatus]="
+                    inviteForm.get('phoneNumber')?.invalid &&
+                    inviteForm.get('phoneNumber')?.touched
+                      ? 'error'
+                      : ''
+                  "
+                  [nzErrorTip]="getPhoneNumberError()"
+                >
+                  <input
+                    nz-input
+                    formControlName="phoneNumber"
+                    placeholder="请输入手机号"
+                    maxlength="11"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+
+              <!-- 验证码输入框 -->
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>验证码</nz-form-label>
+                <nz-form-control
+                  [nzSpan]="18"
+                  [nzValidateStatus]="
+                    inviteForm.get('verificationCode')?.invalid &&
+                    inviteForm.get('verificationCode')?.touched
+                      ? 'error'
+                      : ''
+                  "
+                  [nzErrorTip]="getVerificationCodeError()"
+                >
+                  <div class="verification-code-group">
+                    <input
+                      nz-input
+                      formControlName="verificationCode"
+                      placeholder="请输入验证码"
+                      maxlength="6"
+                      class="verification-input"
+                    />
+                    <button
+                      nz-button
+                      nzType="default"
+                      (click)="
+                        sendVerificationCode();
+                        $event.preventDefault();
+                        $event.stopPropagation()
+                      "
+                      [disabled]="
+                        isCountingDown || !inviteForm.get('phoneNumber')?.valid
+                      "
+                      nzShape="circle"
+                      type="button"
+                    >
+                      <i
+                        nz-icon
+                        [nzType]="isCountingDown ? 'clock-circle' : 'send'"
+                        nzTheme="outline"
+                      ></i>
+                      <span *ngIf="isCountingDown">{{ countdown }}s</span>
+                    </button>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+              <!-- 提交按钮 -->
+              <div nz-row nzJustify="center">
+                <div
+                  nz-col
+                  [nzXs]="24"
+                  [nzSm]="24"
+                  [nzMd]="24"
+                  [nzLg]="16"
+                  [nzXl]="12"
+                  [nzXXl]="12"
+                >
+                  <nz-form-item>
+                    <nz-form-control>
+                      <!-- 在提交按钮部分添加加载状态 -->
+                      <button
+                        nz-button
+                        nzType="primary"
+                        nzSize="large"
+                        nzBlock
+                        [disabled]="inviteForm.invalid || isLoading"
+                        [nzLoading]="isLoading"
+                        class="submit-btn"
+                      >
+                        <i nz-icon nzType="check" nzTheme="outline"></i>
+                        完成注册
+                      </button>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </form>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

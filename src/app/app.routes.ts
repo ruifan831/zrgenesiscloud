@@ -18,5 +18,10 @@ export const routes: Routes = [
   { path: 'privacy-policy', loadComponent: () => import('./privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent) },
   { path: 'privacy/calendar', loadComponent: () => import('./privacy/calendar-privacy/calendar-privacy.component').then(m => m.CalendarPrivacyComponent) },
   { path: 'privacy/teleprompter', loadComponent: () => import('./privacy/vision-cue-privacy/vision-cue-privacy.component').then(m => m.VisionCuePrivacyComponent) },
+  { 
+    path: 'invite/calendar', 
+    loadComponent: () => import('./pages/calendar-invite/calendar-invite.component').then(m => m.CalendarInviteComponent),
+    data: { showHeader: false, showFooter: false }
+  },
   { path: '**', redirectTo: '' } // 重定向到首页
 ];

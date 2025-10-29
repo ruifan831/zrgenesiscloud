@@ -2,3 +2,7 @@
     min-height: calc(100vh - 200px); // 减去头部和底部的高度
     padding-top: 70px; // 头部固定位置的偏移量
   }
+
+.no-header {
+    padding-top: 0;
+}

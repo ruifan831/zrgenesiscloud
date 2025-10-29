@@ -1,7 +1,7 @@
-<zrgenesiscloud-header></zrgenesiscloud-header>
+<zrgenesiscloud-header *ngIf="showHeader"></zrgenesiscloud-header>
 
-<main class="main-content">
+<main class="main-content" [class.no-header]="!showHeader">
   <router-outlet></router-outlet>
 </main>
 
-<zrgenesiscloud-footer></zrgenesiscloud-footer>
+<zrgenesiscloud-footer *ngIf="showFooter"></zrgenesiscloud-footer>

@@ -1,100 +1,139 @@
-<div class="hero-section">
-    <div class="container">
-      <div nz-row [nzGutter]="[32, 32]" nzAlign="middle">
-        <div nz-col [nzXs]="24" [nzMd]="12" class="hero-content">
-          <h1 class="main-title">高效实用的工具应用</h1>
-          <p class="subtitle">专注于打造轻量、简洁且实用的移动应用程序，帮助用户解决日常问题</p>
-          <div class="hero-buttons">
-            <button nz-button nzType="primary" nzSize="large" [routerLink]="['/products']">
-              查看产品
-            </button>
-            <button nz-button nzSize="large" [routerLink]="['/about']">
-              了解我们
-            </button>
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <!-- 漂浮玻璃球 -->
+  <span class="ambient-orb orb-1"></span>
+  <span class="ambient-orb orb-2"></span>
+  <span class="ambient-orb orb-3"></span>
+
+  <div class="container hero__inner">
+    <div nz-row [nzGutter]="[32, 32]" nzAlign="middle">
+      <div nz-col [nzXs]="24" [nzMd]="13" class="hero__content" appAnimateOnScroll>
+        <div class="hero__chip">
+          <span class="hero__chip-dot"></span>
+          ZRGenesis · 移动应用工作室
+        </div>
+        <h1 class="hero__title">
+          打造让人<span class="hero__title-grad">惊喜</span>的<br />
+          移动端工具应用
+        </h1>
+        <p class="hero__subtitle">
+          专注于轻量、简洁、实用——把生活与工作的小事，做到精致。
+        </p>
+        <div class="hero__cta">
+          <button nz-button nzType="primary" nzSize="large" [routerLink]="['/products']">
+            <span>查看产品</span>
+            <span nz-icon nzType="arrow-right"></span>
+          </button>
+          <button nz-button nzSize="large" [routerLink]="['/about']" class="hero__cta-ghost">
+            了解我们
+          </button>
+        </div>
+        <div class="hero__badges">
+          <span class="hero__badge" *ngFor="let b of heroBadges">{{ b }}</span>
+        </div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzMd]="11" class="hero__visual" appAnimateOnScroll [stagger]="2">
+        <div class="hero__glass-card glass-surface">
+          <img src="assets/images/hero-image.png" alt="Hero" />
+          <div class="hero__glass-meta">
+            <div class="hero__glass-meta-label">月活跃</div>
+            <div class="hero__glass-meta-value">100K+</div>
           </div>
         </div>
-        <div nz-col [nzXs]="24" [nzMd]="12" class="hero-image">
-          <img src="assets/images/hero-image.png" alt="Hero Image">
+        <div class="hero__floating-tag glass-surface glass-surface--strong">
+          <span nz-icon nzType="trophy"></span>
+          App Store 推荐
         </div>
       </div>
     </div>
   </div>
-  
-  <div class="products-section section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">我们的产品</h2>
-        <p class="section-subtitle">用心打造每一款应用，满足用户的需求</p>
+</section>
+
+<!-- ============================ PRODUCTS ============================ -->
+<section class="products section">
+  <div class="container">
+    <div class="section-header" appAnimateOnScroll>
+      <span class="section-eyebrow">PRODUCTS</span>
+      <h2 class="section-title">我们的产品</h2>
+      <p class="section-subtitle">用心打造每一款应用，满足用户的真实需求</p>
+    </div>
+
+    <div nz-row [nzGutter]="[32, 32]">
+      <div
+        nz-col
+        [nzXs]="24" [nzSm]="24" [nzMd]="12"
+        *ngFor="let p of products; let i = index">
+        <a [routerLink]="[p.href]" class="product-card glass-surface"
+           [class.product-card--amber]="p.accent === 'amber'"
+           [class.product-card--cool]="p.accent === 'cool'"
+           appAnimateOnScroll [stagger]="i">
+          <div class="product-card__glow"></div>
+          <div class="product-card__icon">
+            <img [src]="p.icon" [alt]="p.title" />
+          </div>
+          <div class="product-card__info">
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.desc }}</p>
+            <div class="product-card__tags">
+              <span class="product-card__tag" *ngFor="let t of p.tags">{{ t }}</span>
+            </div>
+            <span class="product-card__cta">
+              了解更多
+              <span nz-icon nzType="arrow-right"></span>
+            </span>
+          </div>
+        </a>
       </div>
-      
-      <div nz-row [nzGutter]="[32, 32]">
-        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
-          <div class="product-card card-hover">
-            <div class="product-icon">
-              <img src="assets/images/calendar.png" alt="万年历图标">
-            </div>
-            <div class="product-info">
-              <h3>全民万年黄历通</h3>
-              <p>集日历、黄历、节气、节日于一体的多功能日历应用，帮助您合理安排生活与工作。</p>
-              <a class="learn-more" [routerLink]="['/products/calendar']">
-                了解更多 <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
-              </a>
-            </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FEATURES ============================ -->
+<section class="features section">
+  <div class="container">
+    <div class="section-header" appAnimateOnScroll>
+      <span class="section-eyebrow">WHY US</span>
+      <h2 class="section-title">为什么选择我们</h2>
+      <p class="section-subtitle">致力于提供优质的用户体验和真正实用的功能</p>
+    </div>
+
+    <div nz-row [nzGutter]="[24, 24]">
+      <div
+        nz-col
+        [nzXs]="24" [nzSm]="12" [nzMd]="8"
+        *ngFor="let feature of features; let i = index">
+        <div class="feature-card glass-surface" appAnimateOnScroll [stagger]="i">
+          <div class="feature-card__icon">
+            <span nz-icon [nzType]="feature.icon" nzTheme="outline"></span>
           </div>
-        </div>
-        
-        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
-          <div class="product-card card-hover">
-            <div class="product-icon">
-              <img src="assets/images/teleprompter-app.jpg" alt="提词器图标">
-            </div>
-            <div class="product-info">
-              <h3>全能提词器</h3>
-              <p>专业的提词器应用，适合主播、演讲者、视频创作者使用，让您的表达更加流畅自信。</p>
-              <a class="learn-more" [routerLink]="['/products/vision-cue']">
-                了解更多 <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
-              </a>
-            </div>
-          </div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
         </div>
       </div>
     </div>
   </div>
-  
-  <div class="features-section section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">为什么选择我们</h2>
-        <p class="section-subtitle">我们致力于提供优质的用户体验和实用功能</p>
-      </div>
-      
-      <div nz-row [nzGutter]="[32, 48]">
-        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" *ngFor="let feature of features">
-          <div class="feature-card card-hover">
-            <div class="feature-icon">
-              <i nz-icon [nzType]="feature.icon" nzTheme="outline"></i>
-            </div>
-            <h3>{{ feature.title }}</h3>
-            <p>{{ feature.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="download-section">
-    <div class="container">
-      <div class="download-content">
+</section>
+
+<!-- ============================ CTA ============================ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta__card" appAnimateOnScroll>
+      <span class="ambient-orb cta__orb-1"></span>
+      <span class="ambient-orb cta__orb-2"></span>
+      <div class="cta__inner">
+        <span class="cta__eyebrow">LET'S START</span>
         <h2>让我们一起开始</h2>
-        <p>立即体验我们的产品，提升您的日常生活效率</p>
-        <div class="cta-buttons">
+        <p>立即体验我们的产品，提升日常生活效率</p>
+        <div class="cta__buttons">
           <button nz-button nzType="primary" nzSize="large" [routerLink]="['/products']">
             查看所有产品
           </button>
-          <button nz-button nzSize="large" [routerLink]="['/contact']">
+          <button nz-button nzSize="large" [routerLink]="['/contact']" class="cta__buttons-ghost">
             联系我们
           </button>
         </div>
       </div>
     </div>
   </div>
+</section>

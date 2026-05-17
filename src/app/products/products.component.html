@@ -22,6 +22,28 @@
                 {{ feature }}
               </nz-tag>
             </div>
+
+            <p class="product-earning" *ngIf="product.earningSummary">
+              <span nz-icon nzType="gift" nzTheme="outline"></span>
+              {{ product.earningSummary }}
+            </p>
+
+            <div class="download-row" *ngIf="product.downloadChannels.length > 0">
+              <span class="download-row__label">去下载</span>
+              <a
+                *ngFor="let channel of product.downloadChannels"
+                class="market-icon-link"
+                [href]="channel.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="product.title + channel.label + '下载'"
+                [title]="channel.label"
+              >
+                <span nz-icon [nzType]="channel.icon" nzTheme="outline"></span>
+                <span class="market-icon-link__short">{{ channel.shortLabel }}</span>
+                <span class="market-icon-link__name">{{ channel.label }}</span>
+              </a>
+            </div>
             
             <ng-template #avatarTemplate>
               <nz-avatar *ngIf="product.available" nzIcon="check-circle" nzColor="#52c41a"></nz-avatar>

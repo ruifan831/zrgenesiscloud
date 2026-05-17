@@ -4,6 +4,7 @@ import { AboutComponent } from './about/about.component';
 import { ProductsComponent } from './products/products.component';
 import { CalendarComponent } from './products/calendar/calendar.component';
 import { VisionCueComponent } from './products/vision-cue/vision-cue.component';
+import { ShanyingComponent } from './products/shanying/shanying.component';
 import { ContactComponent } from './contact/contact.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { CalendarPrivacyComponent } from './privacy/calendar-privacy/calendar-privacy.component';
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'products', loadComponent: () => import('./products/products.component').then(m => m.ProductsComponent) },
   { path: 'products/calendar', loadComponent: () => import('./products/calendar/calendar.component').then(m => m.CalendarComponent)  },
   { path: 'products/vision-cue', loadComponent: () => import('./products/vision-cue/vision-cue.component').then(m => m.VisionCueComponent) },
+  { path: 'products/shanying', loadComponent: () => import('./products/shanying/shanying.component').then(m => m.ShanyingComponent) },
   { path: 'contact', loadComponent: () => import('./contact/contact.component').then(m => m.ContactComponent) },
   { path: 'privacy-policy', loadComponent: () => import('./privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent) },
   { path: 'privacy/calendar', loadComponent: () => import('./privacy/calendar-privacy/calendar-privacy.component').then(m => m.CalendarPrivacyComponent) },

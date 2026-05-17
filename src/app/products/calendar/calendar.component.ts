@@ -13,6 +13,11 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import {
+  ANDROID_DOWNLOAD_CHANNELS,
+  APP_EARNING_STEPS,
+  CALENDAR_DOWNLOAD_NOTE
+} from '../product-downloads';
 
 @Component({
   selector: 'zrgenesiscloud-calendar',
@@ -40,10 +45,16 @@ export class CalendarComponent implements OnInit {
   product = {
     id: 'calendar',
     title: '全民万年黄历通',
-    description: '全民万年黄历通是一款功能全面的日历应用，将传统万年历、黄历与现代日程管理完美结合。无论是查询日期、农历、节气，还是安排日程、设置提醒，都能轻松完成。',
+    description: '全民万年黄历通是一款功能全面的安卓日历应用，将传统万年历、黄历与现代日程管理结合。用户可查询日期、农历、节气、宜忌，也可以通过邀请好友与有效使用规则获取收益。',
     image: 'assets/images/calendar.png',
     available: true
   };
+
+  downloadChannels = ANDROID_DOWNLOAD_CHANNELS['calendar'];
+
+  earningSteps = APP_EARNING_STEPS;
+
+  directDownloadNote = CALENDAR_DOWNLOAD_NOTE;
   
   features = [
     { 
@@ -69,12 +80,16 @@ export class CalendarComponent implements OnInit {
     { 
       title: '界面定制', 
       description: '提供多种主题和显示方式，个性化您的日历体验' 
+    },
+    {
+      title: '邀请收益',
+      description: '通过邀请码邀请好友注册，好友有效使用后按规则累计收益'
     }
   ];
   
   // 特性图标（使用NG-ZORRO图标）
   featureIcons = [
-    'calendar', 'compass', 'schedule', 'notification', 'sync', 'skin'
+    'calendar', 'compass', 'schedule', 'notification', 'sync', 'skin', 'gift'
   ];
   
   screenshots = [

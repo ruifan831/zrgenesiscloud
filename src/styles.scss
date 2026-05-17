@@ -239,6 +239,67 @@ body {
       }
     }
   }
+
+  .download-lane {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+
+    &__label {
+      color: #6b5544;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    &__note {
+      color: #8a6c52;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+  }
+
+  .market-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 38px;
+    padding: 0.42rem 0.8rem;
+    border: 1px solid rgba(181, 104, 45, 0.24);
+    border-radius: 999px;
+    background: #fff8ef;
+    color: #8a4d22;
+    text-decoration: none;
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: rgba(181, 104, 45, 0.45);
+      background: #fff1df;
+      color: #6f3717;
+    }
+
+    span[nz-icon] {
+      font-size: 1.05rem;
+    }
+
+    &__short {
+      display: inline-grid;
+      place-items: center;
+      width: 1.45rem;
+      height: 1.45rem;
+      border-radius: 0.5rem;
+      background: #b5682d;
+      color: #fffaf2;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    &__name {
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+  }
   
   .product-content {
     padding: 3rem 0;
@@ -249,6 +310,82 @@ body {
     
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  .earnings-section {
+    margin-top: -1rem;
+  }
+
+  .earnings-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
+    gap: 2rem;
+    align-items: stretch;
+    padding: clamp(1.5rem, 3vw, 2.4rem);
+    border: 1px solid rgba(181, 104, 45, 0.16);
+    border-radius: 18px;
+    background:
+      linear-gradient(135deg, #fff8ef 0%, #f7eadc 100%);
+    box-shadow: 0 12px 30px rgba(80, 46, 23, 0.07);
+
+    &__copy {
+      h2 {
+        margin: 0 0 1rem;
+        color: #2a1c10;
+        font-size: clamp(1.45rem, 2.6vw, 2rem);
+        font-weight: 800;
+        line-height: 1.25;
+      }
+
+      p {
+        margin: 0;
+        color: #6b5544;
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+    }
+
+    &__kicker {
+      display: inline-flex;
+      margin-bottom: 0.75rem;
+      color: #a04324;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    &__steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  .earning-step {
+    min-height: 100%;
+    padding: 1.15rem;
+    border: 1px solid rgba(181, 104, 45, 0.14);
+    border-radius: 14px;
+    background: rgba(255, 250, 242, 0.76);
+
+    span[nz-icon] {
+      color: #a04324;
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    h3 {
+      margin: 0 0 0.55rem;
+      color: #2a1c10;
+      font-size: 1.02rem;
+      font-weight: 750;
+    }
+
+    p {
+      margin: 0;
+      color: #6b5544;
+      font-size: 0.92rem;
+      line-height: 1.65;
     }
   }
   
@@ -343,12 +480,38 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap;
     
     .store-button {
       display: inline-block;
       
       img {
         height: 50px;
+      }
+    }
+
+    &--markets {
+      margin: 1.25rem 0 0;
+
+      .store-button--market {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        min-height: 48px;
+        padding: 0 1.1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 250, 242, 0.38);
+        background: rgba(255, 250, 242, 0.15);
+        color: #fffaf2;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.25s ease, background-color 0.25s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          background: rgba(255, 250, 242, 0.24);
+          color: #fffaf2;
+        }
       }
     }
   }
@@ -390,6 +553,19 @@ body {
     
     .section {
       margin-bottom: 3rem;
+    }
+
+    .download-lane {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .earnings-panel {
+      grid-template-columns: 1fr;
+
+      &__steps {
+        grid-template-columns: 1fr;
+      }
     }
     
     .section-title {

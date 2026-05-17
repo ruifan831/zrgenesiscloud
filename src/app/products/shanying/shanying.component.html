@@ -1,4 +1,4 @@
-<div class="product-detail-page calendar-page">
+<div class="product-detail-page shanying-page">
   <div class="page-header-wrapper">
     <div class="container">
       <nz-page-header
@@ -8,33 +8,22 @@
       >
         <nz-page-header-extra>
           <nz-tag nzColor="success">已上线</nz-tag>
+          <nz-tag nzColor="processing">Android</nz-tag>
         </nz-page-header-extra>
 
         <nz-page-header-content>
           <div nz-row [nzGutter]="[32, 32]">
-            <div
-              nz-col
-              [nzXs]="24"
-              [nzSm]="24"
-              [nzMd]="8"
-              class="product-image"
-            >
+            <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8" class="product-image">
               <div class="app-icon-wrapper">
                 <img [src]="product.image" [alt]="product.title" />
               </div>
             </div>
-            <div
-              nz-col
-              [nzXs]="24"
-              [nzSm]="24"
-              [nzMd]="16"
-              class="product-description"
-            >
+            <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="16" class="product-description">
               <p class="product-intro">{{ product.description }}</p>
 
               <nz-divider></nz-divider>
 
-              <div class="download-lane" aria-label="全民万年黄历通安卓下载地址">
+              <div class="download-lane" aria-label="闪映安卓下载地址">
                 <span class="download-lane__label">去下载</span>
                 <a
                   *ngFor="let channel of downloadChannels"
@@ -59,7 +48,6 @@
 
   <div class="product-content">
     <div class="container">
-      <!-- 核心功能部分 -->
       <div class="section features-section">
         <h2 class="section-title">核心功能</h2>
         <div nz-row [nzGutter]="[24, 24]">
@@ -68,14 +56,11 @@
             [nzXs]="24"
             [nzSm]="12"
             [nzMd]="8"
-            *ngFor="let feature of features; let i = index"
+            *ngFor="let feature of features"
           >
             <div class="feature-card card-hover">
               <div class="feature-icon">
-                <nz-avatar
-                  [nzSize]="64"
-                  nzIcon="{{ featureIcons[i] }}"
-                ></nz-avatar>
+                <span nz-icon [nzType]="feature.icon" nzTheme="outline"></span>
               </div>
               <h3>{{ feature.title }}</h3>
               <p>{{ feature.description }}</p>
@@ -84,14 +69,13 @@
         </div>
       </div>
 
-      <!-- 收益机制部分 -->
       <div class="section earnings-section">
         <div class="earnings-panel">
           <div class="earnings-panel__copy">
             <span class="earnings-panel__kicker">收益机制</span>
-            <h2>使用日历，也可以积累收益</h2>
+            <h2>浏览内容，也可以积累收益</h2>
             <p>
-              用户可通过邀请链接或邀请码邀请新用户。好友注册并完成有效使用、签到或激励广告任务后，
+              用户可通过邀请链接或邀请码邀请新用户。好友注册并完成有效浏览或激励广告任务后，
               系统会按应用内规则记录邀请收益。具体比例、门槛和到账时间以应用内显示为准。
             </p>
           </div>
@@ -105,52 +89,27 @@
         </div>
       </div>
 
-      <!-- 应用截图部分 -->
       <div class="section screenshots-section">
         <h2 class="section-title">应用截图</h2>
         <div class="screenshots-card">
           <nz-carousel [nzEffect]="'fade'" [nzDots]="true" [nzAutoPlay]="true">
             <div nz-carousel-content *ngFor="let screenshot of screenshots">
               <div class="screenshot-wrapper">
-                <img [src]="screenshot" alt="应用截图" />
+                <img [src]="screenshot" alt="闪映应用截图" />
               </div>
             </div>
           </nz-carousel>
         </div>
       </div>
-
-      <!-- 用户评价部分 -->
-      <!-- <div class="section reviews-section">
-        <h2 class="section-title">用户评价</h2>
-        <div nz-row [nzGutter]="[24, 24]">
-          <div
-            nz-col
-            [nzXs]="24"
-            [nzSm]="24"
-            [nzMd]="8"
-            *ngFor="let review of reviews"
-          >
-            <div class="review-card card-hover">
-              <nz-comment [nzAuthor]="review.author" [nzDatetime]="review.date">
-                <ng-template #nzContent>
-                  <p>{{ review.content }}</p>
-                  <nz-rate [ngModel]="review.rating" nzDisabled></nz-rate>
-                </ng-template>
-              </nz-comment>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 
-  <!-- 下载CTA区域 -->
   <div class="download-section">
     <div class="overlay"></div>
     <div class="container">
       <div class="download-content">
-        <h2>立即下载全民万年黄历通</h2>
-        <p>让您的日常生活更加便捷</p>
+        <h2>立即下载闪映</h2>
+        <p>体验轻量内容浏览与邀请收益机制</p>
 
         <div class="download-buttons download-buttons--markets">
           <a
@@ -165,15 +124,8 @@
           </a>
         </div>
 
-        <!-- 隐私政策链接 -->
         <div class="privacy-link-container">
-          <p>
-            下载前请阅读<a
-              [routerLink]="['/privacy/calendar']"
-              class="privacy-policy-link"
-              >《全民万年黄历通》</a
-            >，继续使用即表示您同意该政策。
-          </p>
+          <p>下载前请在应用市场页面查看权限与隐私说明，继续使用即表示您同意对应政策。</p>
         </div>
       </div>
     </div>

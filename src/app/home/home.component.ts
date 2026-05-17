@@ -46,6 +46,14 @@ export class HomeComponent implements OnInit {
       href: '/products/vision-cue',
       tags: ['提词器', '直播', '创作'],
       accent: 'cool'
+    },
+    {
+      icon: 'assets/images/shanying.png',
+      title: '闪映',
+      desc: '信息展示类安卓应用，聚合授权图文与信息流内容，并结合广告推荐服务展示内容。',
+      href: '/products/shanying',
+      tags: ['安卓', '信息流', '收益'],
+      accent: 'rose'
     }
   ];
 

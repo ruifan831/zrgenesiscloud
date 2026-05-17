@@ -292,6 +292,10 @@
       background: radial-gradient(120% 80% at 100% 100%, rgba(185, 212, 255, 0.55), transparent 60%);
     }
 
+    &--rose .product-card__glow {
+      background: radial-gradient(120% 80% at 100% 0%, rgba(255, 150, 180, 0.38), transparent 60%);
+    }
+
     &__icon {
       flex-shrink: 0;
       width: 96px;

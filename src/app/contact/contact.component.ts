@@ -41,11 +41,11 @@ export class ContactComponent implements OnInit {
   faqs = [
     {
       question: '如何下载你们的应用？',
-      answer: '您可以在App Store或Google Play商店中搜索我们的应用名称，直接下载安装。也可以通过我们网站上的下载链接获取应用。'
+      answer: '目前产品以安卓应用为主。您可以在产品页的“去下载”区域跳转到应用宝等应用市场；官网 APK 直链上线后，也会在同一区域提供。'
     },
     {
       question: '产品支持哪些平台？',
-      answer: '我们的应用产品支持iOS和Android平台，部分工具也提供Web版本，可以在各类主流设备上使用。'
+      answer: '当前重点支持 Android 平台，并会根据上架进度补充更多安卓应用市场下载地址。'
     },
     {
       question: '如何联系技术支持？',

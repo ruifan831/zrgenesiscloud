@@ -1,0 +1,233 @@
+// PrivacyIndexPage — /privacy 隐私汇总页
+// 极简无装饰，max-width 居中，按 App 分组列表
+
+$content-max: 1200px;
+$content-padding: max(40px, calc((100vw - #{$content-max}) / 2));
+
+// ─── Hero ──────────────────────────────────────────────────────────────────
+.privacy-index__hero {
+  background: var(--surface-light);
+  padding: var(--space-20) $content-padding var(--space-12);
+
+  .type-eyebrow {
+    margin-bottom: var(--space-4);
+  }
+}
+
+.privacy-index__hero-title {
+  font-size: var(--font-display-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-display-lg);
+  letter-spacing: var(--ls-display-lg);
+  color: var(--text-on-light);
+  margin-bottom: var(--space-5);
+  max-width: 600px;
+}
+
+.privacy-index__hero-lead {
+  font-size: var(--font-tagline);
+  font-weight: var(--fw-regular);
+  line-height: 1.38;
+  color: var(--text-on-light-secondary);
+  max-width: 600px;
+}
+
+// ─── App Group List ─────────────────────────────────────────────────────────
+.privacy-index__list {
+  background: var(--surface-light);
+  padding: 0 $content-padding var(--space-20);
+}
+
+.privacy-index__group {
+  border-bottom: 1px solid var(--color-divider);
+  padding: var(--space-8) 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.privacy-index__group-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+// App 信息（左列）
+.privacy-index__app-info {
+  flex: 1;
+  min-width: 220px;
+}
+
+.privacy-index__app-name-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2);
+}
+
+.privacy-index__app-name {
+  font-size: var(--font-tagline);
+  font-weight: var(--fw-semibold);
+  color: var(--text-on-light);
+  margin: 0;
+}
+
+.privacy-index__platform-chip {
+  background: var(--chip-bg);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  color: var(--text-on-light-secondary);
+}
+
+.privacy-index__app-desc {
+  font-size: var(--font-body);
+  color: var(--text-on-light-muted);
+}
+
+// 协议链接（右列）
+.privacy-index__links {
+  flex: 1;
+  min-width: 220px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  margin: 0;
+}
+
+.privacy-index__link-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+
+  &--sub {
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-divider-light);
+  }
+}
+
+.privacy-index__link-meta {
+  flex: 1;
+}
+
+.privacy-index__link-title {
+  font-size: var(--font-body);
+  font-weight: var(--fw-semibold);
+  color: var(--text-on-light);
+  margin: 0 0 2px;
+}
+
+.privacy-index__link-date {
+  margin: 0;
+}
+
+.privacy-index__policy-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: var(--font-body);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+  flex-shrink: 0;
+
+  &::after {
+    content: ' ›';
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &--disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+// Loading skeleton
+.privacy-index__skeleton {
+  background: var(--surface-parchment, #f5f0e8);
+  border-radius: var(--radius-lg, 16px);
+  min-height: 120px;
+  margin-bottom: var(--space-4);
+}
+
+// ─── Company Privacy Section ────────────────────────────────────────────────
+.privacy-index__company {
+  padding: var(--space-12) $content-padding;
+}
+
+.privacy-index__company-inner {
+  max-width: 800px;
+}
+
+.privacy-index__company-title {
+  font-size: var(--font-tagline);
+  font-weight: var(--fw-semibold);
+  color: var(--text-on-light);
+  margin: 0 0 var(--space-3);
+}
+
+.privacy-index__company-desc {
+  font-size: var(--font-body);
+  line-height: var(--lh-body);
+  color: var(--text-on-light-secondary);
+  margin: 0 0 var(--space-5);
+}
+
+.privacy-index__company-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: var(--font-body);
+  font-weight: var(--fw-semibold);
+  transition: opacity var(--duration-fast) var(--easing-standard);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// ─── Responsive ─────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  $mobile-padding: 16px;
+
+  .privacy-index__hero {
+    padding: var(--space-16) $mobile-padding var(--space-8);
+  }
+
+  .privacy-index__list {
+    padding: 0 $mobile-padding var(--space-16);
+  }
+
+  .privacy-index__company {
+    padding: var(--space-10) $mobile-padding;
+  }
+
+  .privacy-index__hero-title {
+    font-size: 28px;
+  }
+
+  .privacy-index__hero-lead {
+    font-size: var(--font-body);
+  }
+
+  .privacy-index__group-inner {
+    flex-direction: column;
+  }
+
+  .privacy-index__app-info,
+  .privacy-index__links {
+    min-width: unset;
+    width: 100%;
+  }
+}

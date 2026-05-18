@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PrivacyPolicyComponent } from './privacy-policy.component';
 
 describe('PrivacyPolicyComponent', () => {
@@ -8,10 +7,9 @@ describe('PrivacyPolicyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrivacyPolicyComponent]
-    })
-    .compileComponents();
-    
+      imports: [PrivacyPolicyComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PrivacyPolicyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +17,10 @@ describe('PrivacyPolicyComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render legal page structure', () => {
+    const legalPage = fixture.nativeElement.querySelector('.legal-page');
+    expect(legalPage).toBeTruthy();
   });
 });

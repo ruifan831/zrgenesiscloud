@@ -1,0 +1,115 @@
+// Design tokens — ZRGenesis App Showcase
+// All CSS Custom Properties are defined here on :root
+// Reference: docs/design/zrgenesiscloud-app-showcase/design-tokens.html
+
+:root {
+  // ─── Brand / Action ───────────────────────────────────────────────────────
+  --color-accent:          #0066cc;  // 全站唯一动作色 (CTA / link / focus)
+  --color-accent-dark:     #2997ff;  // 暗底链接色，不用于亮底
+  --color-focus-ring:      #0071e3;  // 焦点环
+
+  // ─── Text / Ink ───────────────────────────────────────────────────────────
+  --text-on-light:         #1d1d1f;  // 主文字（非纯黑）
+  --text-on-light-secondary: #333333;
+  --text-on-light-muted:   #7a7a7a;
+  --text-on-dark:          #f5f5f7;  // 暗底主文字
+  --text-on-dark-muted:    #a1a1a6;  // 暗底弱化文字
+
+  // ─── Surfaces ─────────────────────────────────────────────────────────────
+  --surface-light:         #ffffff;  // canvas-white
+  --surface-parchment:     #f5f5f7;  // canvas-parchment (sub-nav / tile / footer)
+  --surface-pearl:         #fafafc;  // canvas-pearl
+  --surface-dark:          #1d1d1f;  // hero-dark
+  --surface-tile-dark-1:   #272729;  // 首页 tile 1 / 功能 tile 暗
+  --surface-tile-dark-2:   #2a2a2c;
+  --surface-tile-dark-3:   #252527;
+  --surface-nav:           #000000;  // global-nav 专用真黑
+
+  // ─── Dividers ─────────────────────────────────────────────────────────────
+  --color-divider:         #e0e0e0;
+  --color-divider-light:   #f0f0f0;
+
+  // ─── Platform badge backgrounds ───────────────────────────────────────────
+  --chip-bg:               rgba(210, 210, 215, 0.64);  // 亮底
+  --chip-bg-dark:          rgba(255, 255, 255, 0.15);  // 暗底
+
+  // ─── Typography scale ─────────────────────────────────────────────────────
+  // font-size / line-height / letter-spacing
+  --font-hero:             56px;   // 首页 hero 主标题
+  --lh-hero:               1.07;
+  --ls-hero:               -0.28px;
+
+  --font-display-lg:       40px;   // App 名称 / section 标题
+  --lh-display-lg:         1.10;
+  --ls-display-lg:         -0.374px;
+
+  --font-lead:             28px;   // hero 副标题
+  --lh-lead:               1.25;
+  --ls-lead:               -0.01em;
+
+  --font-tagline:          21px;   // sub-nav App 名 / tile 副标题级别
+  --lh-tagline:            1.30;
+  --ls-tagline:            -0.01em;
+
+  --font-tile-subtitle:    21px;   // tile 副标题文字
+  --lh-tile-subtitle:      1.38;
+  --ls-tile-subtitle:      -0.01em;
+
+  --font-body:             17px;   // 正文（不是 16px）
+  --lh-body:               1.47;
+  --ls-body:               0;
+
+  --font-nav-link:         12px;   // nav 链接
+  --lh-nav-link:           1;
+
+  --font-eyebrow:          12px;   // eyebrow / kicker
+  --lh-eyebrow:            1;
+  --ls-eyebrow:            0.1em;
+
+  --font-caption:          14px;   // 协议区小字
+  --lh-caption:            1.47;
+
+  --font-footer-dense:     12px;   // footer dense-link
+  --lh-footer-dense:       2.41;
+
+  // ─── Font weights ─────────────────────────────────────────────────────────
+  // Only 300 / 400 / 600 / 700 — no 500
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  // ─── Spacing scale (4px base) ─────────────────────────────────────────────
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+
+  // ─── Border radius ────────────────────────────────────────────────────────
+  --radius-none: 0;
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;   // --radius-card
+  --radius-card: 12px;
+  --radius-lg:   18px;   // --radius-tile / product image
+  --radius-tile: 18px;
+  --radius-pill: 9999px;
+
+  // ─── Shadow (唯一允许的阴影 — 产品图悬浮投影) ────────────────────────────
+  // 正确值来自 Apple-design-analysis 原 spec（designer README 说明）
+  --shadow-product: 3px 5px 30px 0 rgba(0, 0, 0, 0.22);
+
+  // ─── Motion ───────────────────────────────────────────────────────────────
+  --duration-fast:       150ms;
+  --duration-base:       240ms;
+  --easing-standard:     cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-emphasized:   cubic-bezier(0.22, 1, 0.36, 1);
+}

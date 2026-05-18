@@ -1,0 +1,48 @@
+// Surface utility classes — light / parchment / dark
+// Components use currentColor + :where(.surface-dark) & for auto dark adaptation
+
+.surface-light {
+  background: var(--surface-light);
+  color: var(--text-on-light);
+}
+
+.surface-parchment {
+  background: var(--surface-parchment);
+  color: var(--text-on-light);
+}
+
+.surface-pearl {
+  background: var(--surface-pearl);
+  color: var(--text-on-light);
+}
+
+.surface-dark {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+
+.surface-tile-dark {
+  background: var(--surface-tile-dark-1);
+  color: var(--text-on-dark);
+}
+
+.surface-nav {
+  background: var(--surface-nav);
+  color: var(--text-on-dark);
+}
+
+// Muted text helpers contextual to surface
+.surface-dark,
+.surface-tile-dark {
+  .text-muted {
+    color: var(--text-on-dark-muted);
+  }
+}
+
+.surface-light,
+.surface-parchment,
+.surface-pearl {
+  .text-muted {
+    color: var(--text-on-light-muted);
+  }
+}

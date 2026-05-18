@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VisionCuePrivacyComponent } from './vision-cue-privacy.component';
 
 describe('VisionCuePrivacyComponent', () => {
@@ -8,10 +7,9 @@ describe('VisionCuePrivacyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VisionCuePrivacyComponent]
-    })
-    .compileComponents();
-    
+      imports: [VisionCuePrivacyComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(VisionCuePrivacyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +17,10 @@ describe('VisionCuePrivacyComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render privacy title', () => {
+    const h1 = fixture.nativeElement.querySelector('h1');
+    expect(h1?.textContent).toContain('全能提词器');
   });
 });

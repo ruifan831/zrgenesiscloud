@@ -1,0 +1,122 @@
+.hero-section {
+  background: var(--surface-light);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-20) max(var(--space-10), calc((100vw - 1200px) / 2));
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    width: 100%;
+  }
+
+  &__text {
+    flex: 1;
+    max-width: 520px;
+  }
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  &__logo {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  &__heading-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__eyebrow {
+    font-size: var(--font-caption);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-on-light-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  &__title {
+    font-size: var(--font-display-lg);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-display-lg);
+    letter-spacing: var(--ls-display-lg);
+    color: var(--text-on-light);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: var(--font-tagline);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-tile-subtitle);
+    color: var(--text-on-light-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 440px;
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  &__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  &__image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding: var(--space-16) var(--space-10);
+
+    &__inner {
+      flex-direction: column;
+      gap: var(--space-10);
+    }
+
+    &__text {
+      max-width: 100%;
+    }
+
+    &__title {
+      font-size: 28px;
+      letter-spacing: -0.2px;
+    }
+
+    &__logo {
+      width: 56px;
+      height: 56px;
+    }
+
+    &__subtitle {
+      font-size: var(--font-body);
+    }
+
+    &__image {
+      justify-content: center;
+      max-width: 100%;
+    }
+  }
+}

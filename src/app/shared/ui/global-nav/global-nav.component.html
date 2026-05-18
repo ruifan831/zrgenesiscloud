@@ -1,0 +1,119 @@
+<nav
+  class="global-nav"
+  [class.global-nav--frosted]="mode === 'frosted'"
+  [class.global-nav--scrolled]="isScrolled()"
+  [class.global-nav--transparent]="transparentOnTop && !isScrolled()"
+  aria-label="主导航"
+>
+  <div class="global-nav__inner">
+
+    <!-- Logo -->
+    <a routerLink="/" class="global-nav__logo" aria-label="ZRGenesis 首页">
+      <span class="global-nav__logo-text">ZRGenesis</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="global-nav__links" role="list">
+      <!-- Apps dropdown trigger (simple list on desktop) -->
+      <li class="global-nav__item global-nav__item--apps">
+        <span class="global-nav__link global-nav__link--label">应用</span>
+        <ul class="global-nav__app-dropdown" role="list">
+          <ng-container *ngIf="apps$ | async as apps">
+            <li *ngFor="let app of apps">
+              <a
+                [routerLink]="['/apps', app.slug]"
+                class="global-nav__dropdown-link"
+                (click)="closeMobileMenu()"
+              >{{ app.name }}</a>
+            </li>
+          </ng-container>
+        </ul>
+      </li>
+      <li class="global-nav__item">
+        <a routerLink="/privacy" class="global-nav__link" routerLinkActive="global-nav__link--active">隐私</a>
+      </li>
+      <li class="global-nav__item">
+        <a routerLink="/contact" class="global-nav__link" routerLinkActive="global-nav__link--active">联系</a>
+      </li>
+    </ul>
+
+    <!-- Right icons -->
+    <div class="global-nav__actions">
+      <!-- Search icon placeholder (MVP: no function) -->
+      <button class="global-nav__icon-btn" aria-label="搜索（即将开放）" title="搜索（即将开放）" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+
+      <!-- Language icon placeholder (MVP: no function) -->
+      <button class="global-nav__icon-btn" aria-label="切换语言（即将开放）" title="切换语言（即将开放）" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </button>
+
+      <!-- Hamburger (mobile only) -->
+      <button
+        class="global-nav__hamburger"
+        type="button"
+        [attr.aria-expanded]="mobileMenuOpen()"
+        aria-controls="mobile-menu"
+        aria-label="打开菜单"
+        (click)="toggleMobileMenu()"
+      >
+        <span class="global-nav__hamburger-bar"></span>
+        <span class="global-nav__hamburger-bar"></span>
+        <span class="global-nav__hamburger-bar"></span>
+      </button>
+    </div>
+
+  </div><!-- /.global-nav__inner -->
+
+  <!-- Mobile menu dialog -->
+  <div
+    id="mobile-menu"
+    class="global-nav__mobile-menu"
+    [class.global-nav__mobile-menu--open]="mobileMenuOpen()"
+    role="dialog"
+    aria-label="移动端菜单"
+  >
+    <button
+      class="global-nav__mobile-close"
+      type="button"
+      aria-label="关闭菜单"
+      (click)="closeMobileMenu()"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <ul class="global-nav__mobile-list" role="list">
+      <li>
+        <span class="global-nav__mobile-section">应用</span>
+        <ul role="list">
+          <ng-container *ngIf="apps$ | async as apps">
+            <li *ngFor="let app of apps">
+              <a
+                [routerLink]="['/apps', app.slug]"
+                class="global-nav__mobile-link"
+                (click)="closeMobileMenu()"
+              >{{ app.name }}</a>
+            </li>
+          </ng-container>
+        </ul>
+      </li>
+      <li>
+        <a routerLink="/privacy" class="global-nav__mobile-link" (click)="closeMobileMenu()">隐私</a>
+      </li>
+      <li>
+        <a routerLink="/contact" class="global-nav__mobile-link" (click)="closeMobileMenu()">联系</a>
+      </li>
+    </ul>
+  </div>
+
+</nav>

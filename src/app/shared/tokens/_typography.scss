@@ -1,0 +1,106 @@
+// Typography — SF Pro Display / SF Pro Text fallback stack
+// Font weight ladder: 300 / 400 / 600 / 700 only (no 500)
+
+body {
+  font-family: 'Inter', 'SF Pro Display', 'SF Pro Text', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: var(--font-body);           // 17px
+  line-height: var(--lh-body);          // 1.47
+  letter-spacing: var(--ls-body);       // 0
+  color: var(--text-on-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Utility classes that can be applied to any element
+// These mirror the token values without resetting tag semantics
+
+.type-hero {
+  font-size: var(--font-hero);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);
+}
+
+.type-display-lg {
+  font-size: var(--font-display-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-display-lg);
+  letter-spacing: var(--ls-display-lg);
+}
+
+.type-lead {
+  font-size: var(--font-lead);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-lead);
+  letter-spacing: var(--ls-lead);
+}
+
+.type-tagline {
+  font-size: var(--font-tagline);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tagline);
+  letter-spacing: var(--ls-tagline);
+}
+
+.type-tile-subtitle {
+  font-size: var(--font-tile-subtitle);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-tile-subtitle);
+  letter-spacing: var(--ls-tile-subtitle);
+  color: var(--text-on-light-secondary);
+}
+
+.type-body {
+  font-size: var(--font-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+}
+
+.type-body-semibold {
+  font-size: var(--font-body);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-body);
+}
+
+.type-eyebrow {
+  font-size: var(--font-eyebrow);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-on-light-muted);
+}
+
+.type-caption {
+  font-size: var(--font-caption);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-caption);
+}
+
+.type-nav-link {
+  font-size: var(--font-nav-link);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-nav-link);
+}
+
+.type-footer-dense {
+  font-size: var(--font-footer-dense);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-footer-dense);
+}
+
+// Responsive: hero drops on mobile
+@media (max-width: 767px) {
+  .type-hero {
+    font-size: 34px;
+    letter-spacing: -0.2px;
+  }
+
+  .type-display-lg {
+    font-size: 28px;
+  }
+
+  .type-lead {
+    font-size: 21px;
+  }
+}

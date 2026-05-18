@@ -1,0 +1,41 @@
+<ng-container *ngIf="href; else routerOrButton">
+  <a
+    [href]="href"
+    [attr.target]="external ? '_blank' : null"
+    [attr.rel]="external ? 'noopener noreferrer' : null"
+    class="btn-primary"
+    [class.btn-primary--lg]="size === 'lg'"
+    [class.btn-primary--disabled]="disabled"
+    [attr.aria-disabled]="disabled"
+    (click)="onButtonClick()"
+  >
+    {{ label }}
+  </a>
+</ng-container>
+
+<ng-template #routerOrButton>
+  <ng-container *ngIf="routerLink; else buttonEl">
+    <a
+      [routerLink]="routerLink"
+      class="btn-primary"
+      [class.btn-primary--lg]="size === 'lg'"
+      [class.btn-primary--disabled]="disabled"
+      [attr.aria-disabled]="disabled"
+      (click)="onButtonClick()"
+    >
+      {{ label }}
+    </a>
+  </ng-container>
+</ng-template>
+
+<ng-template #buttonEl>
+  <button
+    type="button"
+    class="btn-primary"
+    [class.btn-primary--lg]="size === 'lg'"
+    [disabled]="disabled"
+    (click)="onButtonClick()"
+  >
+    {{ label }}
+  </button>
+</ng-template>

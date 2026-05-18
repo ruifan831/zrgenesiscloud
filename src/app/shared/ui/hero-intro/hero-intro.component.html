@@ -1,0 +1,37 @@
+<section class="hero-intro surface-dark">
+  <!-- Eyebrow brand label -->
+  <p class="hero-intro__eyebrow">ZRGenesis</p>
+
+  <!-- Main slogan: 56/600/-0.28px -->
+  <h1 class="hero-intro__title">
+    精心打造<br>每一款应用
+  </h1>
+
+  <!-- Subtitle: 28/400 -->
+  <p class="hero-intro__subtitle">
+    三款专注于日常生活的 App，帮你更高效地度过每一天。
+  </p>
+
+  <!-- CTA group -->
+  <div class="hero-intro__ctas">
+    <!-- Primary: scroll to apps section -->
+    <a class="hero-intro__btn hero-intro__btn--primary"
+       [attr.href]="'#' + appsAnchor">
+      {{ primaryLabel }}
+    </a>
+    <!-- Secondary: go to featured app detail -->
+    <a class="hero-intro__btn hero-intro__btn--secondary"
+       [routerLink]="'/apps/' + featuredAppSlug">
+      {{ featuredAppLabel }}
+    </a>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="hero-intro__scroll-hint" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    <span>向下滚动探索</span>
+  </div>
+</section>

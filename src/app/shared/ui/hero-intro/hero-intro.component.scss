@@ -1,0 +1,126 @@
+// HeroIntro — fullscreen dark section, no product images, no decorative elements
+// Matches home.html §2 hero tile: #1d1d1f background, center-aligned text
+
+.hero-intro {
+  // surface-dark class provides background + color; min-height fills below nav (44px)
+  min-height: calc(100vh - 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-20) max(var(--space-10), calc((100vw - 1200px) / 2));
+}
+
+// Eyebrow: tiny brand label
+.hero-intro__eyebrow {
+  font-size: var(--font-nav-link);   // 12px
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: var(--space-6);
+}
+
+// Main slogan: 56/600/-0.28px
+.hero-intro__title {
+  font-size: var(--font-hero);       // 56px
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);    // -0.28px
+  color: #ffffff;
+  max-width: 700px;
+  margin-bottom: var(--space-6);
+}
+
+// Subtitle: 28/400
+.hero-intro__subtitle {
+  font-size: var(--font-lead);       // 28px
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-lead);
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 520px;
+  margin-bottom: var(--space-12);
+}
+
+// CTA group
+.hero-intro__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+// Shared pill button base
+.hero-intro__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-body);       // 17px
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--duration-fast) var(--easing-standard),
+              transform var(--duration-fast) var(--easing-standard),
+              background var(--duration-fast) var(--easing-standard);
+  cursor: pointer;
+  user-select: none;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Primary: filled blue pill (#0066cc → dark variant: #2997ff)
+.hero-intro__btn--primary {
+  background: var(--color-accent-dark);   // #2997ff on dark background
+  color: #ffffff;
+  border: none;
+
+  &:hover {
+    opacity: 0.88;
+  }
+}
+
+// Secondary: transparent + white outline pill (dark surface version)
+.hero-intro__btn--secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// Scroll hint
+.hero-intro__scroll-hint {
+  margin-top: var(--space-20);
+  color: rgba(255, 255, 255, 0.3);
+  font-size: var(--font-nav-link);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+// ── Mobile responsive ≤ 640px ────────────────────────────────────────────────
+
+@media (max-width: 640px) {
+  .hero-intro {
+    padding: var(--space-12) var(--space-6);
+  }
+
+  .hero-intro__title {
+    font-size: 34px;
+    letter-spacing: -0.2px;
+  }
+
+  .hero-intro__subtitle {
+    font-size: 19px;
+  }
+}

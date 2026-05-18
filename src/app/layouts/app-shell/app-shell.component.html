@@ -1,0 +1,7 @@
+<ui-global-nav *ngIf="showHeader()"></ui-global-nav>
+
+<main class="app-shell__main" [class.app-shell__main--no-nav]="!showHeader()">
+  <router-outlet></router-outlet>
+</main>
+
+<ui-site-footer *ngIf="showFooter()"></ui-site-footer>

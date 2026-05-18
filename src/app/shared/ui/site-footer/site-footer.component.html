@@ -1,0 +1,80 @@
+<footer class="site-footer surface-parchment" aria-label="页脚">
+  <div class="site-footer__inner">
+
+    <!-- Four-column link grid -->
+    <div class="site-footer__grid">
+
+      <!-- Column 1: 产品 -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-title">产品</h3>
+        <ul class="site-footer__link-list" role="list">
+          <ng-container *ngIf="apps$ | async as apps">
+            <li *ngFor="let app of apps">
+              <a [routerLink]="['/apps', app.slug]" class="site-footer__link">{{ app.name }}</a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+
+      <!-- Column 2: 法律 -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-title">法律</h3>
+        <ul class="site-footer__link-list" role="list">
+          <li><a routerLink="/privacy-policy" class="site-footer__link">隐私政策</a></li>
+          <li><a routerLink="/privacy" class="site-footer__link">应用隐私协议</a></li>
+          <ng-container *ngIf="apps$ | async as apps">
+            <li *ngFor="let app of apps">
+              <a
+                *ngIf="app.privacyUrl"
+                [routerLink]="app.privacyUrl"
+                class="site-footer__link"
+              >{{ app.name }}隐私协议</a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+
+      <!-- Column 3: 公司 -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-title">公司</h3>
+        <ul class="site-footer__link-list" role="list">
+          <li><a routerLink="/" class="site-footer__link">关于我们</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: 联系 -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-title">联系</h3>
+        <ul class="site-footer__link-list" role="list">
+          <li>
+            <a [href]="'mailto:' + contactEmail" class="site-footer__link">{{ contactEmail }}</a>
+          </li>
+          <li>
+            <a routerLink="/contact" class="site-footer__link">联系页面</a>
+          </li>
+        </ul>
+      </div>
+
+    </div><!-- /.site-footer__grid -->
+
+    <!-- Bottom bar: copyright + ICP -->
+    <div class="site-footer__bottom">
+      <p class="site-footer__fine-print">
+        Copyright &copy; {{ currentYear }} {{ companyName }}. All rights reserved.
+      </p>
+      <p class="site-footer__fine-print" *ngIf="icp">
+        <a
+          href="https://beian.miit.gov.cn"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="site-footer__link"
+        >{{ icp }}</a>
+      </p>
+      <p class="site-footer__fine-print" *ngIf="!icp">
+        <!-- ICP 备案号待业务方提供，届时更新 environment.icp -->
+        ICP 备案号待提供
+      </p>
+    </div>
+
+  </div><!-- /.site-footer__inner -->
+</footer>

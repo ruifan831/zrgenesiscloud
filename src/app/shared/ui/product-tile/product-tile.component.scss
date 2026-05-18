@@ -1,0 +1,166 @@
+// ProductTileComponent — full-screen App gallery tile
+// Surface class is applied by component (surface-light / surface-parchment / surface-tile-dark)
+// No border-radius on the tile itself (full-bleed section)
+
+.product-tile {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.product-tile__inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-20) max(var(--space-10), calc((100vw - 1200px) / 2));
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+// ── Image layout variants ───────────────────────────────────────────────────
+
+// image-right (default): text left, image right
+.product-tile--image-right .product-tile__inner {
+  flex-direction: row;
+}
+
+.product-tile--image-right .product-tile__text {
+  order: 0;
+}
+
+.product-tile--image-right .product-tile__image {
+  order: 1;
+  justify-content: flex-end;
+}
+
+// image-left: text right, image left
+.product-tile--image-left .product-tile__inner {
+  flex-direction: row-reverse;
+}
+
+.product-tile--image-left .product-tile__text {
+  order: 0;
+}
+
+.product-tile--image-left .product-tile__image {
+  order: 1;
+  justify-content: flex-start;
+}
+
+// image-bottom: text top, image bottom (single column)
+.product-tile--image-bottom .product-tile__inner {
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+// ── Text side ───────────────────────────────────────────────────────────────
+
+.product-tile__text {
+  flex: 1;
+  max-width: 520px;
+}
+
+// Eyebrow: 14/600/0.08em uppercase — uses tagline text as category
+.product-tile__eyebrow {
+  font-size: var(--font-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+  opacity: 0.55;
+  color: currentColor;
+}
+
+// App name: display-lg 40/600/-0.374px
+.product-tile__name {
+  font-size: var(--font-display-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-display-lg);
+  letter-spacing: var(--ls-display-lg);
+  color: currentColor;
+  margin-bottom: var(--space-5);
+}
+
+// Subtitle: 21/400
+.product-tile__subtitle {
+  font-size: var(--font-tile-subtitle);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-tile-subtitle);
+  color: currentColor;
+  opacity: 0.8;
+  max-width: 440px;
+  margin-bottom: var(--space-8);
+}
+
+// Platform badges row
+.product-tile__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+// CTA row
+.product-tile__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+// ── Image side ───────────────────────────────────────────────────────────────
+
+.product-tile__image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 480px;
+
+  ui-product-image {
+    width: 320px;
+    max-width: 100%;
+  }
+}
+
+// ── Mobile responsive ≤ 640px ───────────────────────────────────────────────
+
+@media (max-width: 640px) {
+  .product-tile {
+    min-height: auto;
+  }
+
+  .product-tile__inner {
+    flex-direction: column !important;
+    padding: var(--space-12) var(--space-6);
+    gap: var(--space-10);
+  }
+
+  .product-tile__text {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .product-tile__name {
+    font-size: 28px;
+    letter-spacing: -0.2px;
+  }
+
+  .product-tile__subtitle {
+    font-size: 17px;
+  }
+
+  .product-tile__image {
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    justify-content: center;
+
+    ui-product-image {
+      width: 80%;
+    }
+  }
+}

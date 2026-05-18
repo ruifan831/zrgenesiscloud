@@ -1,0 +1,64 @@
+// ButtonPrimary — filled pill; accent background; white text
+// Dark surface adaptation via :where(.surface-dark) context
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  background: var(--color-accent);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-body);    // 17px
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background var(--duration-fast) var(--easing-standard);
+  user-select: none;
+
+  &:hover:not(.btn-primary--disabled) {
+    // lighten by reducing opacity slightly, or use a slightly lighter shade
+    background: #1a78d4;
+  }
+
+  &:active:not(.btn-primary--disabled) {
+    transform: scale(0.95);
+    background: #005ab5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0071e3;
+    outline-offset: 3px;
+  }
+
+  &--lg {
+    padding: 14px 30px;
+    font-size: 19px;
+  }
+
+  &--disabled,
+  &[disabled] {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Dark surface: accent-blue still works, no style override needed
+// (white text on #0066cc has sufficient contrast on dark backgrounds)
+
+// Surface-dark context: use slightly lighter blue for better presence
+:where(.surface-dark, .surface-tile-dark) .btn-primary {
+  background: var(--color-accent-dark);  // #2997ff on dark
+
+  &:hover:not(.btn-primary--disabled) {
+    background: #1a8af5;
+  }
+
+  &:active:not(.btn-primary--disabled) {
+    background: #0070d1;
+  }
+}

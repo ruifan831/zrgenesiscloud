@@ -1,0 +1,52 @@
+<section id="download" class="download-section">
+  <div class="download-section__inner">
+
+    <h2 class="download-section__title">获取应用</h2>
+    <p class="download-section__lead">选择适合你的平台，立即开始使用</p>
+
+    <!-- Platform cards grid -->
+    <div class="download-section__grid" *ngIf="channels.length > 0; else noChannels">
+      <div
+        *ngFor="let vm of platformCards"
+        class="platform-card"
+        [class.platform-card--disabled]="!isAvailable(vm.channel)"
+      >
+        <!-- Icon + label row -->
+        <div class="platform-card__header">
+          <div class="platform-card__icon-wrap" aria-hidden="true">
+            {{ vm.iconEmoji }}
+          </div>
+          <div class="platform-card__label-block">
+            <p class="platform-card__caption-label">{{ vm.captionText }}</p>
+            <p class="platform-card__platform-name">{{ vm.channel.label }}</p>
+          </div>
+        </div>
+
+        <!-- Available CTA -->
+        <a
+          *ngIf="isAvailable(vm.channel); else disabledBtn"
+          [href]="vm.channel.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-pill platform-card__cta"
+        >前往</a>
+
+        <ng-template #disabledBtn>
+          <button
+            type="button"
+            class="btn-pill platform-card__cta platform-card__cta--disabled"
+            disabled
+          >暂未开放</button>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- No channels fallback -->
+    <ng-template #noChannels>
+      <div class="download-section__empty">
+        <p>暂未提供下载渠道，敬请期待</p>
+      </div>
+    </ng-template>
+
+  </div>
+</section>

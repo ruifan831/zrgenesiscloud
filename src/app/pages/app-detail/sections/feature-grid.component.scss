@@ -1,0 +1,13 @@
+.feature-tile {
+  padding: var(--space-20) max(var(--space-10), calc((100vw - 1200px) / 2));
+
+  &__inner {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .feature-tile {
+    padding: var(--space-12) var(--space-10);
+  }
+}

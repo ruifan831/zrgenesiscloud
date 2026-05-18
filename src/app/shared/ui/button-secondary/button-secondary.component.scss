@@ -1,0 +1,65 @@
+// ButtonSecondary — transparent pill with accent outline + accent text
+// Dark surface: outline becomes white, text becomes white
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  background: transparent;
+  color: var(--color-accent);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-accent);
+  cursor: pointer;
+  font-size: var(--font-body);    // 17px
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  text-decoration: none;
+  font-family: inherit;
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+  user-select: none;
+
+  &:hover:not(.btn-secondary--disabled) {
+    background: rgba(0, 102, 204, 0.06);
+  }
+
+  &:active:not(.btn-secondary--disabled) {
+    transform: scale(0.95);
+    background: rgba(0, 102, 204, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0071e3;
+    outline-offset: 3px;
+  }
+
+  &--lg {
+    padding: 14px 30px;
+    font-size: 19px;
+  }
+
+  &--disabled,
+  &[disabled] {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Dark surface: outline-on-dark (white border + white text)
+:where(.surface-dark, .surface-tile-dark) .btn-secondary {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
+
+  &:hover:not(.btn-secondary--disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+
+  &:active:not(.btn-secondary--disabled) {
+    background: rgba(255, 255, 255, 0.14);
+  }
+}

@@ -1,0 +1,98 @@
+<div class="privacy-index surface-light">
+
+  <!-- Hero 文字区 -->
+  <section class="privacy-index__hero">
+    <p class="type-eyebrow">隐私与协议</p>
+    <h1 class="privacy-index__hero-title">我们如何处理你的数据</h1>
+    <p class="privacy-index__hero-lead">
+      ZRGenesis 认真对待用户隐私。以下页面详细说明我们旗下各应用的数据收集、使用方式，
+      以及你的权利与选择。请选择对应的应用查阅相关协议。
+    </p>
+  </section>
+
+  <!-- 协议列表（按 App 分组） -->
+  <section class="privacy-index__list">
+
+    <ng-container *ngIf="apps$ | async as apps; else loadingTpl">
+      <div *ngFor="let app of apps" class="privacy-index__group">
+        <div class="privacy-index__group-inner">
+
+          <!-- App 信息（左列） -->
+          <div class="privacy-index__app-info">
+            <div class="privacy-index__app-name-row">
+              <h2 class="privacy-index__app-name">{{ app.name }}</h2>
+              <span *ngFor="let label of getPlatformLabels(app)" class="privacy-index__platform-chip">
+                {{ label }}
+              </span>
+            </div>
+            <p class="privacy-index__app-desc text-muted">{{ app.subtitle }}</p>
+          </div>
+
+          <!-- 协议链接（右列） -->
+          <ul class="privacy-index__links">
+
+            <!-- 隐私政策 -->
+            <li class="privacy-index__link-item">
+              <div class="privacy-index__link-meta">
+                <p class="privacy-index__link-title">隐私政策</p>
+                <p *ngIf="app.updatedAt" class="privacy-index__link-date type-caption text-muted">
+                  最后更新：{{ app.updatedAt }}
+                </p>
+                <p *ngIf="!app.updatedAt" class="privacy-index__link-date type-caption text-muted">
+                  最后更新：见协议文件
+                </p>
+              </div>
+              <ng-container *ngIf="app.privacyUrl; else privacyUnavailable">
+                <a [routerLink]="app.privacyUrl" class="privacy-index__policy-link">查看</a>
+              </ng-container>
+              <ng-template #privacyUnavailable>
+                <span class="privacy-index__policy-link privacy-index__policy-link--disabled">即将上线</span>
+              </ng-template>
+            </li>
+
+            <!-- 用户协议 -->
+            <li class="privacy-index__link-item privacy-index__link-item--sub">
+              <div class="privacy-index__link-meta">
+                <p class="privacy-index__link-title">用户协议</p>
+                <p class="privacy-index__link-date type-caption text-muted">
+                  <ng-container *ngIf="app.termsUrl; else termsNote">
+                    &nbsp;
+                  </ng-container>
+                  <ng-template #termsNote>链接待业务方提供</ng-template>
+                </p>
+              </div>
+              <ng-container *ngIf="app.termsUrl; else termsUnavailable">
+                <a [href]="app.termsUrl" target="_blank" rel="noopener noreferrer" class="privacy-index__policy-link">查看</a>
+              </ng-container>
+              <ng-template #termsUnavailable>
+                <span class="privacy-index__policy-link privacy-index__policy-link--disabled">查看</span>
+              </ng-template>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Loading 占位 -->
+    <ng-template #loadingTpl>
+      <div class="privacy-index__skeleton" *ngFor="let _ of [1,2,3]"></div>
+    </ng-template>
+
+  </section>
+
+  <!-- 公司通用隐私声明 -->
+  <section class="privacy-index__company surface-parchment">
+    <div class="privacy-index__company-inner">
+      <h2 class="privacy-index__company-title">公司层面隐私声明</h2>
+      <p class="privacy-index__company-desc">
+        以上 App 专属隐私政策之外，ZRGenesis 还发布了覆盖全站的通用隐私声明，
+        说明公司整体的数据处理原则与联系方式。
+      </p>
+      <a routerLink="/privacy-policy" class="privacy-index__company-link">
+        查看公司隐私声明 ›
+      </a>
+    </div>
+  </section>
+
+</div>

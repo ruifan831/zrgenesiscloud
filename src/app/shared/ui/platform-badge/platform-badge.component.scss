@@ -1,0 +1,140 @@
+// PlatformBadge — chip/pill for platform download links
+// Light surface: chip-bg (rgba(210,210,215,0.64)) with dark text
+// Dark surface: chip-bg-dark (rgba(255,255,255,0.15)) with white text
+
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);        // 8px
+  padding: 9px 16px;
+  background: var(--chip-bg);
+  color: var(--text-on-light);
+  border-radius: var(--radius-pill);
+  border: none;
+  text-decoration: none;
+  font-size: var(--font-body);   // 17px
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  font-family: inherit;
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    opacity var(--duration-fast) var(--easing-standard);
+  cursor: pointer;
+
+  &:hover:not(.platform-badge--disabled) {
+    background: rgba(210, 210, 215, 0.85);
+  }
+
+  &:active:not(.platform-badge--disabled) {
+    transform: scale(0.95);
+  }
+
+  &.badge--disabled,
+  &--disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // appstore & google-play: dark pill (black bg, white text)
+  &.badge--appstore,
+  &.badge--google-play {
+    background: #1d1d1f;
+    color: #ffffff;
+
+    &:hover:not(.badge--disabled) {
+      background: #333333;
+    }
+  }
+
+  // apk: neutral gray
+  &.badge--apk {
+    background: rgba(210, 210, 215, 0.64);
+    color: var(--text-on-light);
+  }
+
+  // tencent-myapp: accent-tinted pill
+  &.badge--tencent-myapp {
+    background: rgba(210, 210, 215, 0.64);
+    color: var(--text-on-light);
+  }
+
+  // wechat-mp: WeChat green tint
+  &.badge--wechat-mp {
+    background: rgba(9, 187, 7, 0.12);
+    color: #0a7c07;
+
+    &:hover:not(.badge--disabled) {
+      background: rgba(9, 187, 7, 0.2);
+    }
+  }
+
+  // web: accent tint
+  &.badge--web {
+    background: rgba(0, 102, 204, 0.08);
+    color: var(--color-accent);
+
+    &:hover:not(.badge--disabled) {
+      background: rgba(0, 102, 204, 0.14);
+    }
+  }
+}
+
+.platform-badge__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.platform-badge__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.platform-badge__label {
+  font-size: 15px;
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+}
+
+.platform-badge__sublabel {
+  font-size: 11px;
+  font-weight: var(--fw-regular);
+  opacity: 0.7;
+  line-height: 1;
+}
+
+.platform-badge__disabled-tag {
+  font-size: 11px;
+  font-weight: var(--fw-regular);
+  opacity: 0.6;
+  line-height: 1;
+}
+
+// Dark surface overrides
+:where(.surface-dark, .surface-tile-dark) .platform-badge {
+  background: var(--chip-bg-dark);
+  color: var(--text-on-dark);
+
+  &:hover:not(.badge--disabled) {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  // appstore & google-play stay black+white — no override needed
+  &.badge--appstore,
+  &.badge--google-play {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+
+  &.badge--wechat-mp {
+    background: rgba(9, 187, 7, 0.2);
+    color: #5ade59;
+  }
+
+  &.badge--web {
+    background: rgba(41, 151, 255, 0.15);
+    color: var(--color-accent-dark);
+  }
+}

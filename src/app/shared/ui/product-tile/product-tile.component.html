@@ -1,0 +1,69 @@
+<section
+  class="product-tile"
+  [ngClass]="[tileClass, 'product-tile--' + layout]"
+  [attr.data-theme]="resolvedTheme"
+>
+  <div class="product-tile__inner">
+
+    <!-- Text side -->
+    <div class="product-tile__text">
+
+      <!-- Eyebrow: App slug as category label, using app.tagline as eyebrow -->
+      <p class="product-tile__eyebrow">{{ app.tagline }}</p>
+
+      <!-- Display-lg title: 40/600/-0.374px -->
+      <h2 class="product-tile__name">{{ app.name }}</h2>
+
+      <!-- Lead subtitle: 21/400 -->
+      <p class="product-tile__subtitle">{{ app.subtitle }}</p>
+
+      <!-- Platform badges -->
+      <div class="product-tile__badges" *ngIf="app.platforms?.length">
+        <ui-platform-badge
+          *ngFor="let ch of app.platforms"
+          [badge]="ch.badge"
+          [label]="ch.label"
+          [href]="ch.url"
+          [disabled]="!ch.available || !ch.url"
+        ></ui-platform-badge>
+      </div>
+
+      <!-- CTA row -->
+      <div class="product-tile__ctas">
+        <!-- "了解更多" — primary blue pill, routes to /apps/:slug -->
+        <ui-button-primary
+          label="了解更多"
+          [routerLink]="detailRoute"
+          (clicked)="onPrimaryCtaClick()"
+        ></ui-button-primary>
+
+        <!-- "立即下载" — secondary outline pill, external download link -->
+        <ng-container *ngIf="hasDownload; else downloadDisabled">
+          <ui-button-secondary
+            label="立即下载"
+            [href]="primaryChannel!.url"
+            [external]="true"
+            (clicked)="onSecondaryCtaClick()"
+          ></ui-button-secondary>
+        </ng-container>
+        <ng-template #downloadDisabled>
+          <ui-button-secondary
+            label="立即下载"
+            [disabled]="true"
+          ></ui-button-secondary>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <!-- Image side -->
+    <div class="product-tile__image" *ngIf="app.heroImage">
+      <ui-product-image
+        [src]="app.heroImage"
+        [alt]="app.name + ' 应用图标'"
+        [aspect]="app.heroAspect ?? 1"
+      ></ui-product-image>
+    </div>
+
+  </div>
+</section>

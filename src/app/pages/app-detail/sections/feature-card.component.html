@@ -1,0 +1,28 @@
+<div class="feature-card" [class.feature-card--image-right]="imageRight">
+
+  <!-- Feature image (placeholder or actual) -->
+  <div class="feature-card__image-wrap">
+    <img
+      *ngIf="imageSrc; else placeholderImg"
+      [src]="imageSrc"
+      [alt]="feature.title"
+      class="feature-card__image"
+    />
+    <ng-template #placeholderImg>
+      <div class="feature-card__placeholder" [class.feature-card__placeholder--dark]="dark"></div>
+    </ng-template>
+  </div>
+
+  <!-- Text block -->
+  <div class="feature-card__text">
+    <p class="feature-card__eyebrow" [class.feature-card__eyebrow--dark]="dark">
+      {{ feature.icon }}
+    </p>
+    <h3 class="feature-card__title">{{ feature.title }}</h3>
+    <p class="feature-card__desc">{{ feature.description }}</p>
+    <a href="#download" class="feature-card__link" [class.feature-card__link--dark]="dark">
+      立即下载体验
+    </a>
+  </div>
+
+</div>

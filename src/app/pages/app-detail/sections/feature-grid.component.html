@@ -1,0 +1,15 @@
+<div id="features" *ngIf="features.length > 0">
+  <section
+    *ngFor="let tile of featureTiles()"
+    class="feature-tile"
+    [class]="tile.surface"
+  >
+    <div class="feature-tile__inner">
+      <app-feature-card
+        [feature]="tile.feature"
+        [dark]="tile.dark"
+        [imageRight]="tile.imageRight"
+      ></app-feature-card>
+    </div>
+  </section>
+</div>

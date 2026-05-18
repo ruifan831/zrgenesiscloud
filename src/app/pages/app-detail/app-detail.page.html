@@ -1,0 +1,45 @@
+<ng-container *ngIf="app">
+
+  <!-- Sub-nav frosted -->
+  <ui-sub-nav
+    [appName]="app.name"
+    [links]="subNavLinks"
+    [cta]="subNavCta"
+  ></ui-sub-nav>
+
+  <!-- Hero section -->
+  <app-hero-section [app]="app"></app-hero-section>
+
+  <!-- Feature highlights (交替 tile，数据驱动，empty = skip) -->
+  <app-feature-grid [features]="app.features"></app-feature-grid>
+
+  <!-- Platform download grid + legal links -->
+  <app-platform-download-grid [channels]="app.platforms"></app-platform-download-grid>
+
+  <!-- Legal line: inside the same visual section, rendered separately -->
+  <div class="detail-legal-wrap">
+    <app-legal-links
+      [appName]="app.name"
+      [privacyUrl]="app.privacyUrl"
+      [termsUrl]="app.termsUrl"
+    ></app-legal-links>
+  </div>
+
+  <!-- Related apps strip -->
+  <section class="related-apps" *ngIf="otherApps.length > 0">
+    <div class="related-apps__inner">
+      <p class="related-apps__lead">探索更多应用</p>
+      <div class="related-apps__list">
+        <a
+          *ngFor="let other of otherApps"
+          [routerLink]="['/apps', other.slug]"
+          class="related-apps__pill"
+        >{{ other.name }}</a>
+        <a routerLink="/" class="related-apps__pill related-apps__pill--back">
+          ← 返回首页
+        </a>
+      </div>
+    </div>
+  </section>
+
+</ng-container>

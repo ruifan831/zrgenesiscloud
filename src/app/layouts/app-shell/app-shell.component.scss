@@ -1,0 +1,9 @@
+// AppShell — layout wrapper: nav (44px) + content + footer
+
+.app-shell__main {
+  padding-top: 44px;  // offset for fixed global-nav height
+
+  &--no-nav {
+    padding-top: 0;
+  }
+}

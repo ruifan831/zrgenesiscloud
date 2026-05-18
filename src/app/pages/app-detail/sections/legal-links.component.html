@@ -1,0 +1,23 @@
+<div id="privacy-terms" class="legal-links">
+  <p class="legal-links__text">
+    下载即代表你同意
+
+    <ng-container *ngIf="privacyUrl; else noPrivacy">
+      <a [routerLink]="privacyUrl" class="legal-links__link">
+        《{{ appName || '应用' }}隐私政策》
+      </a>
+    </ng-container>
+    <ng-template #noPrivacy>
+      <a routerLink="/privacy" class="legal-links__link">《隐私政策》</a>
+    </ng-template>
+
+    和
+
+    <ng-container *ngIf="termsUrl; else noTerms">
+      <a [routerLink]="termsUrl" class="legal-links__link">《用户协议》</a>
+    </ng-container>
+    <ng-template #noTerms>
+      <span class="legal-links__placeholder">《用户协议》（链接待提供）</span>
+    </ng-template>
+  </p>
+</div>

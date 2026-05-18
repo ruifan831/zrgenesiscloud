@@ -1,0 +1,25 @@
+<nav class="sub-nav" [attr.aria-label]="appName + ' 子导航'">
+  <div class="sub-nav__inner">
+
+    <!-- Left: App name -->
+    <span class="sub-nav__app-name type-tagline">{{ appName }}</span>
+
+    <!-- Right: anchor links + CTA -->
+    <div class="sub-nav__actions">
+      <ul class="sub-nav__links" role="list" *ngIf="links.length > 0">
+        <li *ngFor="let link of links">
+          <a [fragment]="link.fragment" routerLink="." class="sub-nav__link">{{ link.label }}</a>
+        </li>
+      </ul>
+
+      <a
+        *ngIf="cta"
+        [href]="cta.href"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sub-nav__cta btn-primary"
+      >{{ cta.label }}</a>
+    </div>
+
+  </div>
+</nav>

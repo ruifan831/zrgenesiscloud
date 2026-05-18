@@ -1,0 +1,61 @@
+<section class="hero-section">
+  <div class="hero-section__inner">
+
+    <!-- Text block -->
+    <div class="hero-section__text">
+      <div class="hero-section__heading">
+        <img
+          *ngIf="app.heroImage"
+          class="hero-section__logo"
+          [src]="app.heroImage"
+          [alt]="app.name + ' 图标'"
+          loading="eager"
+          decoding="async"
+        />
+        <div class="hero-section__heading-text">
+          <p class="hero-section__eyebrow">{{ app.tagline }}</p>
+          <h1 class="hero-section__title">{{ app.name }}</h1>
+        </div>
+      </div>
+      <p class="hero-section__subtitle">{{ app.description }}</p>
+
+      <!-- Platform badges (all platforms, showing availability) -->
+      <div class="hero-section__badges" *ngIf="app.platforms.length > 0">
+        <ui-platform-badge
+          *ngFor="let p of app.platforms"
+          [badge]="p.badge"
+          [label]="p.label"
+          [href]="p.url"
+          [disabled]="p.available === false"
+        ></ui-platform-badge>
+      </div>
+
+      <!-- Primary CTA (first available platform) -->
+      <div class="hero-section__cta" *ngIf="primaryPlatform">
+        <ui-button-primary
+          [label]="'在 ' + primaryPlatform.label + ' 下载'"
+          [href]="primaryPlatform.url"
+          [external]="true"
+          size="lg"
+        ></ui-button-primary>
+      </div>
+      <div class="hero-section__cta" *ngIf="!primaryPlatform">
+        <ui-button-primary
+          label="暂未提供下载"
+          [disabled]="true"
+          size="lg"
+        ></ui-button-primary>
+      </div>
+    </div>
+
+    <!-- Product image -->
+    <div class="hero-section__image">
+      <ui-product-image
+        [src]="app.heroImage"
+        [alt]="app.name + ' 产品图'"
+        [aspect]="app.heroAspect ?? 1"
+      ></ui-product-image>
+    </div>
+
+  </div>
+</section>

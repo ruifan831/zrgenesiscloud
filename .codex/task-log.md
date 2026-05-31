@@ -6,6 +6,29 @@ If a public-site feature also changes the FastAPI server, record the server-side
 
 ---
 
+## 2026-06-01 — CrewPilot 法律文档静态页 Angular 集成（方案 A）
+
+### 产出文件
+- `src/app/pages/legal/legal-doc.component.ts` — 新建，standalone + OnPush，ActivatedRoute 取 slug，HttpClient fetch markdown，marked 渲染，DomSanitizer.bypassSecurityTrustHtml，MetaService noindex
+- `src/app/pages/legal/legal-doc.component.html` — 新建，返回按钮 + loading / 404 / 文档三态
+- `src/app/pages/legal/legal-doc.component.scss` — 新建，back-bar + 状态视图样式，主排版沿用全局 _legal.scss
+- `src/app/app.routes.ts` — 新增 `legal/:slug` 路由（lazy，showHeader/showFooter: false，放在 `**` 之前）
+- `package.json` / `package-lock.json` — `marked@^18` 新增依赖
+- `src/assets/legal/crewpilot/README.md` — 标注"Angular 集成已完成（方案 A）"，勾选 developer 任务清单已完成项，列出实际 URL
+
+### 验证
+- `npm run build` 通过，`legal-doc-component` lazy chunk 46.97 kB
+- 5 个 slug 白名单：privacy / terms / sdk-list / pii-collection / minor-protection
+- 非白名单 slug 展示 404 状态，不跳转
+- 返回按钮用 `history.back()` fallback 到首页，兼容小程序 web-view
+
+### 注意
+- 法律文档内含 `{{占位符}}` 尚未填写，上线前须运营/法务替换
+- nginx 需已配置 `try_files $uri /index.html` 支持 HTML5 路由
+- 微信小程序业务域名白名单添加 `crewpilot.zrgenesiscloud.com` 为运营动作（未做）
+
+---
+
 ## 2026-05-17 - App Showcase 重构 Wave 3：T-9 / T-12 / T-13
 
 ### T-9：路由与旧 URL 兼容

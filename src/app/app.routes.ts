@@ -74,6 +74,14 @@ export const routes: Routes = [
     data: { showHeader: false, showFooter: false },
   },
 
+  // ── 法律文档 /legal/:slug ────────────────────────────────────────────────
+  {
+    path: 'legal/:slug',
+    loadComponent: () =>
+      import('./pages/legal/legal-doc.component').then((m) => m.LegalDocComponent),
+    data: { showHeader: false, showFooter: false },
+  },
+
   // ── 兜底：未知路径跳首页 ──────────────────────────────────────────────────
   { path: '**', redirectTo: '' },
 ];

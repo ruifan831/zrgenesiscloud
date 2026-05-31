@@ -1,0 +1,42 @@
+<div class="legal-page surface-light">
+
+  <!-- 返回按钮（兼容小程序 web-view — 不依赖 router navigation） -->
+  <div class="legal-doc__back-bar">
+    <button class="legal-doc__back-btn" (click)="goBack()" type="button">
+      <span class="legal-doc__back-chevron" aria-hidden="true">‹</span>
+      返回
+    </button>
+  </div>
+
+  <!-- 加载中 -->
+  @if (isLoading) {
+    <div class="legal-doc__loading" role="status" aria-live="polite">
+      <span>加载中…</span>
+    </div>
+  }
+
+  <!-- 404 / 加载失败 -->
+  @if (!isLoading && isNotFound) {
+    <div class="legal-doc__not-found">
+      <p class="legal-doc__not-found-title">页面未找到</p>
+      <p class="legal-doc__not-found-desc">该文档不存在或已移除，请返回重试。</p>
+      <button class="legal-doc__back-btn legal-doc__back-btn--primary" (click)="goBack()" type="button">
+        返回
+      </button>
+    </div>
+  }
+
+  <!-- 文档内容 -->
+  @if (!isLoading && !isNotFound) {
+    <div class="legal-page__hero">
+      <p class="type-eyebrow">法律文件</p>
+      <h1 class="legal-page__title">{{ docTitle }}</h1>
+      @if (docMeta) {
+        <p class="legal-page__meta">{{ docMeta }}</p>
+      }
+    </div>
+
+    <div class="legal-page__body legal-doc__rendered" [innerHTML]="docHtml"></div>
+  }
+
+</div>

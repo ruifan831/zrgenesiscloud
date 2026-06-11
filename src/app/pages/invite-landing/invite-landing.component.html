@@ -1,0 +1,129 @@
+<div class="il-page">
+  <div class="il-page__inner">
+
+    <!-- 品牌 header -->
+    <div class="il-header">
+      <span class="il-header__brand">ZRGenesis</span>
+      <span class="il-header__app-chip" *ngIf="!isLoading">{{ displayAppName }}</span>
+    </div>
+
+    <!-- 加载骨架 -->
+    <ng-container *ngIf="isLoading">
+      <div class="il-skeleton">
+        <div class="il-skeleton__line il-skeleton__line--wide"></div>
+        <div class="il-skeleton__line il-skeleton__line--medium"></div>
+        <div class="il-skeleton__line il-skeleton__line--narrow"></div>
+      </div>
+    </ng-container>
+
+    <!-- 404 — 邀请人不存在 -->
+    <ng-container *ngIf="!isLoading && isNotFound">
+      <div class="il-state">
+        <p class="il-state__icon">🔍</p>
+        <h2 class="il-state__title">邀请链接无效</h2>
+        <p class="il-state__desc">该邀请链接已过期或不存在，请联系邀请人重新分享。</p>
+      </div>
+    </ng-container>
+
+    <!-- 网络错误 -->
+    <ng-container *ngIf="!isLoading && isError">
+      <div class="il-state">
+        <p class="il-state__icon">📡</p>
+        <h2 class="il-state__title">网络开小差了</h2>
+        <p class="il-state__desc">暂时无法加载邀请信息，你仍可以下载应用注册体验。</p>
+      </div>
+    </ng-container>
+
+    <!-- 邀请人卡片 -->
+    <ng-container *ngIf="!isLoading && card">
+      <div class="il-card">
+        <div class="il-card__avatar" aria-hidden="true">
+          {{ displayNickname.charAt(0) }}
+        </div>
+        <div class="il-card__body">
+          <p class="il-card__eyebrow">邀请你加入</p>
+          <h1 class="il-card__headline">{{ displayNickname }}</h1>
+          <p class="il-card__message">{{ displayMessage }}</p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- T-L4：iOS / Android 用户优先看到"在 App 中打开"按钮（已装 App 直接跳过来） -->
+    <ng-container *ngIf="!isLoading && (isIOS() || isAndroid()) && !isInWeChat()">
+      <div class="il-open-in-app">
+        <button
+          type="button"
+          class="il-btn il-btn--primary il-btn--block"
+          (click)="openInApp()"
+          [disabled]="isAttemptingAppOpen"
+          aria-label="在 App 中打开">
+          {{ isAttemptingAppOpen ? '正在打开 App…' : '在 App 中打开' }}
+        </button>
+        <p class="il-open-in-app__hint" *ngIf="isAttemptingAppOpen">
+          如果没有自动跳转，几秒后将引导您前往应用商店下载。
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- 下载区（无论加载状态都显示，降级用通用文案） -->
+    <ng-container *ngIf="!isLoading">
+      <div class="il-downloads">
+        <p class="il-downloads__label">下载班管家，立即领取奖励</p>
+
+        <!-- iOS App Store -->
+        <a
+          [href]="appStoreUrl"
+          class="il-btn il-btn--primary"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="从 App Store 下载">
+          <svg class="il-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          App Store 下载
+        </a>
+
+        <!-- TestFlight -->
+        <a
+          [href]="testFlightUrl"
+          class="il-btn il-btn--secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="通过 TestFlight 下载测试版">
+          <svg class="il-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19.59 3.41C20.37 4.18 20.5 5.38 20 6.34L13.66 12l5.05 5.05c.98-.43 2.12-.23 2.88.53.98.98.98 2.56 0 3.54-.98.98-2.56.98-3.54 0-.73-.73-.93-1.81-.53-2.73L12 12.94l-5.52 5.45c.4.92.2 2-.53 2.73-.98.98-2.56.98-3.54 0-.98-.98-.98-2.56 0-3.54.76-.76 1.9-.96 2.88-.53L10.34 12 3.66 5.32c-.98.43-2.12.23-2.88-.53C-.2 3.81-.2 2.23.78 1.25 1.76.27 3.34.27 4.32 1.25c.73.73.93 1.81.53 2.73L12 11.06l6.05-6.05c-.4-.92-.2-2 .53-2.73.98-.98 2.56-.98 3.54 0 .98.98.98 2.56 0 3.54-.24.24-.52.42-.82.55l.29.04z"/>
+          </svg>
+          TestFlight 测试版
+        </a>
+
+        <!-- Google Play -->
+        <a
+          [href]="googlePlayUrl"
+          class="il-btn il-btn--secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="从 Google Play 下载">
+          <svg class="il-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3.18 23.76c.35.2.76.22 1.14.07l11.65-6.73-2.5-2.5-10.29 9.16zM.5 1.02C.19 1.37 0 1.87 0 2.5v19c0 .63.19 1.13.5 1.48L.6 23.06l10.64-10.64v-.26L.6.95.5 1.02zM20.17 10.52L17.3 8.87 14.5 11.68l2.8 2.8 2.88-1.66c.82-.47.82-1.83-.01-2.3zM4.32.17L15.97 6.9 13.47 9.4 3.18.24C3.56.09 3.97.11 4.32.17z"/>
+          </svg>
+          Google Play 下载
+        </a>
+      </div>
+
+      <!-- 微信用户引导（微信内置浏览器打开时显示） -->
+      <div class="il-wechat-hint" *ngIf="isInWeChat()">
+        <p class="il-wechat-hint__text">
+          微信用户请点击右上角
+          <span class="il-wechat-hint__icon" aria-hidden="true">⋯</span>
+          选择「在浏览器中打开」以下载应用
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- 页脚品牌 -->
+    <footer class="il-footer">
+      <p class="il-footer__copy">© ZRGenesis · 班管家</p>
+    </footer>
+
+  </div>
+</div>

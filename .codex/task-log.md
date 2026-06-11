@@ -1,8 +1,166 @@
 # Public Site Task Log
 
+## 2026-06-12 — T-25 zrgenesiscloud /.well-known/ reverse proxy to BE
+
+### 结论：无 SSR，采用 ops nginx 方案
+
+zrgenesiscloud 是纯静态 SPA（Angular 17，无 `server.ts`，`package.json` 无 express / `@angular/ssr`），无法在项目内做 reverse proxy。按 arch §10 T-25 的 ops nginx 备选方案处理。
+
+### 改动文件
+
+**`angular.json`**
+- 从 `build.options.assets` 数组删除两条 well-known glob 配置：
+  - `{ "glob": "apple-app-site-association", "input": "src/well-known", "output": ".well-known" }`
+  - `{ "glob": "assetlinks.json", "input": "src/well-known", "output": ".well-known" }`
+- 让运维 nginx 接管 `/.well-known/`，不再 ship 静态 JSON
+
+**删除静态文件**
+- `src/well-known/apple-app-site-association`（hardcode 旧 bundle_id，来自 T-L2）
+- `src/well-known/assetlinks.json`（SHA256 fingerprint 为 TODO 占位）
+- `src/well-known/` 目录随之删除
+
+### 构建结果
+
+`npm run build` — Application bundle generation complete. [2.779 seconds]，无错误。
+`dist/zrgenesiscloud/browser/.well-known/` 已不存在（正确）。
+
+### 运维 ops 跟进（必须）：nginx 配置
+
+www.zrgenesiscloud.com 的 nginx 需要在 Angular SPA `try_files` 规则之前加以下配置，
+把 `/.well-known/` 反代到 BE T-23 endpoint：
+
+```nginx
+location = /.well-known/apple-app-site-association {
+    proxy_pass https://www.zrgenesiscloud.com/api/v1/public/well-known/apple-app-site-association?host=$host;
+    proxy_set_header Host www.zrgenesiscloud.com;
+    proxy_set_header X-Forwarded-Host $host;
+    add_header Cache-Control "public, max-age=300";
+    proxy_hide_header Cache-Control;
+}
+
+location = /.well-known/assetlinks.json {
+    proxy_pass https://www.zrgenesiscloud.com/api/v1/public/well-known/assetlinks.json?host=$host;
+    proxy_set_header Host www.zrgenesiscloud.com;
+    proxy_set_header X-Forwarded-Host $host;
+    add_header Cache-Control "public, max-age=300";
+    proxy_hide_header Cache-Control;
+}
+```
+
+注意：
+- BE T-23 endpoint 是 public，无鉴权
+- `proxy_pass` 目标 URL 包含 `?host=` 参数，BE 按 host 反查 app_id
+- `Cache-Control: public, max-age=300`（5 分钟），与 T-24 scheduling-web 一致
+- 必须在 `try_files $uri /index.html` 规则之前配置，否则请求会被 SPA 兜底拦截
+- T-41 清理 BE hardcode bundle_id 后，AASA 返回的 `appID` 从 scoped config 动态拼装，www 这边无需改动
+
+### 关联 T-41 说明
+
+BE T-23 实现 AASA endpoint 时引入了 hardcode `_FALLBACK_IOS_BUNDLE_ID`。
+T-41 清理后 www 反代生效时自动使用 scoped config 的真实 bundle_id，无需重新部署 zrgenesiscloud。
+
+---
+
+## 2026-06-12 — T-21 旧 /invite/r/:userId 301 到 crewpilot 子域 + 修 custom scheme W-3
+
+### 背景
+已分享出去的旧链接 `https://www.zrgenesiscloud.com/invite/r/{userId}` 需在 30 天兼容期内
+跳转到新统一邀请落地页 `https://crewpilot.zrgenesiscloud.com/share/{userId}`（arch §10 T-21）。
+顺带修 reviewer W-3：invite-landing custom scheme 格式从老格式改为与 iOS deep link 一致的格式。
+
+### 方案选择：方案 B（Angular client guard）
+zrgenesiscloud 无 server.ts，是纯 SPA 静态构建，无法做真 HTTP 301。
+使用 Angular functional `canActivate` guard，在 Angular Router 激活路由前调用
+`window.location.replace()`，阻止老组件渲染，语义上等同于 302（replace 不留浏览器历史）。
+若未来搭 SSR 或 Nginx 层可以在 server 侧补真 301 覆盖。
+
+### 改动文件
+
+**`src/app/app.routes.ts`**
+- 顶部新增 `inject` 和 `ActivatedRoute` import
+- `invite/r/:userId` 路由加 `canActivate` functional guard：读 `paramMap.get('userId')`，
+  `encodeURIComponent` 编码后 `window.location.replace()` 跳到
+  `https://crewpilot.zrgenesiscloud.com/share/${userId}`，返回 `false` 阻止 Angular 渲染
+
+**`src/app/pages/invite-landing/invite-landing.component.ts`**（W-3，1 行）
+- 第 127 行 custom scheme 格式：`${scheme}://invite?ref=${ref}` → `${scheme}://share/${ref}`
+  （与 iOS CrewPilotApp deep link handler 格式 `crewpilot://share/{userId}` 一致）
+
+### 构建结果
+`npm run build` → Application bundle generation complete. [3.088 seconds]，无编译错误
+
+### 注意
+- 纯 SPA 无真 HTTP 301，搜索引擎爬虫会收到 200（Angular SPA）再 JS 跳转；
+  若 SEO 影响不可接受，30 天兼容期结束后直接删除该路由即可
+- 兼容期结束（~2026-07-12）可删除 `invite/r/:userId` 整条路由定义
+
+---
+
 Use this log for public Angular site work under `zrgenesiscloud`.
 
 If a public-site feature also changes the FastAPI server, record the server-side
+
+---
+
+## 2026-06-08 — W-4 invite-landing 收尾：UL 自动唤起 + 环境配置 + 测试
+
+### 背景
+W-4 落地页 `/invite/r/:userId` 的骨架（路由 + 组件 + 服务 + UI + AASA + SEO）在
+之前批次已完成。本批补齐：
+- T-L4 "在 App 中打开" 按钮 + custom scheme 兜底 + 超时回退应用商店
+- iOS / Android / WeChat UA 检测（SSR 安全）
+- 把 App Store / TestFlight / Google Play / iOS scheme / 自动跳超时统一搬进
+  `environment.shiftmate.*` 配置（运维填 TBD 不动代码）
+- 单元测试 9 个
+
+### 改动
+- `src/environments/environment.ts` + `environment.prod.ts`：新增
+  `shiftmate: { appStoreId, appStoreUrl, testFlightUrl, googlePlayUrl,
+  iosCustomScheme, autoOpenFallbackMs }` 配置块；所有商店 URL 仍为 'TBD'，
+  等运营拿到真 App Store ID + TestFlight 邀请链接后填
+- `src/app/pages/invite-landing/invite-landing.component.ts`：
+  - 移除硬编码 URL → 用 `environment.shiftmate.*`
+  - 加 `isIOS()` / `isAndroid()` / `isInWeChat()` UA 检测（`isPlatformBrowser`
+    guard 兼容 SSR）
+  - 加 `openInApp()`：触发 `shiftmate://invite?ref={userId}` custom scheme；
+    `autoOpenFallbackMs`（默认 2.5s）后回退到 App Store / Google Play
+  - `isAttemptingAppOpen` 状态字段控制 banner 显示
+  - Smart Banner `app-id` 改读 `environment.shiftmate.appStoreId`
+  - `og:title` / `og:description` 补全
+- `invite-landing.component.html`：
+  - iOS/Android（非微信）显示 "在 App 中打开" 主按钮，按钮 disabled 期间显示
+    "正在打开 App…" + 提示文案
+  - 微信内置浏览器提示改成 `*ngIf="isInWeChat()"` 条件显示
+- `invite-landing.component.scss`：新增 `.il-open-in-app` + `.il-btn--block` 样式
+- `invite-landing.component.spec.ts`（新建）：9 个测试覆盖
+  - 组件创建 / userId 解析 / 邀请人 nickname 渲染
+  - notFound + error 状态分支
+  - isIOS / isAndroid / isInWeChat UA sniff（UA mock）
+  - openInApp 在 WeChat 内 no-op
+
+### 构建 / 测试
+- `npx ng test --include='**/invite-landing.component.spec.ts'` → **9/9 SUCCESS**
+- `npx ng build --configuration=production` → ✓ Application bundle generation
+  complete (2.7s)
+- AASA 文件 `dist/zrgenesiscloud/browser/.well-known/apple-app-site-association`
+  正确 copy 到 dist（已配置 Team ID `SHQ5SHUP62` + bundle id
+  `com.zrgenesiscloud.banguanjia` + components `/invite/r/*`）
+
+### Wave 1 W-4 状态
+✅ T-L1 路由（之前批次）
+✅ T-L2 AASA + Android assetlinks.json（assetlinks SHA256 fingerprint TODO 待运维）
+✅ T-L3 invite-card 服务
+✅ T-L4 移动端 UI + UL 自动唤起 + 兜底（本批补齐）
+✅ T-L5 SEO meta + Apple Smart Banner + OG/Twitter card
+
+### 待运维 / 上线前收尾
+1. **App Store ID**：拿到后填 `environment.shiftmate.appStoreId` + `appStoreUrl`
+2. **TestFlight 邀请链接**：填 `testFlightUrl`
+3. **Android keystore SHA256**：`assetlinks.json` 里 fingerprints TODO 替换
+4. **iOS Info.plist**：注册 `shiftmate` URL scheme + Associated Domains
+   `applinks:www.zrgenesiscloud.com`
+5. **Android Manifest**：`<intent-filter android:autoVerify="true">` 加
+   `<data android:scheme="https" android:host="www.zrgenesiscloud.com" android:pathPrefix="/invite/r/"/>`
 
 ---
 
@@ -524,3 +682,78 @@ Reviewer 后于 T-13 复审，找到 3 个 P0 + 6 个 P1。本次修复 3 个 P0
 
 - `zrgenesis-admin`: `npm run build` 通过
 - `zrgenesiscloud`: `npm run build` 通过（Initial 331.48 kB）
+
+---
+
+## 2026-06-07 — T-L1~L5：ShiftMate 邀请落地页 `/invite/r/:userId`
+
+**关联任务**：`docs/tasks/profile-rewards-remaining.md` W-4（T-L1~L5）
+**关联 Arch**：`docs/arch/profile-rewards.md` §3.7
+
+### 完成内容
+
+**T-L1 Angular 路由 + 组件**
+- 新建 `src/app/pages/invite-landing/invite-landing.component.ts` — standalone, ChangeDetectionStrategy.OnPush
+- 路由注册在 `src/app/app.routes.ts`：`invite/r/:userId`，lazy load，`showHeader: false, showFooter: false`
+
+**T-L2 AASA + App Links**
+- 新建 `src/well-known/apple-app-site-association` — Team ID `SHQ5SHUP62`，Bundle `com.zrgenesiscloud.banguanjia`，paths: `/invite/r/*`
+- 新建 `src/well-known/assetlinks.json` — Android App Links；SHA256 fingerprint 标 TODO（等 release keystore）
+- `angular.json` build.options.assets 增加两条 glob 规则，output 到 `.well-known`（产物位置：`dist/zrgenesiscloud/browser/.well-known/`）
+
+**T-L3 invite-card 数据**
+- 新建 `src/app/services/invite-card.service.ts`
+- 调 `GET /api/v1/rewards/public/users/{userId}/invite-card?app_id=sl85pwpqci`，无 JWT
+- 错误处理：404 → `notFound: true`，其他网络错误 → `error: true`，各自降级文案
+
+**T-L4 移动端 UI**
+- `invite-landing.component.html`：邀请人卡片（nickname/首字母 avatar/invite_message），App Store / TestFlight / Google Play 三按钮，微信用户「在浏览器中打开」引导
+- `invite-landing.component.scss`：Apple-style design tokens；移动端优先，640px+ 桌面兼容；`--shadow-product` 卡片投影
+- 骨架屏（loading）/ 404 / 网络错误三种状态降级展示
+
+**T-L5 SEO meta + Apple Smart Banner**
+- 动态设置 `og:title` / `og:description` / `og:type` / `og:url` via Angular `Meta` service
+- `apple-itunes-app` Smart Banner meta（app-id=TBD，含 `app-argument=invite/r/{userId}`）
+- `twitter:card` / `twitter:title` / `twitter:description`
+- `MetaService.setPageMeta` 复用现有 `og:title` / `og:site_name` / `description`
+
+### 测试结果
+
+- `npm run build` → **BUILD SUCCEEDED**，lazy chunk `invite-landing-component` 12.26 kB
+- `dist/zrgenesiscloud/browser/.well-known/` 含 `apple-app-site-association` 和 `assetlinks.json`
+
+### TODO / 占位项
+
+- `APP_STORE_URL`：`https://apps.apple.com/app/idTBD` — 等 App Store app-id 上线后替换（component.ts L19）
+- `TESTFLIGHT_URL`：`https://testflight.apple.com/join/TBD` — 等 TestFlight public link（component.ts L20）
+- `apple-itunes-app` meta 的 `app-id=TBD` — 同 App Store（component.ts setMeta()）
+- Android `assetlinks.json` SHA256 fingerprint — 等 release keystore（well-known/assetlinks.json）
+- iOS 注册流程尚未接 `pendingInviterUserId`（存到 UserDefaults，follow-up T-I-referral-register）
+
+## 2026-06-07 — T-ApiEnvelopeFix: zrgenesiscloud InviteCardService envelope 解套
+
+### 改动文件
+- `src/app/services/invite-card.service.ts`
+  - 添加 `ApiEnvelope<T>` 接口定义
+  - `http.get<InviteCardDto>` → `http.get<ApiEnvelope<InviteCardDto>>`
+  - `map(dto => ...)` → `map(envelope => ...)` 解套 `envelope.data`
+  - 失败时检查 `!envelope.success || !envelope.data`
+
+### 构建结果
+- `npm run build`: BUILD SUCCESSFUL（Application bundle generation complete. 2.951 seconds）
+
+## 2026-06-12 — invite-routing 项目收口 (T-22)
+
+**涉及 T 号**：
+- T-11：`/api/v1/public/apps` 公共 marketing API（zrgenesiscloud 消费侧）
+- 老域名 `www.zrgenesiscloud.com/invite/r/:userId` 兼容 301 重定向至新域（需 nginx/CF 配置）
+- 本项目不承载新的 invite 落地页（统一由 scheduling-web 承载）
+
+**仍未完成 / follow-up**：
+- 老链兼容 301：`/invite/r/:userId` → `crewpilot.zrgenesiscloud.com/share/:userId`（需 CF 规则或 nginx 配置）
+- 若 `www.zrgenesiscloud.com` 域名保留，AASA 需同步配置 `/invite/:token` + `/share/:userId` 路径
+
+**跨端契约关键点**：
+- 公共 marketing API：`GET /api/v1/public/apps`（PublicAppsClient），无鉴权
+- `GET /api/v1/app/meta` invite_routing bundle：zrgenesiscloud 如需展示 App 邀请入口可消费该字段
+- 新 invite 域：`crewpilot.zrgenesiscloud.com`（scheduling-web 落地页）

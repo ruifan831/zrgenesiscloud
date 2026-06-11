@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { appDetailResolver } from './pages/app-detail/app-detail.resolver';
 
 export const routes: Routes = [
@@ -70,6 +72,30 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/calendar-invite/calendar-invite.component').then(
         (m) => m.CalendarInviteComponent
+      ),
+    data: { showHeader: false, showFooter: false },
+  },
+
+  // ── 旧 ShiftMate 邀请落地页 /invite/r/:userId → 301 兼容重定向（T-21）
+  // 已分享出去的旧链接 301 跳转到新统一邀请落地页（crewpilot 子域），兼容期 30 天。
+  // 纯 SPA 无 SSR，使用 guard 做客户端跳转（无法做真 HTTP 301）。
+  {
+    path: 'invite/r/:userId',
+    canActivate: [
+      () => {
+        const route = inject(ActivatedRoute);
+        const userId = encodeURIComponent(
+          route.snapshot.paramMap.get('userId') ?? ''
+        );
+        window.location.replace(
+          `https://crewpilot.zrgenesiscloud.com/share/${userId}`
+        );
+        return false;
+      },
+    ],
+    loadComponent: () =>
+      import('./pages/invite-landing/invite-landing.component').then(
+        (m) => m.InviteLandingComponent
       ),
     data: { showHeader: false, showFooter: false },
   },

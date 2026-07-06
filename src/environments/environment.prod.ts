@@ -7,6 +7,7 @@ export const environment = {
   companyName: 'ZRGenesis',
   contactEmail: 'support@zrgenesiscloud.com',
   shiftmateAppId: 'sl85pwpqci',       // ShiftMate release app_id
+  chinesealmancAppId: 'zndhxnav19',   // ChineseAlmanc release app_id
 
   // W-4 T-L4 / T-L5: ShiftMate 落地页下载链接（TBD = 等运营提供后填）
   shiftmate: {

@@ -74,8 +74,15 @@ export class CalendarInviteComponent implements OnInit {
     }, 1000);
   }
 
+  private redirectToDownload(): void {
+    setTimeout(() => {
+      window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.zrgenesiscloud.chinesealmanc';
+    }, 1500);
+  }
+
   onSubmit(): void {
     this.errorMessage = '';
+    this.successMessage = '';
     if (this.inviteForm.valid) {
       const phoneNumber = this.inviteForm.get('phoneNumber')?.value;
       const verificationCode = this.inviteForm.get('verificationCode')?.value;
@@ -83,13 +90,31 @@ export class CalendarInviteComponent implements OnInit {
       this.authService.register(phoneNumber, verificationCode, this.inviteCode).subscribe({
         next: (response) => {
           this.isLoading = false;
-          if (response.success) {
-            this.successMessage = '注册成功！请下载应用开始使用';
-            setTimeout(() => {
-              window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.zrgenesiscloud.chinesealmanc';
-            }, 1500);
-          } else {
+          if (!response.success) {
+            // 业务失败（验证码错误等）：直接展示后端中文 message
             this.errorMessage = response.message || '注册失败';
+            return;
+          }
+          const bound = response.data?.bound ?? false;
+          const reason = response.data?.reason ?? null;
+          if (bound) {
+            this.successMessage = '注册成功！请下载应用开始使用';
+            this.redirectToDownload();
+          } else if (reason === 'already_bound') {
+            this.successMessage = '您已绑定过邀请关系，请下载应用开始使用';
+            this.redirectToDownload();
+          } else if (reason === 'already_active') {
+            this.successMessage = '您已是活跃用户，无法绑定邀请关系，欢迎下载应用继续使用';
+            this.redirectToDownload();
+          } else if (reason === 'invalid_invite_code') {
+            this.errorMessage = '邀请码无效，请确认邀请链接是否正确';
+          } else if (reason === 'self_invite_rejected') {
+            this.errorMessage = '不能使用自己的邀请码';
+          } else if (reason === 'inviter_not_found') {
+            this.errorMessage = '邀请人不存在，请确认邀请链接是否正确';
+          } else {
+            // success=true 时 message 是英文成功文案，不能当错误展示
+            this.errorMessage = '绑定邀请关系失败，请稍后重试';
           }
         },
         error: () => { this.isLoading = false; this.errorMessage = '注册失败，请稍后重试'; }

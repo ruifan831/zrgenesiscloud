@@ -7,6 +7,7 @@ export const environment = {
   companyName: 'ZRGenesis',
   contactEmail: 'support@zrgenesiscloud.com',
   shiftmateAppId: 'h1vfxv95s8',       // ShiftMate debug app_id
+  chinesealmancAppId: 'hrf0ycqjgu',   // ChineseAlmanc debug app_id
 
   // W-4 T-L4 / T-L5: ShiftMate 落地页下载链接（TBD = 等运营提供后填）
   // appStoreId 用于 Apple Smart Banner 的 app-id 字段

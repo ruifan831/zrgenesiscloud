@@ -23,6 +23,14 @@ export interface APIResponse<T> {
   message: string;
   data?: T;
 }
+
+// /rewards/referral/register 响应 data：bound=true 表示邀请关系绑定成功；
+// reason 枚举见后端 schemas/referral.py（already_bound / already_active /
+// inviter_not_found / invalid_invite_code / self_invite_rejected / app_id_missing）
+export interface ReferralRegisterData {
+  bound: boolean;
+  reason: string | null;
+}
 export interface RegisterResponse  {
   success: boolean;
   message: string;
@@ -62,15 +70,15 @@ export class AuthService {
    * @param inviteCode 邀请码
    * @returns Observable<RegisterResponse>
    */
-  register(phoneNumber: string, verificationCode: string, inviteCode: string): Observable<APIResponse<boolean>> {
-    const url = `${this.baseUrl}/api/v1/rewards/referral/register`;
+  register(phoneNumber: string, verificationCode: string, inviteCode: string): Observable<APIResponse<ReferralRegisterData>> {
+    const url = `${this.baseUrl}/api/v1/rewards/referral/register?app_id=${environment.chinesealmancAppId}`;
     const body: RegisterRequest = {
       phone: phoneNumber,
       verification_code: verificationCode,
       invite_code: inviteCode
     };
 
-    return this.http.post<APIResponse<boolean>>(url, body);
+    return this.http.post<APIResponse<ReferralRegisterData>>(url, body);
   }
 
   /**

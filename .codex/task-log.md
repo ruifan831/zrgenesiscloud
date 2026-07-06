@@ -1,5 +1,39 @@
 # Public Site Task Log
 
+## 2026-07-06 — ChineseAlmanc 邀请落地页对接注册/补绑一体新契约
+
+### 背景
+后端已完成 `/rewards/referral/register` 注册/补绑一体改造（新手机号建号+绑定，老手机号验证码校验后补绑），
+响应 data 从 boolean 变为 `{ bound, reason }`，且 app_id 需通过 query 参数传递。
+落地页 `/invite/calendar` 需同步适配，去掉"用户已注册"卡死分支。
+
+### 改动文件
+
+**`src/environments/environment.ts` / `environment.prod.ts`**
+- 新增 `chinesealmancAppId` 字段（仿 `shiftmateAppId` 风格）：dev=`hrf0ycqjgu`，prod=`zndhxnav19`
+
+**`src/app/services/auth.service.ts`**
+- 新增 `ReferralRegisterData` 接口：`{ bound: boolean; reason: string | null }`，reason 枚举见后端 `schemas/referral.py`
+- `register()` URL 追加 `?app_id=${environment.chinesealmancAppId}`；返回类型从
+  `APIResponse<boolean>` 改为 `APIResponse<ReferralRegisterData>`；请求 body 字段不变
+- 发码接口确认已是 `POST /auth/send-verification-code`（新老手机号一致下发），零改动
+
+**`src/app/pages/calendar-invite/calendar-invite.component.ts`**
+- `onSubmit` 按 `data.bound` / `data.reason` 分支展示：
+  - `bound=true` → "注册成功！请下载应用开始使用" + 跳应用宝
+  - `reason=already_bound` → "您已绑定过邀请关系，请下载应用开始使用" + 跳应用宝
+  - `reason=already_active` → "您已是活跃用户，无法绑定邀请关系，欢迎下载应用继续使用" + 跳应用宝
+  - `reason=invalid_invite_code` / `self_invite_rejected` / `inviter_not_found` → 对应中文错误文案
+  - `success=false`（验证码错误等业务失败）→ 直接展示后端中文 message
+- 下载跳转抽为 `redirectToDownload()`（应用宝链接不变）
+- 不再有"用户已注册"卡死分支（前端无法也无需区分新老用户，防枚举）
+
+### 构建结果
+`npm run build` **未执行** — 本环境 Bash 被安全分类器限流（"claude-fable-5 temporarily unavailable"），
+重试 2 次仍失败，按约束放弃。改动均为类型/文案级小改，下次构建时验证。
+
+---
+
 ## 2026-06-12 — T-25 zrgenesiscloud /.well-known/ reverse proxy to BE
 
 ### 结论：无 SSR，采用 ops nginx 方案

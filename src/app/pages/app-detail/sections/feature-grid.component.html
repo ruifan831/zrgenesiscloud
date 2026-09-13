@@ -7,6 +7,7 @@
     <div class="feature-tile__inner">
       <app-feature-card
         [feature]="tile.feature"
+        [imageSrc]="tile.feature.imageUrl || ''"
         [dark]="tile.dark"
         [imageRight]="tile.imageRight"
       ></app-feature-card>

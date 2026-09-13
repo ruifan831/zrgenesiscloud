@@ -29,6 +29,7 @@ export interface DownloadChannel {
 export interface AppFeature {
   title: string;       // 6–12 字
   description: string; // 20–60 字
+  imageUrl?: string;
   icon: string;        // 图标 key / SVG 资产路径
 }
 
@@ -40,6 +41,7 @@ export interface AppEntry {
   tagline: string;       // ≤10 字
   subtitle: string;      // 20–40 字
   description: string;   // 80–200 字
+  logoImage?: string;
   heroImage: string;     // /assets/images/calendar.png 或后端 hero_image_url
   /** Width/height ratio for heroImage. 1 = square logo (default), 0.56 = portrait phone screenshot. */
   heroAspect?: number;

@@ -20,6 +20,7 @@ const MOCK_APPS: AppEntry[] = [
     platforms: [{ type: 'android', label: '应用宝', badge: 'tencent-myapp', url: '', available: true }],
     features: [],
     privacyUrl: '/privacy/calendar',
+    updatedAt: '2026-09-13',
   },
   {
     slug: 'vision-cue',
@@ -55,7 +56,7 @@ describe('PrivacyIndexPage', () => {
 
   const mockCatalog = {
     list: jasmine.createSpy('list').and.returnValue(of(MOCK_APPS)),
-    getBySlug: jasmine.createSpy('getBySlug'),
+    getBySlug: jasmine.createSpy('getBySlug').and.callFake((slug: string) => of(MOCK_APPS.find(app => app.slug === slug) ?? null)),
     getFeatured: jasmine.createSpy('getFeatured').and.returnValue(of(MOCK_APPS)),
   };
 
@@ -73,6 +74,12 @@ describe('PrivacyIndexPage', () => {
     fixture = TestBed.createComponent(PrivacyIndexPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('loads detail records so published legal links are visible', () => {
+    expect(mockCatalog.getBySlug).toHaveBeenCalledWith('calendar');
+    expect(fixture.nativeElement.textContent).toContain('2026-09-13');
+    expect(fixture.nativeElement.querySelector('a[href="/privacy/calendar"]')).toBeTruthy();
   });
 
   it('should create', () => {

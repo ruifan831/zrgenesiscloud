@@ -1,34 +1,24 @@
-<!-- ===== Hero Intro tile (首屏，满足 AC-2：不以公司为主角) ===== -->
-<ui-hero-intro
-  primaryLabel="浏览全部应用"
-  appsAnchor="apps"
-  [featuredAppSlug]="''"
-  [featuredAppLabel]="''"
-></ui-hero-intro>
-
-<!-- ===== App Gallery tiles（画廊式，满足 AC-1、AC-12） ===== -->
-<!-- 节奏：calendar(dark) → vision-cue(light) → shanying(parchment) -->
-<!-- 数据来自 AppCatalogService HTTP，顺序由 catalog 决定（满足 AC-2） -->
-<div id="apps">
-
-  <!-- 加载中骨架屏（极简灰块，不引 ng-zorro spinner） -->
-  <ng-container *ngIf="apps$ | async as apps; else loadingOrError">
-    <ui-product-tile
-      *ngFor="let app of apps; let i = index"
-      [app]="app"
-      [layout]="getTileLayout(i)"
-    ></ui-product-tile>
-  </ng-container>
-
-  <ng-template #loadingOrError>
-    <ng-container *ngIf="loadError; else skeletonTpl">
-      <div class="apps-load-error">
-        应用列表暂时无法加载，请稍后再试
-      </div>
+<ng-container *ngIf="{ apps: apps$ | async } as state">
+  <ui-hero-intro [apps]="state.apps ?? []" primaryLabel="探索我们的应用" appsAnchor="apps"
+    [featuredAppSlug]="''" [featuredAppLabel]="''"></ui-hero-intro>
+  <section id="apps" class="app-gallery" aria-labelledby="gallery-title">
+    <div class="app-gallery__heading">
+      <h2 id="gallery-title">为日常，认真打磨。</h2>
+      <p>找到适合你的那一款。</p>
+    </div>
+    <ng-container *ngIf="state.apps as apps; else loadingOrError">
+      <ui-product-tile *ngFor="let app of apps; let i = index" [app]="app"
+        [surface]="i % 2 === 0 ? 'dark' : 'parchment'" [layout]="getTileLayout(i)"></ui-product-tile>
+      <p *ngIf="!apps.length" class="apps-load-error" role="status">应用正在准备中，欢迎稍后再来看看。</p>
     </ng-container>
-    <ng-template #skeletonTpl>
-      <div class="app-tile-skeleton" *ngFor="let _ of [1,2,3]"></div>
+    <ng-template #loadingOrError>
+      <div *ngIf="loadError; else skeletonTpl" class="apps-load-error" role="status">
+        <h3>暂时无法加载应用</h3><p>请检查网络连接，或稍后再试。</p>
+        <button type="button" (click)="retry()">重新加载</button>
+      </div>
+      <ng-template #skeletonTpl><div role="status" aria-label="正在加载应用">
+        <div class="app-tile-skeleton" *ngFor="let _ of [1,2]" aria-hidden="true"></div>
+      </div></ng-template>
     </ng-template>
-  </ng-template>
-
-</div>
+  </section>
+</ng-container>

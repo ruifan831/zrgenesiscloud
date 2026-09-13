@@ -22,7 +22,8 @@
   }
 
   @media (max-width: 500px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    .site-footer__col:last-child { grid-column: 1 / -1; }
   }
 }
 
@@ -51,10 +52,13 @@
 }
 
 .site-footer__link {
-  font-size: var(--font-footer-dense);   // 12px
+  font-size: 13px;
   line-height: var(--lh-footer-dense);  // 2.41
   color: var(--text-on-light-secondary);
   text-decoration: none;
+  display: inline-block;
+  padding-block: 4px;
+  overflow-wrap: anywhere;
   transition: color var(--duration-fast) var(--easing-standard);
 
   &:hover {

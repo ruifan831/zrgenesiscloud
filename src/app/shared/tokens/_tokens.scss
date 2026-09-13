@@ -3,6 +3,8 @@
 // Reference: docs/design/zrgenesiscloud-app-showcase/design-tokens.html
 
 :root {
+  --nav-height: 64px;
+  --page-gutter: max(24px, calc((100vw - 1152px) / 2));
   // ─── Brand / Action ───────────────────────────────────────────────────────
   --color-accent:          #0066cc;  // 全站唯一动作色 (CTA / link / focus)
   --color-accent-dark:     #2997ff;  // 暗底链接色，不用于亮底
@@ -11,19 +13,19 @@
   // ─── Text / Ink ───────────────────────────────────────────────────────────
   --text-on-light:         #1d1d1f;  // 主文字（非纯黑）
   --text-on-light-secondary: #333333;
-  --text-on-light-muted:   #7a7a7a;
+  --text-on-light-muted:   oklch(49% 0.008 250);
   --text-on-dark:          #f5f5f7;  // 暗底主文字
   --text-on-dark-muted:    #a1a1a6;  // 暗底弱化文字
 
   // ─── Surfaces ─────────────────────────────────────────────────────────────
-  --surface-light:         #ffffff;  // canvas-white
+  --surface-light:         oklch(99.5% 0.002 250);  // tinted canvas
   --surface-parchment:     #f5f5f7;  // canvas-parchment (sub-nav / tile / footer)
   --surface-pearl:         #fafafc;  // canvas-pearl
   --surface-dark:          #1d1d1f;  // hero-dark
   --surface-tile-dark-1:   #272729;  // 首页 tile 1 / 功能 tile 暗
   --surface-tile-dark-2:   #2a2a2c;
   --surface-tile-dark-3:   #252527;
-  --surface-nav:           #000000;  // global-nav 专用真黑
+  --surface-nav:           oklch(20% 0.006 250);  // navigation ink
 
   // ─── Dividers ─────────────────────────────────────────────────────────────
   --color-divider:         #e0e0e0;
@@ -56,10 +58,10 @@
   --ls-tile-subtitle:      -0.01em;
 
   --font-body:             17px;   // 正文（不是 16px）
-  --lh-body:               1.47;
+  --lh-body:               1.75;
   --ls-body:               0;
 
-  --font-nav-link:         12px;   // nav 链接
+  --font-nav-link:         14px;   // nav 链接
   --lh-nav-link:           1;
 
   --font-eyebrow:          12px;   // eyebrow / kicker

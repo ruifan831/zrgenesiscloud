@@ -1,11 +1,12 @@
 <div class="product-image__wrapper" [style.aspect-ratio]="aspect ? aspect : null">
   <img
-    *ngIf="src"
+    *ngIf="src && !failed"
     class="product-image__img"
     [src]="src"
     [alt]="alt"
     loading="lazy"
     decoding="async"
+    (error)="failed = true"
   />
-  <div *ngIf="!src" class="product-image__placeholder" [attr.aria-label]="alt"></div>
+  <div *ngIf="!src || failed" class="product-image__placeholder" role="img" [attr.aria-label]="alt">{{ alt || '应用图片' }}</div>
 </div>

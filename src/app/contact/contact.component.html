@@ -1,18 +1,12 @@
-<div class="contact-page surface-light">
-
-  <!-- 单屏内容区 -->
-  <div class="contact-page__content">
-    <p class="type-eyebrow">联系我们</p>
-    <h1 class="contact-page__title">有问题？<br>欢迎写信给我们。</h1>
-    <p class="contact-page__lead">
-      我们通常在 1–2 个工作日内回复。如果您对某款应用有反馈或合作意向，请在邮件中说明。
-    </p>
-    <a [href]="'mailto:' + contactEmail" class="contact-page__email-link">
-      {{ contactEmail }}
-    </a>
-    <a [href]="'mailto:' + contactEmail" class="contact-page__cta">
-      发送邮件
-    </a>
+<div class="contact-page surface-light"><div class="contact-page__content">
+  <div><p class="type-eyebrow">联系我们</p><h1 class="contact-page__title">你的想法，<br>我们愿意听。</h1>
+    <p class="contact-page__lead">使用中遇到问题，或有一个让应用更好的建议？欢迎写信给我们。</p>
+    <a [href]="'mailto:' + contactEmail" class="contact-page__cta">发送邮件 <span aria-hidden="true">↗</span></a>
   </div>
-
-</div>
+  <div class="contact-page__details"><h2>保持联系</h2>
+    <a [href]="'mailto:' + contactEmail" class="contact-page__email-link">{{ contactEmail }}</a>
+    <p>通常在 1–2 个工作日内回复。</p>
+    <div class="contact-page__note"><h3>应用反馈</h3><p>请注明应用名称、设备型号和问题现象，附上截图可以帮助我们更快了解情况。</p></div>
+    <div class="contact-page__note"><h3>商务合作</h3><p>请简单介绍你的团队与合作想法。</p></div>
+  </div>
+</div></div>

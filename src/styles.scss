@@ -7,3 +7,11 @@
 @use 'app/shared/tokens/surfaces';
 @use 'app/shared/tokens/utilities';
 @use 'app/shared/tokens/legal';
+
+html { scroll-padding-top: 128px; }
+.skip-link { position: fixed; left: 16px; top: 8px; z-index: 2000; padding: 12px 20px; background: var(--surface-light); color: var(--color-accent); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+@media(prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+
+:where(a, button, input, [tabindex]):focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }

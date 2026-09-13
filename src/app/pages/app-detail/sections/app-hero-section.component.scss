@@ -1,15 +1,16 @@
 .hero-section {
   background: var(--surface-light);
-  min-height: 80vh;
+  min-height: 480px;
   display: flex;
   align-items: center;
-  padding: var(--space-20) max(var(--space-10), calc((100vw - 1200px) / 2));
+  padding: clamp(48px, 6vw, 88px) var(--page-gutter);
 
   &__inner {
     display: flex;
     align-items: center;
     gap: var(--space-16);
     width: 100%;
+    justify-content: space-between;
   }
 
   &__text {
@@ -83,13 +84,15 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    max-width: 480px;
+    max-width: 360px;
+    width: 100%;
+    ui-product-image { display: block; width: 100%; }
   }
 }
 
 @media (max-width: 640px) {
   .hero-section {
-    padding: var(--space-16) var(--space-10);
+    padding: 48px 24px;
 
     &__inner {
       flex-direction: column;
@@ -97,6 +100,7 @@
     }
 
     &__text {
+      width: 100%;
       max-width: 100%;
     }
 
@@ -116,7 +120,7 @@
 
     &__image {
       justify-content: center;
-      max-width: 100%;
+      max-width: 240px;
     }
   }
 }

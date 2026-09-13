@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 11px 22px;
+  min-height: 44px;
   background: transparent;
   color: var(--color-accent);
   border-radius: var(--radius-pill);
@@ -50,7 +51,8 @@
 }
 
 // Dark surface: outline-on-dark (white border + white text)
-:where(.surface-dark, .surface-tile-dark) .btn-secondary {
+:host-context(.surface-dark) .btn-secondary,
+:host-context(.surface-tile-dark) .btn-secondary {
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.5);
 

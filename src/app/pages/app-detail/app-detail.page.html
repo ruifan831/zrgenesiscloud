@@ -10,6 +10,16 @@
   <!-- Hero section -->
   <app-hero-section [app]="app"></app-hero-section>
 
+  <section *ngIf="app.description" class="app-story" aria-labelledby="story-title">
+    <h2 id="story-title">关于 {{ app.name }}</h2>
+    <p>{{ app.description }}</p>
+  </section>
+  <section *ngIf="app.detailImages?.length" class="app-screenshots" aria-label="应用截图">
+    <h2>看看应用里的日常</h2>
+    <div class="app-screenshots__rail" tabindex="0" role="region" aria-label="应用截图，可左右滚动">
+      <img *ngFor="let src of app.detailImages; let i = index" [src]="src" [alt]="app.name + ' 应用截图 ' + (i + 1)" loading="lazy" decoding="async">
+    </div>
+  </section>
   <!-- Feature highlights (交替 tile，数据驱动，empty = skip) -->
   <app-feature-grid [features]="app.features"></app-feature-grid>
 

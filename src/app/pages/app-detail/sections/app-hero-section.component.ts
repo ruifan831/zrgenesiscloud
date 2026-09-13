@@ -26,12 +26,12 @@ export class AppHeroSectionComponent {
   @Input() app!: AppEntry;
 
   get availablePlatforms(): DownloadChannel[] {
-    return this.app.platforms.filter((p) => p.available !== false);
+    return this.app.platforms.filter((p) => p.available !== false && !!p.url);
   }
 
   get primaryPlatform(): DownloadChannel | undefined {
     return (
-      this.app.platforms.find((p) => p.primary && p.available !== false) ??
+      this.app.platforms.find((p) => p.primary && p.available !== false && !!p.url) ??
       this.availablePlatforms[0]
     );
   }

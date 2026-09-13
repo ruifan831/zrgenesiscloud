@@ -2,7 +2,9 @@
 // 主要排版由全局 _legal.scss 提供；此处仅加 back-bar 和状态视图
 
 .legal-doc__back-bar {
-  padding: var(--space-4) max(40px, calc((100vw - 1200px) / 2));
+  max-width: 808px;
+  margin-inline: auto;
+  padding: var(--space-4) 24px;
   padding-top: var(--space-6);
 }
 

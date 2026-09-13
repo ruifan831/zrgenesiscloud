@@ -4,7 +4,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { GlobalNavComponent } from '../../shared/ui/global-nav/global-nav.component';
@@ -22,9 +22,10 @@ export class AppShellComponent implements OnInit {
   showHeader = signal(true);
   showFooter = signal(true);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private viewport: ViewportScroller) {}
 
   ngOnInit(): void {
+    this.viewport.setOffset([0, 132]);
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(() => {

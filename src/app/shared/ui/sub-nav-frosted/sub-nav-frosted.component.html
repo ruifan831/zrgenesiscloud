@@ -12,13 +12,10 @@
         </li>
       </ul>
 
-      <a
-        *ngIf="cta"
-        [href]="cta.href"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="sub-nav__cta btn-primary"
-      >{{ cta.label }}</a>
+      <ng-container *ngIf="cta">
+        <a *ngIf="cta.href.startsWith('#'); else externalCta" routerLink="." [fragment]="cta.href.slice(1)" class="sub-nav__cta">{{ cta.label }}</a>
+        <ng-template #externalCta><a [href]="cta.href" target="_blank" rel="noopener noreferrer" class="sub-nav__cta">{{ cta.label }}</a></ng-template>
+      </ng-container>
     </div>
 
   </div>

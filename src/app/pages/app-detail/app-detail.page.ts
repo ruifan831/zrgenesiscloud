@@ -2,11 +2,14 @@ import {
   Component,
   ChangeDetectionStrategy,
   OnInit,
+  DestroyRef,
+  ChangeDetectorRef,
   inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable, map, of, EMPTY, catchError } from 'rxjs';
+import { Observable, map, of, catchError, switchMap } from 'rxjs';
 
 import { AppEntry } from '../../models/app.model';
 import { AppCatalogService } from '../../core/services/app-catalog.service';
@@ -51,33 +54,30 @@ export class AppDetailPage implements OnInit {
   otherApps: ReadonlyArray<AppEntry> = [];
   otherApps$: Observable<ReadonlyArray<AppEntry>> = of([]);
 
-  readonly subNavLinks = SUB_NAV_LINKS;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  get subNavLinks() {
+    return SUB_NAV_LINKS.filter(link => link.fragment !== 'features' || !!this.app?.features.length);
+  }
 
   ngOnInit(): void {
-    // Resolver puts the result in route.snapshot.data['app']
-    const resolved = this.route.snapshot.data['app'] as AppEntry | null | undefined;
-
-    if (resolved === null || resolved === undefined) {
-      // Resolver returned null (404) or EMPTY (network error already redirected)
-      // If null (not found), redirect to home
-      this.app = null;
-      this.router.navigate(['/']);
-      return;
-    }
-
-    this.app = resolved;
-    this.meta.setForApp(resolved);
-
-    // Derive otherApps from list() observable
-    this.otherApps$ = this.catalog.list().pipe(
-      map((apps) => apps.filter((a) => a.slug !== resolved.slug)),
-      catchError(() => of([]))
-    );
-
-    // Subscribe once to populate synchronous otherApps for template
-    this.otherApps$.subscribe((apps) => {
-      this.otherApps = apps;
-    });
+    this.route.data.pipe(
+      switchMap(data => {
+        const resolved = data['app'] as AppEntry | null;
+        this.app = resolved;
+        if (!resolved) {
+          this.router.navigate(['/']);
+          return of([] as AppEntry[]);
+        }
+        this.meta.setForApp(resolved);
+        return this.catalog.list().pipe(
+          map(apps => apps.filter(app => app.slug !== resolved.slug)),
+          catchError(() => of([] as AppEntry[]))
+        );
+      }),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(apps => { this.otherApps = apps; this.cdr.markForCheck(); });
   }
 
   /** For sub-nav "下载" CTA: scroll to #download if multiple platforms,

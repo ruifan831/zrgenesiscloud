@@ -7,7 +7,10 @@
 }
 
 .legal-page__hero {
-  padding: var(--space-20) max(40px, calc((100vw - 1200px) / 2)) var(--space-8);
+  max-width: 808px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 72px) 24px 28px;
+  border-bottom: 1px solid var(--color-divider);
 
   .type-eyebrow {
     margin-bottom: var(--space-4);
@@ -31,9 +34,11 @@
 }
 
 .legal-page__body {
-  max-width: 720px;
+  max-width: 808px;
   margin: 0 auto;
-  padding: var(--space-8) max(40px, calc((100vw - 720px - 80px) / 2)) var(--space-20);
+  padding: 32px 24px 80px;
+  overflow-wrap: anywhere;
+  > h1:first-child { display: none; }
 
   h2 {
     font-size: var(--font-tagline);
@@ -61,6 +66,9 @@
     color: var(--text-on-light-secondary);
     margin: 0 0 var(--space-4);
   }
+
+  ul { list-style: disc; }
+  ol { list-style: decimal; }
 
   ul, ol {
     margin: 0 0 var(--space-4);
@@ -91,6 +99,8 @@
 
   // SDK 三方表格
   table {
+    display: block;
+    overflow-x: auto;
     width: 100%;
     border-collapse: collapse;
     margin: var(--space-6) 0;
@@ -118,7 +128,7 @@
 // ─── Responsive ────────────────────────────────────────────────────────────
 @media (max-width: 640px) {
   .legal-page__hero {
-    padding: var(--space-12) 16px var(--space-6);
+    padding: var(--space-12) 24px var(--space-6);
   }
 
   .legal-page__title {
@@ -126,7 +136,7 @@
   }
 
   .legal-page__body {
-    padding: var(--space-6) 16px var(--space-16);
+    padding: var(--space-6) 24px var(--space-16);
 
     table {
       font-size: 12px;

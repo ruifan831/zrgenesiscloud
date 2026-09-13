@@ -5,9 +5,9 @@
     <div class="hero-section__text">
       <div class="hero-section__heading">
         <img
-          *ngIf="app.heroImage"
+          *ngIf="app.logoImage && app.logoImage !== app.heroImage"
           class="hero-section__logo"
-          [src]="app.heroImage"
+          [src]="app.logoImage"
           [alt]="app.name + ' 图标'"
           loading="eager"
           decoding="async"
@@ -17,7 +17,7 @@
           <h1 class="hero-section__title">{{ app.name }}</h1>
         </div>
       </div>
-      <p class="hero-section__subtitle">{{ app.description }}</p>
+      <p *ngIf="app.subtitle" class="hero-section__subtitle">{{ app.subtitle }}</p>
 
       <!-- Platform badges (all platforms, showing availability) -->
       <div class="hero-section__badges" *ngIf="app.platforms.length > 0">
@@ -26,7 +26,7 @@
           [badge]="p.badge"
           [label]="p.label"
           [href]="p.url"
-          [disabled]="p.available === false"
+          [disabled]="p.available === false || !p.url"
         ></ui-platform-badge>
       </div>
 
@@ -49,7 +49,7 @@
     </div>
 
     <!-- Product image -->
-    <div class="hero-section__image">
+    <div *ngIf="app.heroImage" class="hero-section__image">
       <ui-product-image
         [src]="app.heroImage"
         [alt]="app.name + ' 产品图'"

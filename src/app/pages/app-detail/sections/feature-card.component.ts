@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -10,7 +11,7 @@ import { AppFeature } from '../../../models/app.model';
   selector: 'app-feature-card',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './feature-card.component.html',
   styleUrl: './feature-card.component.scss',
 })

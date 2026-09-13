@@ -15,7 +15,7 @@
       <h2 class="product-tile__name">{{ app.name }}</h2>
 
       <!-- Lead subtitle: 21/400 -->
-      <p class="product-tile__subtitle">{{ app.subtitle }}</p>
+      <p *ngIf="app.subtitle" class="product-tile__subtitle">{{ app.subtitle }}</p>
 
       <!-- Platform badges -->
       <div class="product-tile__badges" *ngIf="app.platforms?.length">
@@ -48,7 +48,7 @@
         </ng-container>
         <ng-template #downloadDisabled>
           <ui-button-secondary
-            label="立即下载"
+            label="下载暂未开放"
             [disabled]="true"
           ></ui-button-secondary>
         </ng-template>

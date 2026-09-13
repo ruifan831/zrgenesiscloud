@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, of, catchError } from 'rxjs';
 import { AppCatalogService } from '../core/services/app-catalog.service';
 import { MetaService } from '../shared/seo/meta.service';
 import { AppEntry } from '../models/app.model';
@@ -24,16 +24,23 @@ export class HomeComponent implements OnInit {
   private catalogService = inject(AppCatalogService);
   private meta = inject(MetaService);
 
-  apps$: Observable<ReadonlyArray<AppEntry>> = this.catalogService.list();
+  apps$: Observable<ReadonlyArray<AppEntry> | null> = this.loadApps();
   loadError = false;
 
   ngOnInit(): void {
     this.meta.setForHome();
-    this.apps$.subscribe({
-      error: () => {
-        this.loadError = true;
-      },
-    });
+  }
+
+  loadApps(): Observable<ReadonlyArray<AppEntry> | null> {
+    return this.catalogService.list().pipe(catchError(() => {
+      this.loadError = true;
+      return of(null);
+    }));
+  }
+
+  retry(): void {
+    this.loadError = false;
+    this.apps$ = this.loadApps();
   }
 
   /**

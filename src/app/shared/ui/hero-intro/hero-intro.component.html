@@ -1,37 +1,21 @@
-<section class="hero-intro surface-dark">
-  <!-- Eyebrow brand label -->
-  <p class="hero-intro__eyebrow">ZRGenesis</p>
-
-  <!-- Main slogan: 56/600/-0.28px -->
-  <h1 class="hero-intro__title">
-    精心打造<br>每一款应用
-  </h1>
-
-  <!-- Subtitle: 28/400 -->
-  <p class="hero-intro__subtitle">
-    三款专注于日常生活的 App，帮你更高效地度过每一天。
-  </p>
-
-  <!-- CTA group -->
-  <div class="hero-intro__ctas">
-    <!-- Primary: scroll to apps section -->
-    <a class="hero-intro__btn hero-intro__btn--primary"
-       [attr.href]="'#' + appsAnchor">
-      {{ primaryLabel }}
-    </a>
-    <!-- Secondary: go to featured app detail -->
-    <a class="hero-intro__btn hero-intro__btn--secondary"
-       [routerLink]="'/apps/' + featuredAppSlug">
-      {{ featuredAppLabel }}
-    </a>
-  </div>
-
-  <!-- Scroll hint -->
-  <div class="hero-intro__scroll-hint" aria-hidden="true">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="1.5">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
-    <span>向下滚动探索</span>
+<section class="hero-intro" [class.hero-intro--text-only]="!apps.length">
+  <div class="hero-intro__inner">
+    <div class="hero-intro__copy">
+      <p class="hero-intro__eyebrow">让每一天，更从容。</p>
+      <h1 class="hero-intro__title">精心打造<br>每一款应用。</h1>
+      <p class="hero-intro__subtitle">专注生活里的真实需要，<br>把日常小事，做得更好。</p>
+      <div class="hero-intro__ctas">
+        <a class="hero-intro__btn" [attr.href]="'#' + appsAnchor">{{ primaryLabel }} <span aria-hidden="true">↓</span></a>
+        <a *ngIf="featuredAppSlug && featuredAppLabel" class="hero-intro__secondary" [routerLink]="['/apps', featuredAppSlug]">{{ featuredAppLabel }}</a>
+      </div>
+    </div>
+    <div *ngIf="apps.length" class="hero-intro__apps" aria-label="应用速览">
+      <a *ngFor="let app of apps | slice:0:3; let i = index" class="hero-intro__app" [routerLink]="['/apps', app.slug]">
+        <ui-product-image *ngIf="app.logoImage || app.heroImage" [src]="app.logoImage || app.heroImage" [alt]="app.name + ' 图标'" [aspect]="1"></ui-product-image>
+        <div><h2>{{ app.name }}</h2><p>{{ app.tagline }}</p></div>
+        <span class="hero-intro__arrow" aria-hidden="true">↗</span>
+      </a>
+      <p class="hero-intro__note">每一款应用，都从一个真实需要开始。</p>
+    </div>
   </div>
 </section>

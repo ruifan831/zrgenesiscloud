@@ -62,3 +62,11 @@
     padding: var(--space-12) var(--space-10);
   }
 }
+
+.app-story { background: var(--surface-parchment); padding: 56px var(--page-gutter); }
+.app-story h2, .app-screenshots h2 { font-size: 28px; font-weight: 600; margin-bottom: 24px; line-height: 1.4; }
+.app-story p { max-width: 72ch; white-space: pre-line; line-height: 1.9; color: var(--text-on-light-secondary); }
+.app-screenshots { padding: 64px var(--page-gutter); }
+.app-screenshots__rail { display: flex; gap: 24px; overflow-x: auto; padding: 4px 4px 24px; scroll-snap-type: x proximity; }
+.app-screenshots img { height: 440px; max-width: 85vw; object-fit: contain; border-radius: 18px; scroll-snap-align: start; }
+@media(max-width: 640px) { .detail-legal-wrap, .related-apps { padding-inline: 24px; } .app-screenshots img { height: 360px; } }

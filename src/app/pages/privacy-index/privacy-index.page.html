@@ -14,18 +14,23 @@
   <section class="privacy-index__list">
 
     <ng-container *ngIf="apps$ | async as apps; else loadingTpl">
+      <div *ngIf="!apps.length" class="privacy-index__empty" role="status">
+        <p>{{ loadError ? '协议列表暂时无法加载，请稍后重试。' : '暂无应用协议。' }}</p>
+        <button *ngIf="loadError" type="button" (click)="load()">重新加载</button>
+      </div>
       <div *ngFor="let app of apps" class="privacy-index__group">
         <div class="privacy-index__group-inner">
 
           <!-- App 信息（左列） -->
           <div class="privacy-index__app-info">
+            <img *ngIf="app.logoImage" [src]="app.logoImage" alt="" width="48" height="48" class="privacy-index__app-icon">
             <div class="privacy-index__app-name-row">
               <h2 class="privacy-index__app-name">{{ app.name }}</h2>
               <span *ngFor="let label of getPlatformLabels(app)" class="privacy-index__platform-chip">
                 {{ label }}
               </span>
             </div>
-            <p class="privacy-index__app-desc text-muted">{{ app.subtitle }}</p>
+            <p class="privacy-index__app-desc text-muted">{{ app.tagline }}</p>
           </div>
 
           <!-- 协议链接（右列） -->
@@ -36,17 +41,17 @@
               <div class="privacy-index__link-meta">
                 <p class="privacy-index__link-title">隐私政策</p>
                 <p *ngIf="app.updatedAt" class="privacy-index__link-date type-caption text-muted">
-                  最后更新：{{ app.updatedAt }}
+                  最后更新：{{ app.updatedAt | slice:0:10 }}
                 </p>
                 <p *ngIf="!app.updatedAt" class="privacy-index__link-date type-caption text-muted">
                   最后更新：见协议文件
                 </p>
               </div>
               <ng-container *ngIf="app.privacyUrl; else privacyUnavailable">
-                <a [routerLink]="app.privacyUrl" class="privacy-index__policy-link">查看</a>
+                <a [href]="app.privacyUrl" class="privacy-index__policy-link">查看</a>
               </ng-container>
               <ng-template #privacyUnavailable>
-                <span class="privacy-index__policy-link privacy-index__policy-link--disabled">即将上线</span>
+                <span class="privacy-index__policy-link privacy-index__policy-link--disabled">暂未公布</span>
               </ng-template>
             </li>
 
@@ -54,18 +59,13 @@
             <li class="privacy-index__link-item privacy-index__link-item--sub">
               <div class="privacy-index__link-meta">
                 <p class="privacy-index__link-title">用户协议</p>
-                <p class="privacy-index__link-date type-caption text-muted">
-                  <ng-container *ngIf="app.termsUrl; else termsNote">
-                    &nbsp;
-                  </ng-container>
-                  <ng-template #termsNote>链接待业务方提供</ng-template>
-                </p>
+
               </div>
               <ng-container *ngIf="app.termsUrl; else termsUnavailable">
-                <a [href]="app.termsUrl" target="_blank" rel="noopener noreferrer" class="privacy-index__policy-link">查看</a>
+                <a [href]="app.termsUrl" class="privacy-index__policy-link">查看</a>
               </ng-container>
               <ng-template #termsUnavailable>
-                <span class="privacy-index__policy-link privacy-index__policy-link--disabled">查看</span>
+                <span class="privacy-index__policy-link privacy-index__policy-link--disabled">暂未公布</span>
               </ng-template>
             </li>
 
@@ -81,6 +81,13 @@
 
   </section>
 
+  <section class="privacy-index__archive" aria-labelledby="archive-title">
+    <h2 id="archive-title">站内协议文档</h2>
+    <p>也可以直接查阅以下已发布的应用协议。</p>
+    <div><a routerLink="/privacy/calendar">全民万年黄历通隐私政策 <span aria-hidden="true">↗</span></a>
+    <a href="/legal/ticidashi/privacy/">提词器大师隐私政策 <span aria-hidden="true">↗</span></a>
+    <a href="/legal/ticidashi/terms/">提词器大师用户协议 <span aria-hidden="true">↗</span></a></div>
+  </section>
   <!-- 公司通用隐私声明 -->
   <section class="privacy-index__company surface-parchment">
     <div class="privacy-index__company-inner">

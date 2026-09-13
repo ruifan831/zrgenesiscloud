@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, forkJoin, switchMap } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AppCatalogService } from '../../core/services/app-catalog.service';
 import { AppEntry } from '../../models/app.model';
 import { MetaService } from '../../shared/seo/meta.service';
@@ -25,11 +25,19 @@ export class PrivacyIndexPage implements OnInit {
   private metaService = inject(MetaService);
 
   apps$: Observable<ReadonlyArray<AppEntry>> = of([]);
+  loadError = false;
 
   ngOnInit(): void {
     this.metaService.setForPrivacyIndex();
+    this.load();
+  }
+
+  load(): void {
+    this.loadError = false;
     this.apps$ = this.catalog.list().pipe(
-      catchError(() => of([]))
+      switchMap(apps => apps.length ? forkJoin(apps.map(app => this.catalog.getBySlug(app.slug))) : of([])),
+      map(apps => apps.filter((app): app is AppEntry => !!app)),
+      catchError(() => { this.loadError = true; return of([]); })
     );
   }
 

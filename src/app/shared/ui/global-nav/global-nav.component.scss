@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 44px;
+  height: var(--nav-height);
   background: var(--surface-nav);  // #000000
   color: var(--text-on-dark);
   transition: background var(--duration-base) var(--easing-standard);
@@ -43,7 +43,7 @@
 }
 
 .global-nav__logo-text {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: var(--fw-semibold);
   letter-spacing: -0.01em;
   color: #ffffff;
@@ -57,7 +57,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  flex: 1;
+  margin-left: auto;
 
   @media (max-width: 768px) {
     display: none;
@@ -71,6 +71,7 @@
     &:hover .global-nav__app-dropdown,
     &:focus-within .global-nav__app-dropdown {
       opacity: 1;
+      visibility: visible;
       pointer-events: auto;
       transform: translateX(-50%) translateY(0);
     }
@@ -82,7 +83,8 @@
   font-weight: var(--fw-regular);
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  padding: 4px 0;
+  padding: 14px 0;
+  display: inline-flex;
   transition: color var(--duration-fast) var(--easing-standard);
   cursor: pointer;
 
@@ -123,6 +125,7 @@
   list-style: none;
   margin: 0;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transition:
     opacity var(--duration-fast) var(--easing-standard),
@@ -151,15 +154,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-left: auto;
+  @media (max-width: 768px) { margin-left: auto; }
 }
 
 .global-nav__icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.75);
@@ -180,8 +183,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: none;
   color: inherit;
@@ -205,13 +208,15 @@
 // Mobile menu overlay
 .global-nav__mobile-menu {
   position: fixed;
-  inset: 0;
+  inset: var(--nav-height) 0 auto;
+  max-height: calc(100dvh - var(--nav-height));
   background: rgba(0, 0, 0, 0.96);
   backdrop-filter: blur(20px);
   z-index: 999;
-  padding: 60px var(--space-6) var(--space-12);
+  padding: 64px var(--space-6) var(--space-12);
   overflow-y: auto;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transform: translateX(100%);
   transition:
@@ -220,6 +225,7 @@
 
   &--open {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
     transform: translateX(0);
   }

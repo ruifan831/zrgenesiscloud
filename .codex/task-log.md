@@ -791,3 +791,17 @@ Reviewer 后于 T-13 复审，找到 3 个 P0 + 6 个 P1。本次修复 3 个 P0
 - 公共 marketing API：`GET /api/v1/public/apps`（PublicAppsClient），无鉴权
 - `GET /api/v1/app/meta` invite_routing bundle：zrgenesiscloud 如需展示 App 邀请入口可消费该字段
 - 新 invite 域：`crewpilot.zrgenesiscloud.com`（scheduling-web 落地页）
+
+
+## 2026-09-13 — 官网逐页 UI 评估与完善
+
+- 浏览线上所有现存页面类型及当前两款产品，记录逐页评估于 `docs/ui-review-2026-09-13.md`；依据现有 PRD/项目约定整理 `PRODUCT.md`。
+- 首页改为浅色双栏产品速览，真实 API logo 补位，去掉固定三款/空白 CTA；产品展示深浅交替、缩短留白，支持错误重试与空状态。
+- 完善联系页、隐私索引、邀请表单、导航/页脚；法律正文统一阅读宽度、取消重复 H1、恢复列表标记、表格局部滚动，保留所有法律正文。
+- 修正详情路由复用、外部法律链接、带制表符的 APK URL、默认渠道名称与 APK badge、缺失功能锚点、页内锚点导航偏移；保留长介绍与后台功能图/截图数据。
+- 隐私索引读取详情协议并提供已存在的站内文档入口。Nginx 文档添加 `/privacy` 精确匹配以解决目录索引 403；未部署或改生产配置。
+- 验证：production build（含法律页预渲染）通过，legal tests 2/2，重点回归 20/20；全量 Karma 90 成功/16 失败，剩余测试基础设施和旧预期详见评估文档。本地真实公开 API 只读代理复核手机/桌面及菜单、详情切换、锚点。
+- 待办：正式 ICP；黄历协议与营销信息、班管家下载渠道；班管家草稿法律文档与通用声明定位。保留任务开始时已有的提词器预渲染改动。仅本网站受影响，不涉及四端业务 parity。
+
+### 2026-09-14 — 提交官网 UI 完善
+- 按用户要求只提交本次 UI、回归测试及评估文档；将 privacy SPA 修正独立为 `docs/nginx/public-site-privacy.conf`，保留其他任务的法律页与 SDK 披露改动。未 push、未部署。

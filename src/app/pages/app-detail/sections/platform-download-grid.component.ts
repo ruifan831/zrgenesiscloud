@@ -9,7 +9,6 @@ import { DownloadChannel } from '../../../models/app.model';
 interface PlatformCardVm {
   channel: DownloadChannel;
   captionText: string;
-  iconEmoji: string;
 }
 
 const PLATFORM_CAPTIONS: Record<string, string> = {
@@ -19,15 +18,6 @@ const PLATFORM_CAPTIONS: Record<string, string> = {
   'apk':           '官网直链下载',
   'wechat-mp':     '微信扫码访问',
   'web':           '网页版访问',
-};
-
-const PLATFORM_ICONS: Record<string, string> = {
-  'tencent-myapp': '🤖',
-  'appstore':      '📱',
-  'google-play':   '▶',
-  'apk':           '📦',
-  'wechat-mp':     '🟢',
-  'web':           '🌐',
 };
 
 @Component({
@@ -45,7 +35,6 @@ export class PlatformDownloadGridComponent {
     return this.channels.map((ch) => ({
       channel: ch,
       captionText: PLATFORM_CAPTIONS[ch.badge] ?? `在 ${ch.label} 下载`,
-      iconEmoji: PLATFORM_ICONS[ch.badge] ?? '📲',
     }));
   }
 

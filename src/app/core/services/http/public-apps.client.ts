@@ -77,11 +77,14 @@ export interface PublicAppsListResponseDto {
 // ---------------------------------------------------------------------------
 
 function mapChannel(c: PublicChannelDto): DownloadChannel {
+  const badge = c.type === 'apk' ? 'apk' : c.badge as DownloadChannel['badge'];
+  const labels: Record<string, string> = { appstore: 'App Store', 'google-play': 'Google Play', apk: '官网下载 APK', 'tencent-myapp': '应用宝', 'wechat-mp': '微信小程序', web: '网页版' };
+  const label = c.label?.trim();
   return {
     type: c.type as DownloadChannel['type'],
-    label: c.label,
-    badge: c.badge as DownloadChannel['badge'],
-    url: c.url ?? '',
+    label: !label || label === '新渠道' ? labels[badge] ?? '获取应用' : label,
+    badge,
+    url: c.url?.trim() ?? '',
     primary: c.primary,
     available: c.available,
   };
@@ -92,6 +95,7 @@ function mapFeature(f: PublicFeatureDto): AppFeature {
     title: f.title,
     description: f.description,
     icon: f.icon ?? '',
+    imageUrl: f.image_url ?? undefined,
   };
 }
 
@@ -102,7 +106,8 @@ function mapSummaryToEntry(raw: PublicAppSummaryDto): AppEntry {
     tagline: raw.tagline,
     subtitle: raw.subtitle ?? '',
     description: '',
-    heroImage: raw.hero_image_url ?? '',
+    logoImage: raw.logo_url ?? undefined,
+    heroImage: raw.hero_image_url || raw.logo_url || '',
     heroAspect: undefined,
     detailImages: [],
     tileTheme: raw.tile_theme as AppEntry['tileTheme'],
@@ -123,8 +128,9 @@ function mapDetailToEntry(raw: PublicAppDetailDto): AppEntry {
     tagline: raw.tagline,
     subtitle: raw.subtitle ?? '',
     description: raw.description ?? '',
-    heroImage: raw.hero_image_url ?? '',
-    heroAspect: raw.hero_aspect ?? undefined,
+    logoImage: raw.logo_url ?? undefined,
+    heroImage: raw.hero_image_url || raw.logo_url || '',
+    heroAspect: raw.hero_image_url ? raw.hero_aspect ?? undefined : 1,
     detailImages: raw.detail_images.map((img) => img.url),
     tileTheme: raw.tile_theme as AppEntry['tileTheme'],
     platforms: raw.channels.map(mapChannel),
@@ -132,6 +138,7 @@ function mapDetailToEntry(raw: PublicAppDetailDto): AppEntry {
     privacyUrl: raw.privacy_url ?? undefined,
     termsUrl: raw.terms_url ?? undefined,
     publishedAt: raw.published_at ?? undefined,
+    updatedAt: raw.privacy_updated_at ?? undefined,
     isVisible: true,
     seo: {
       title: raw.seo?.title ?? undefined,

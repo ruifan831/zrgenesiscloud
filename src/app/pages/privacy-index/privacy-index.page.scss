@@ -2,7 +2,7 @@
 // 极简无装饰，max-width 居中，按 App 分组列表
 
 $content-max: 1200px;
-$content-padding: max(40px, calc((100vw - #{$content-max}) / 2));
+$content-padding: var(--page-gutter);
 
 // ─── Hero ──────────────────────────────────────────────────────────────────
 .privacy-index__hero {
@@ -148,7 +148,8 @@ $content-padding: max(40px, calc((100vw - #{$content-max}) / 2));
   }
 
   &--disabled {
-    opacity: 0.4;
+    color: var(--text-on-light-muted);
+    &::after { content: none; }
     cursor: default;
     pointer-events: none;
   }
@@ -199,7 +200,7 @@ $content-padding: max(40px, calc((100vw - #{$content-max}) / 2));
 
 // ─── Responsive ─────────────────────────────────────────────────────────────
 @media (max-width: 640px) {
-  $mobile-padding: 16px;
+  $mobile-padding: 24px;
 
   .privacy-index__hero {
     padding: var(--space-16) $mobile-padding var(--space-8);
@@ -231,3 +232,13 @@ $content-padding: max(40px, calc((100vw - #{$content-max}) / 2));
     width: 100%;
   }
 }
+
+.privacy-index__app-icon { border-radius: 12px; object-fit: contain; margin-bottom: 16px; }
+.privacy-index__policy-link { min-height: 44px; }
+.privacy-index__empty { padding: 32px 0; color: var(--text-on-light-muted); }
+.privacy-index__empty button { margin-top: 16px; border: 0; padding: 12px 24px; border-radius: 24px; background: var(--color-accent); color: var(--text-on-dark); cursor: pointer; }
+
+.privacy-index__archive { padding: 0 var(--page-gutter) 56px; }
+.privacy-index__archive h2 { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.privacy-index__archive p { color: var(--text-on-light-muted); margin-bottom: 20px; }
+.privacy-index__archive a { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--color-divider); color: var(--color-accent); }

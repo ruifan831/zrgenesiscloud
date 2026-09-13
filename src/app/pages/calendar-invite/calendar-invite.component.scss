@@ -7,7 +7,8 @@
 }
 
 .invite-page {
-  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--surface-parchment);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +17,11 @@
 
 .invite-page__content {
   width: 100%;
-  max-width: 400px;
+  max-width: 480px;
+  padding: clamp(24px, 5vw, 40px);
+  border: 1px solid var(--color-divider);
+  border-radius: 24px;
+  background: var(--surface-light);
 }
 
 // 页头
@@ -87,7 +92,7 @@
 .invite-page__form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .invite-page__field {
@@ -132,6 +137,7 @@
 
   &--sms {
     flex: 1;
+    min-width: 0;
   }
 }
 

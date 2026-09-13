@@ -23,3 +23,6 @@
   background: var(--surface-parchment);
   border-radius: var(--radius-tile);
 }
+
+:host { display: block; }
+.product-image__placeholder { display: grid; place-items: center; padding: 20px; color: var(--text-on-light-muted); text-align: center; font-size: 14px; min-height: 0; aspect-ratio: 1; }

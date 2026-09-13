@@ -1,6 +1,7 @@
+<a class="skip-link" href="#main-content">跳转到主要内容</a>
 <ui-global-nav *ngIf="showHeader()"></ui-global-nav>
 
-<main class="app-shell__main" [class.app-shell__main--no-nav]="!showHeader()">
+<main id="main-content" tabindex="-1" class="app-shell__main" [class.app-shell__main--no-nav]="!showHeader()">
   <router-outlet></router-outlet>
 </main>
 

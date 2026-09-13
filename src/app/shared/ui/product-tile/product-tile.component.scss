@@ -4,7 +4,7 @@
 
 .product-tile {
   width: 100%;
-  min-height: 100vh;
+  min-height: 520px;
   display: flex;
   align-items: center;
 }
@@ -13,7 +13,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-20) max(var(--space-10), calc((100vw - 1200px) / 2));
+  padding: clamp(48px, 6vw, 80px) 24px;
   display: flex;
   align-items: center;
   gap: var(--space-16);
@@ -70,7 +70,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: var(--space-3);
-  opacity: 0.55;
+  opacity: 0.8;
   color: currentColor;
 }
 
@@ -78,7 +78,7 @@
 .product-tile__name {
   font-size: var(--font-display-lg);
   font-weight: var(--fw-semibold);
-  line-height: var(--lh-display-lg);
+  line-height: 1.25;
   letter-spacing: var(--ls-display-lg);
   color: currentColor;
   margin-bottom: var(--space-5);

@@ -1,28 +1,10 @@
-// Home page — App Gallery
-// No standalone styles needed; section tiles are styled by ProductTileComponent
-// and HeroIntroComponent, each hosting their own surface class.
-
-:host {
-  display: block;
-}
-
-// App gallery tiles container
-#apps {
-  // No gap between tiles — color change is the visual separator (AC-12)
-}
-
-// Loading skeleton — 极简灰块，无 spinner
-.app-tile-skeleton {
-  background: var(--surface-parchment, #f5f0e8);
-  border-radius: var(--radius-lg, 16px);
-  min-height: 480px;
-  margin-bottom: 2px;
-}
-
-// Error state
-.apps-load-error {
-  padding: 80px 24px;
-  text-align: center;
-  color: var(--text-muted, #666);
-  font-size: 1rem;
-}
+:host { display: block; }
+.app-gallery { scroll-margin-top: 76px; }
+.app-gallery__heading { max-width: 1200px; margin: auto; padding: 52px 24px 32px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.app-gallery__heading h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 600; }
+.app-gallery__heading p { color: var(--text-on-light-muted); }
+.app-tile-skeleton { background: var(--surface-parchment); min-height: 320px; margin: 0 24px 20px; border-radius: 24px; }
+.apps-load-error { padding: 64px 24px; text-align: center; color: var(--text-on-light-muted); }
+.apps-load-error h3 { color: var(--text-on-light); margin-bottom: 12px; }
+.apps-load-error button { margin-top: 24px; padding: 12px 24px; border: 0; border-radius: 24px; background: var(--color-accent); color: var(--text-on-dark); cursor: pointer; }
+@media(max-width: 640px) { .app-gallery__heading { display: block; padding-top: 36px; } .app-gallery__heading p { margin-top: 10px; } }

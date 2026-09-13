@@ -14,29 +14,29 @@
     </div>
 
     <!-- 消息提示 -->
-    <div *ngIf="errorMessage" class="invite-page__message invite-page__message--error">{{ errorMessage }}</div>
-    <div *ngIf="successMessage" class="invite-page__message invite-page__message--success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" role="alert" class="invite-page__message invite-page__message--error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" role="status" class="invite-page__message invite-page__message--success">{{ successMessage }}</div>
 
     <!-- 注册表单 -->
     <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-page__form" novalidate>
 
       <div class="invite-page__field">
-        <label class="invite-page__label">邀请码</label>
-        <input formControlName="inviteCode" type="text" readonly class="invite-page__input invite-page__input--readonly"
+        <label for="inviteCode" class="invite-page__label">邀请码</label>
+        <input id="inviteCode" formControlName="inviteCode" type="text" readonly class="invite-page__input invite-page__input--readonly"
           [value]="inviteCode" placeholder="邀请码" />
-        <p class="invite-page__hint">邀请码已自动填入，不可修改</p>
+        <p class="invite-page__hint">{{ inviteCode ? '邀请码已自动填入，不可修改' : '未检测到邀请码，请通过朋友分享的完整链接打开。' }}</p>
       </div>
 
       <div class="invite-page__field">
-        <label class="invite-page__label">手机号 <span class="invite-page__required">*</span></label>
-        <input formControlName="phoneNumber" type="tel" placeholder="请输入手机号" maxlength="11"
+        <label for="phoneNumber" class="invite-page__label">手机号 <span class="invite-page__required">*</span></label>
+        <input id="phoneNumber" formControlName="phoneNumber" type="tel" autocomplete="tel-national" inputmode="numeric" placeholder="请输入手机号" maxlength="11"
           class="invite-page__input" />
       </div>
 
       <div class="invite-page__field">
-        <label class="invite-page__label">验证码 <span class="invite-page__required">*</span></label>
+        <label for="verificationCode" class="invite-page__label">验证码 <span class="invite-page__required">*</span></label>
         <div class="invite-page__sms-row">
-          <input formControlName="verificationCode" type="text" placeholder="请输入6位验证码" maxlength="6"
+          <input id="verificationCode" formControlName="verificationCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入6位验证码" maxlength="6"
             class="invite-page__input invite-page__input--sms" />
           <button type="button" (click)="sendVerificationCode()" [disabled]="isCountingDown"
             class="invite-page__sms-btn">

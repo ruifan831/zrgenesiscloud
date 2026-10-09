@@ -4,7 +4,7 @@
 brand
 
 ## Users
-终端用户从桌面或手机浏览官网，了解应用、找到适合设备的下载入口、查阅协议；合作方从联系页发起沟通。来源：工作区 docs/prd/zrgenesiscloud-app-showcase.md §1、11。
+终端用户从桌面或手机浏览官网，了解应用、找到适合设备的下载入口、查阅协议；合作方从联系页发起沟通。来源：工作区 zrgenesiscloud/docs/prd/zrgenesiscloud-app-showcase.md §1、11。
 
 ## Product Purpose
 以 App 为主角的宣传与下载门户。首页到详情再到下载，路径简短；所有产品信息来自公共 API。公司介绍退居导航与页脚。来源：项目 AGENTS.md 与 PRD。

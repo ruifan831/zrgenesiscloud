@@ -966,3 +966,9 @@ Chrome再次读取/legal/calendar/privacy/，含一次独立query复核，返回
 
 - 提交通用好友邀请页、路由作用域与下载契约、旧实现替换及测试。当前完整production构建通过；沿用既有邀请定向测试记录，本轮未执行真实短信/绑定或线上配置。班管家Web邀请机制保持原样。
 - 用户授权分批本地提交；保留其他批次改动，未推送或部署。
+
+
+## 2026-10-09 — docs: organize public website guidance and design references
+
+- 提交产品文档、项目入口及既有网站设计资料归类；diff检查通过，不代表部署已完成。
+- 用户授权分批本地提交；保留其他批次改动，未推送或部署。

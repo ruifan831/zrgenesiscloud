@@ -1,4 +1,4 @@
-// CalendarInviteComponent — 邀请落地页
+// 通用好友邀请，沿用官网浅色与系统字体。
 // 无 nav/footer（route.data.showHeader/showFooter = false）
 // 极简单屏，新 token 排版
 
@@ -76,9 +76,9 @@
   margin-bottom: var(--space-4);
 
   &--error {
-    background: #fff0f0;
-    border: 1px solid #ffcccc;
-    color: #c00;
+    background: oklch(0.97 0.014 25);
+    border: 1px solid oklch(0.84 0.04 25);
+    color: oklch(0.47 0.16 25);
   }
 
   &--success {
@@ -155,7 +155,7 @@
 .invite-page__sms-btn {
   padding: 10px var(--space-4);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--surface-light);
   border: none;
   border-radius: var(--radius-sm);
   font-size: 14px;
@@ -178,7 +178,7 @@
 .invite-page__submit {
   padding: var(--space-3) var(--space-6);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--surface-light);
   border: none;
   border-radius: var(--radius-pill);
   font-size: var(--font-body);
@@ -216,3 +216,37 @@
     opacity: 0.8;
   }
 }
+
+.invite-page__logo { flex-shrink: 0; border-radius: 12px; object-fit: contain; }
+.invite-page__app-name { padding: 0; background: none; border-radius: 0; color: var(--text-on-light); font-size: 17px; font-weight: var(--fw-semibold); overflow-wrap: anywhere; }
+.invite-page__header { margin-bottom: var(--space-8); }
+.invite-page__eyebrow { margin: 0 0 var(--space-3); color: var(--text-on-light-secondary); font-size: 14px; overflow-wrap: anywhere; }
+.invite-page__title { line-height: 1.3; }
+.invite-page__form { padding: 0; margin: 0; border: 0; min-width: 0; }
+.invite-page__input { min-height: 48px; }
+.invite-page__consent { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.7; }
+.invite-page__consent input { margin-top: 4px; width: 17px; height: 17px; flex-shrink: 0; accent-color: var(--color-accent); }
+.invite-page__field-error { margin: 3px 0 0; font-size: 13px; color: oklch(0.47 0.16 25); }
+.invite-page__hint { line-height: 1.6; }
+.invite-page__get-app { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--color-divider); display: grid; gap: var(--space-4); }
+.invite-page__downloads { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); font-size: 14px; }
+.invite-page a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+.invite-page a:hover { opacity: 0.8; }
+.invite-page__open { min-height: 44px; padding: 8px 16px; border: 1px solid var(--color-accent); border-radius: var(--radius-pill); color: var(--color-accent); background: transparent; cursor: pointer; font: inherit; }
+.invite-page__open:hover { background: var(--surface-parchment); }
+.invite-page button:focus-visible, .invite-page a:focus-visible, .invite-page input:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.invite-page__qr { justify-self: center; text-align: center; }
+.invite-page__qr img { display: block; }
+.invite-page__skeleton { height: 48px; margin-bottom: var(--space-5); border-radius: 8px; background: var(--surface-parchment); }
+.invite-page__skeleton--logo { width: 52px; height: 52px; }
+.invite-page__skeleton--title { width: 75%; height: 32px; }
+@media (max-width: 420px) { .invite-page { padding: 20px 12px; } .invite-page__content { padding: 28px 20px; } .invite-page__title { font-size: 25px; } .invite-page__sms-btn { min-width: 94px; padding-inline: 12px; } }
+
+// App 是手机首要路径；网页手机号验证为独立的可选路径。
+.invite-page__get-app { margin-top: 0; padding-top: 0; border-top: 0; }
+.invite-page__open { color: var(--surface-light); background: var(--color-accent); margin-top: 0; }
+.invite-page__open:hover { background: var(--color-accent); }
+.invite-page__web-option { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--color-divider); }
+.invite-page__web-option summary { cursor: pointer; color: var(--color-accent); font-size: 15px; font-weight: var(--fw-semibold); padding-block: 8px; }
+.invite-page__web-option summary:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.invite-page__web-description { margin-block: var(--space-3) var(--space-6); }

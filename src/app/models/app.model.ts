@@ -36,6 +36,8 @@ export interface AppFeature {
 export type AppTileTheme = 'light' | 'parchment' | 'dark';
 
 export interface AppEntry {
+  /** 后端注册表身份，仅详情接口提供，用于邀请品牌与作用域核对。 */
+  appId?: string;
   slug: string;          // URL 标识：calendar | vision-cue | shanying
   name: string;          // 全民万年黄历通
   tagline: string;       // ≤10 字
@@ -48,7 +50,7 @@ export interface AppEntry {
   detailImages?: string[];
   platforms: DownloadChannel[];
   features: AppFeature[];
-  privacyUrl?: string;   // /privacy/calendar
+  privacyUrl?: string;   // /legal/calendar/privacy/
   termsUrl?: string;
   publishedAt?: string;  // YYYY-MM-DD
   updatedAt?: string;

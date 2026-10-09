@@ -24,12 +24,13 @@ describe('PublicAppsClient presentation mapping', () => {
   it('trims copied download URLs and maps APK channels, feature images and legal dates', fakeAsync(() => {
     let result: AppEntry | null = null;
     client.getBySlug('app').subscribe(value => result = value);
-    http.expectOne(req => req.url.endsWith('/public/apps/app')).flush({ ...summary,
+    http.expectOne(req => req.url.endsWith('/public/apps/app')).flush({ ...summary, app_id: 'trusted-app-id',
       channels: [{ type: 'apk', badge: 'web', label: '新渠道', url: '\thttps://example.com/app.apk ', available: true }],
       features: [{ title: 'feature', description: '', icon: null, image_url: 'https://example.com/feature.png' }],
       detail_images: [], privacy_updated_at: '2026-09-13',
     });
     const app = result as unknown as AppEntry;
+    expect(app.appId).toBe('trusted-app-id');
     expect(app.platforms[0].url).toBe('https://example.com/app.apk');
     expect(app.platforms[0].badge).toBe('apk');
     expect(app.platforms[0].label).toBe('官网下载 APK');

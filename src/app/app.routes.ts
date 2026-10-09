@@ -1,7 +1,13 @@
-import { Routes } from '@angular/router';
-import { inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { appDetailResolver } from './pages/app-detail/app-detail.resolver';
+
+/** The old receiving page has no app-scope contract. Explicit scope must stay here and fail closed. */
+export function legacyReferralRedirectUrl(route: Pick<ActivatedRouteSnapshot, 'paramMap' | 'queryParamMap'>): string | null {
+  if (route.queryParamMap.has('app_id')) return null;
+  const userId = encodeURIComponent(route.paramMap.get('userId') ?? '');
+  const url = new URL(`https://crewpilot.zrgenesiscloud.com/share/${userId}`);
+  return url.href;
+}
 
 export const routes: Routes = [
   // ── 首页（App 画廊）────────────────────────────────────────────────────────
@@ -52,37 +58,23 @@ export const routes: Routes = [
       import('./contact/contact.component').then((m) => m.ContactComponent),
   },
 
-  // ── 邀请落地页（隐藏 nav/footer）─────────────────────────────────────────
-  {
-    path: 'invite/calendar',
-    loadComponent: () =>
-      import('./pages/calendar-invite/calendar-invite.component').then(
-        (m) => m.CalendarInviteComponent
-      ),
-    data: { showHeader: false, showFooter: false },
-  },
-
-  // ── 旧 ShiftMate 邀请落地页 /invite/r/:userId → 301 兼容重定向（T-21）
-  // 已分享出去的旧链接 301 跳转到新统一邀请落地页（crewpilot 子域），兼容期 30 天。
-  // 纯 SPA 无 SSR，使用 guard 做客户端跳转（无法做真 HTTP 301）。
+  // 旧邀请链接精确匹配优先，不被通用应用 slug 路由吞掉。
   {
     path: 'invite/r/:userId',
-    canActivate: [
-      () => {
-        const route = inject(ActivatedRoute);
-        const userId = encodeURIComponent(
-          route.snapshot.paramMap.get('userId') ?? ''
-        );
-        window.location.replace(
-          `https://crewpilot.zrgenesiscloud.com/share/${userId}`
-        );
-        return false;
-      },
-    ],
-    loadComponent: () =>
-      import('./pages/invite-landing/invite-landing.component').then(
-        (m) => m.InviteLandingComponent
-      ),
+    pathMatch: 'full',
+    canActivate: [(route: ActivatedRouteSnapshot) => {
+      const target = legacyReferralRedirectUrl(route);
+      if (!target) return true; // The generic page rejects this legacy URL because it has no product slug.
+      window.location.replace(target);
+      return false;
+    }],
+    loadComponent: () => import('./pages/referral-invite/referral-invite.component').then(m => m.ReferralInviteComponent),
+    data: { showHeader: false, showFooter: false },
+  },
+  {
+    path: 'invite/:slug',
+    pathMatch: 'full',
+    loadComponent: () => import('./pages/referral-invite/referral-invite.component').then(m => m.ReferralInviteComponent),
     data: { showHeader: false, showFooter: false },
   },
 

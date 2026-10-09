@@ -52,14 +52,11 @@ describe('app.routes — redirects (§8 URL compat)', () => {
   });
 
   // These should NOT be redirected
-  it('/privacy/calendar should not redirect', async () => {
-    await harness.navigateByUrl('/privacy/calendar');
-    expect(router.url).toBe('/privacy/calendar');
-  });
-
-  it('/privacy/teleprompter should not redirect', async () => {
-    await harness.navigateByUrl('/privacy/teleprompter');
-    expect(router.url).toBe('/privacy/teleprompter');
+  it('uses the shared product legal route without retired aliases', () => {
+    expect(routes.some(route => route.path === 'legal/:product/:slug')).toBeTrue();
+    for (const path of ['privacy/calendar', 'privacy/teleprompter', 'calendar/privacy', 'calendar/user-agreement']) {
+      expect(routes.some(route => route.path === path)).toBeFalse();
+    }
   });
 
   it('/privacy-policy should not redirect', async () => {

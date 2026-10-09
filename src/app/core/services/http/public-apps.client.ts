@@ -56,6 +56,7 @@ export interface PublicAppSummaryDto {
 }
 
 export interface PublicAppDetailDto extends PublicAppSummaryDto {
+  app_id: string;
   description: string | null;
   hero_aspect: number | null;
   published_at: string | null;
@@ -123,6 +124,7 @@ function mapSummaryToEntry(raw: PublicAppSummaryDto): AppEntry {
 
 function mapDetailToEntry(raw: PublicAppDetailDto): AppEntry {
   return {
+    appId: raw.app_id,
     slug: raw.slug,
     name: raw.name,
     tagline: raw.tagline,
@@ -192,7 +194,7 @@ export class PublicAppsClient {
   getBySlug(slug: string): Observable<AppEntry | null> {
     if (!this.detailCache.has(slug)) {
       const obs$ = this.http
-        .get<PublicAppDetailDto>(`${this.base}/public/apps/${slug}`)
+        .get<PublicAppDetailDto>(`${this.base}/public/apps/${encodeURIComponent(slug)}`)
         .pipe(
           map(mapDetailToEntry),
           catchError((err) => {

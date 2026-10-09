@@ -116,7 +116,7 @@ describe('AppCatalogService', () => {
       primary_channel: null,
       description: '全面的安卓日历应用',
       published_at: '2024-01-01',
-      privacy_url: '/privacy/calendar',
+      privacy_url: '/legal/calendar/privacy/',
       terms_url: null,
       privacy_updated_at: null,
       seo: { title: '全民万年黄历通 — ZRGenesis', description: '日历应用' },

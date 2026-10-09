@@ -792,6 +792,34 @@ Reviewer 后于 T-13 复审，找到 3 个 P0 + 6 个 P1。本次修复 3 个 P0
 - `GET /api/v1/app/meta` invite_routing bundle：zrgenesiscloud 如需展示 App 邀请入口可消费该字段
 - 新 invite 域：`crewpilot.zrgenesiscloud.com`（scheduling-web 落地页）
 
+## 2026-09-12 提词器大师法律页与请求时 SSR
+- 新增两份 Markdown，参考班管家结构并适配本地作品、账号、广告、抽奖、提现和删除。联系邮箱复用官网配置；存储地区及跨境信息待用户确认，未编造具体位置。
+- Node HTTP + marked 按白名单路径返回完整 HTML，无客户端脚本；含 HEAD、301、404、405、503 与 CSP。官网其余页面保持 SPA。
+- Angular 兼容路由及旧提词隐私路由转向已接入；正文使用 sanitizer。新增 Nginx 配置和部署说明，未写后台法律 URL 或部署生产。
+- 验证：Angular production build、2 项 HTTP 测试通过；浏览器检查桌面与 390px 窄屏正文及协议互链，页面无横向溢出。本地预览端口 4100。
+
+## 2026-09-13 法律页改为构建时预渲染
+- 按用户本地 build 后仅上传 browser 的要求，用构建脚本替换专用 Node HTTP 服务，移除 serve:legal 和旧服务测试。保持正文/样式，生成两个法律路径及旧隐私别名完整 HTML。
+- npm run build 自动执行生成；测试覆盖全文无脚本、旧路径一致、SPA 首页不被覆盖、缺失正文构建失败。部署说明、Nginx 配置、README、AGENTS 已同步，生产不再需要依赖安装或 4100 代理。
+- 不涉及后端、App 客户端、线上部署或后台配置。
+- 验证：npm run build 成功；2 项预渲染测试通过；纯静态 HTTP 服务读取两个法律页和旧地址均 200 且含完整正文/无脚本，缺失页 404。打包 dist/zrgenesiscloud-browser.zip（仅 browser 目录）。
+
+## 2026-09-13 用户宝塔配置适配 browser
+生成 docs/nginx/zrgenesiscloud-browser-bt.conf 完整候选。保留全局 root、SSL、admin、API、WS、远端资源、well-known 和旧协议 alias；仅官网 location /、通用图片/JS/CSS规则及新法律路径使用 browser。添加旧提词隐私301。未改服务器；extension/rewrite内容未知，需服务器 nginx -t 和实际访问验证。
+
+## 2026-09-13 停用 admin 网站入口
+按用户要求从完整宝塔配置候选移除 admin 静态资源及 SPA 规则，改为 /admin 精确与 /admin/ 前缀返回404，避免回落官网。保留 API、证书验证及旧协议配置，未删除服务器文件或修改线上服务。
+
+## 2026-09-13 — 提词器大师 GroMore 审核及 SDK 披露
+
+- 审核两端：均开启聚合；iOS 下游 SDK/适配器齐全，Android 仅聚合主 SDK，四家下游缺失。未改原生 SDK 配置，未做真实投放验证。
+- 隐私政策 1.1 按班管家当前法律页面形式补齐 GroMore、快手、优量汇、百度、Sigmob、Android 内嵌抖音 SDK 和支付宝的提供方、范围、目的、信息、方式和官方链接；未把 iOS 专有依赖披露成 Android 已接入。
+- 审核证据与 Android 后续缺口记录于 docs/ticidashi-ad-sdk-audit.md。法律页测试 2 项通过；生产构建通过；验证生成 HTML 包含全部 SDK、无脚本、旧路径正文一致；已刷新 dist/zrgenesiscloud-browser.zip。未部署服务器。
+
+## 2026-09-13 — Android shared GroMore bundle follow-up
+- Android now selects four downstream networks through AuthSDK catalog:1.1.0; privacy disclosure updated to cover both iOS and Android, Android identifiers and constrained permissions. Audit document retains original findings with an explicit follow-up correcting the former missing-dependency status.
+- Legal tests (2) and production build passed; refreshed browser ZIP. No server deployment.
+
 
 ## 2026-09-13 — 官网逐页 UI 评估与完善
 
@@ -805,3 +833,130 @@ Reviewer 后于 T-13 复审，找到 3 个 P0 + 6 个 P1。本次修复 3 个 P0
 
 ### 2026-09-14 — 提交官网 UI 完善
 - 按用户要求只提交本次 UI、回归测试及评估文档；将 privacy SPA 修正独立为 `docs/nginx/public-site-privacy.conf`，保留其他任务的法律页与 SDK 披露改动。未 push、未部署。
+
+## 2026-09-15 — 项目文档分类与公共 SOP 整合
+
+- 将本站 PRD、架构和跟进清单归入项目 docs；更新 PRODUCT 与项目导航，链接平台公共营销资料。
+- 验证：工作区 796 个 Markdown 本地引用检查，无新增断链；未修改应用实现，因此未运行 App 构建。整理前缺失的软著截图/后端迁移总索引记录在工作区维护报告。
+- 完整旧路径映射：[文档整理记录](../../docs/maintenance/2026-09-15-documentation-reorganization.md)。
+
+## 2026-09-15 — 新对话上下文与 SOP 入口
+
+- 项目 AGENTS 增加必读工作区指令、SOP 索引和近期开发记录的启动流程，兼顾独立仓库/worktree 的路径定位。
+- 仅文档变更；已验证本工作区入口链接存在，未启动新会话做端到端加载验证。
+
+## 2026-09-22 — 黄历天气条款与定位披露
+
+- 用户授权补充天气声明与隐私说明。核对站点 AGENTS、索引/近期记录和 Nginx alias，更新根 privacy-policy.html、chinese-almanc-user-agreement.html 及 Angular /privacy/calendar 正文，日期为2026-09-22。
+- 用户协议增加 WeatherAPI 来源、预报不确定性、安全相关使用限制及官方气象来源；隐私章节明确前台单次定位、原生 Geocoder 可能联网、服务器仅接收国家省市区、WeatherAPI 接收城市代表点或地点 ID、不上传原始定位/账号、手选与撤权。未扩大其他条款免责，也未改动既有其他SDK章节。
+- npm run build（Angular生产构建与现有法律页预渲染）及git diff --check通过。关联 ChineseAlmanc 的页面说明与账号表单，其代码/验收记录在应用日志。
+- 未部署、提交或推送。部署须更新 Nginx /calendar/privacy 和 /calendar/user-agreement alias 对应根目录两份静态HTML，仅上传 dist/browser 不能替换该两份文件；Angular备用隐私路由随站点正常构建发布。保留已有其他法律页/文档改动。
+
+
+## 2026-09-23 — 黄历头像隐私披露
+
+- 根目录privacy-policy.html与Angular黄历隐私页增加头像照片说明：系统选图、仅访问所选文件、本地缩小居中裁切和去除EXIF、保存后上传及对象存储用途；更新政策日期。保留此前天气协议等未提交修改。
+- npm run build通过。配合Android新增头像流程，详见ChineseAlmanc/docs/avatar-settings.md；未部署线上政策、提交或推送。
+
+
+## 2026-09-23 — 黄历法律页整合与快手 MAC 披露
+
+- 按用户要求将根 privacy-policy.html、chinese-almanc-user-agreement.html 正文迁入 src/assets/legal/calendar；去除旧独立壳和Angular重复正文，保留原条款/天气/头像，快手SDK表格及专属说明增加MAC地址、目的、方式和场景。无SDK行为修改。
+- 复用提词器构建时预渲染（不是请求时SSR），Angular公共阅读器加载同一HTML来源；新增legal/calendar路由并生成calendar/privacy、calendar/user-agreement、privacy/calendar和两份旧文件名的完整HTML别名。
+- 更新两份Nginx模板替换旧根HTML alias，补充部署文档、README/AGENTS/索引和后续清单；采用会话上下文/文档维护/编码规范。保留本任务前已有修改，未提交或部署。
+- 验证：npm run build通过；2项预渲染测试、2项Angular组件测试通过；本地HTTP核对9个新旧法律地址200全文无script、未知页404。Chrome读取隐私正文/新增披露及协议互链，首屏截图排版正常。未做真机WebView或商店复检。
+
+
+## 2026-09-23 — 所有新应用统一 Markdown 与 legal 前缀
+
+- 用户明确无需旧地址兼容，本条取代上一条保留别名的决定。黄历两份HTML正文转为Markdown，与提词器共用products.json注册表、Angular通用路由和预渲染器；未来新App登记后直接复用，无需新建产品组件。
+- 删除旧calendar-privacy组件、旧Angular路由、构建别名与Nginx兼容块，官网黄历入口统一/legal/calendar/{privacy,terms}/，提词器仍为/legal/ticidashi/{privacy,terms}/。规范、两份部署文档、README/AGENTS同步；未知两段legal路径静态404，旧班管家单段legal路由保持。
+- 验证：生产构建通过、2项预渲染测试及8项共享阅读器/隐私索引测试通过；转换后HTML文本去空白与原文逐字一致，SDK链接/快手MAC披露保留，6种旧路径产物均不存在。无全量Karma重跑。
+- 未提交、部署、改生产数据库；应先上线新URL再发布客户端，部署时需移除旧Nginx alias与旧静态文件（覆盖上传不自动删除）。
+
+
+## 2026-09-24 — 通用多应用好友邀请页
+
+- 按最终方案将固定黄历页改为 `/invite/:slug?app_id&code`，营销详情映射 app_id 并先核对身份，复用 metadata/法律信息/邀请卡/SMS login用途/referral-register。query与X-App-Id统一；不新增聚合API、不按UA改变App ID。
+- 协议勾选、发送/提交防重复、429冷却、明确绑定结果、route切换取消与清空、加载重试；成功无定时跳转。打开/下载只依赖invite routing，iOS scheme/Smart Banner、Android定向intent、HTTPS下载检查、微信提示、桌面本地二维码。
+- 删除原黄历页、不可达旧班管家落地组件、AuthService/InviteCardService和environment中的产品默认身份/下载配置；旧 `/invite/r/:userId` 保留精确守卫并修复读取路由参数方式。沿用官网tokens；应用impeccable规范与编码/API SOP。
+- 验证：29项定向Karma通过，production build与法律页预渲染通过；Chrome本地隔离mock验证桌面、375px、黄历/第三应用、身份冲突、未勾选不可提交及模拟接受成功。浏览器发现并修复OnPush祖先下异步数据刷新和qrcode默认导出interop问题。未发真实SMS/注册/绑定、未提交/部署。
+- 新增 docs/multi-app-referral.md。黄历真实slug为huangli；班管家Android/iOS App ID不同且当前crewpilot营销归iOS，上线前须独立Android营销条目/路径，不能直接复用模板。qrcode懒加载有CommonJS构建提示；真机关联、微信和生产闭环仍待发布验收。保留此前法律页等未提交修改。
+
+- 收尾复核：组件外层改为 div，复用 AppShell 的 main 地标，避免嵌套 main；生产构建再次通过。只读核对原生 parser：规范无尾斜杠模板的 scheme/intent 与 iOS/Android 一致；尾斜杠配置及非 www host 的边界已反馈跨项目负责人。
+
+- 对接收尾：网页接受并保留 routing 产品路径的可选尾斜杠，与 AASA 和原生 exact-path 一致；新增尾斜杠回归后共30项定向测试通过，生产构建再次通过。文档明确当前宿主只接收 www.zrgenesiscloud.com 默认HTTPS端口/443。
+
+- 旧入口身份收尾：`/invite/r/:userId` 只透传全部显式 app_id query 值（含重复/空值）给 CrewPilot /share 校验，缺省维持旧兼容，不透传token/code。新增回归后最终31项定向Karma通过，production build通过。
+
+
+## 2026-09-24 — 按用户纠正恢复 App 优先邀请路径
+
+- 本条取代上一轮“先网页验证”及旧 /r 透传scope依赖接收页校验的安排。手机邀请页首部提供“打开 App 并接受邀请”，带入当前App ID/邀请码；无需先填网页手机号、勾协议或调用网页绑定。网页手机号绑定保留为独立折叠选项。
+- metadata/品牌/邀请卡校验继续保留；法律信息并行渐进加载，其慢/失败只控制网页表单，不阻断App入口。App打开不设超时下载跳转；未安装提示下载后重开邀请链接或选网页验证。
+- inviteActions除严格canonical模板，还支持已有好友 `/share/{inviteCode}` / `/share/{userId}`，scope附加且不解码code，拒绝组织/任意路径和冲突参数；legacy唤起使用routing实际host/scheme/package，canonical/QR仍当前通用官网页。与native代理对齐注册/登录自动绑定，无强制新routing切换。
+- 旧 `/invite/r/:userId` 无scope维持原重定向；显式带app_id（含空/重复）在官网拒绝，避免跳向不做scope校验的旧/share。本子任务未改scheduling-web。
+- 验证：39项Karma通过，生产构建与法律预渲染通过。375px隔离mock Android/iOS首屏CTA、对应下载、独立展开网页表单验证正常。测试覆盖未填表/未勾协议可唤起、payload保留、协议失败独立、legacy支持/拒绝。未发真实短信/注册/绑定，未点击真实scheme/intent；未发布/提交。
+- 2026-09-24 — 黄历隐私检测两项 P0 正文修复：按用户限定仅修改 `src/assets/legal/calendar/privacy.md`，参考 scheduling-web 实际隐私页面的第三方披露（未采用官网 crewpilot 目录中“无广告SDK”的旧草稿）。依照已读会话上下文、应用法律页和代码 SOP，补充 IP 地址的信息类型、目的、系统接口读取方式、同意后初始化/广告请求/运行场景；优量汇和穿山甲表格显式列 IP，并分别增加提供方及专属处理说明。穿山甲用途核对官方 https://www.csjplatform.com/privacy；接口来源为用户提供的 1.1.9 自动化报告。保留其他既有条款与工作区修改，日期更新至2026-09-24。
+  验证：`npm run test:legal` 2项通过、`npm run build`（含完整HTML预渲染）通过，产物核对两家SDK的IP说明、系统接口及触发场景，原天气/头像/快手MAC说明保留，无script/app-root；`git diff --check`通过。构建仅有既有Node非LTS和qrcode/dijkstrajs CommonJS提示。本轮未部署、未修改后台配置/客户端/SDK，未提交或执行商店复检；线上生效仍需单独发布。
+
+
+## 2026-09-25 — 黄历设备标识披露与天气定位频率
+
+- 对照用户两份引擎行为报告，补全穿山甲OAID/Android ID、快手Android ID的信息类型、提供方、用途、读取方式与同意后初始化/广告请求/运行场景，保留IP及快手MAC既有说明；更新日期。未复制其他产品未核实的SDK能力。
+- 配合Android降频修复，天气条款说明Activity会话内成功城市复用5分钟、自动尝试至少间隔1分钟、主动定位立即重试；保留较早版本每次进页请求的披露，未改变iOS客户端或广告SDK。
+- 验证：法律预渲染2项测试、生产构建通过；生成HTML核对三项标识披露、5分钟规则与既有IP内容，无script/app-root；diff格式检查通过。未部署、未改后台URL、未提交或复检。
+
+
+## 2026-09-25 — 黄历传感器列表披露与主动定位策略
+
+- 按用户新贴报告：总体信息清单补充传感器列表、特定类型传感器列表、传感器信息的目的/方式/范围/同意后初始化等场景；优量汇表格及专属段落明确磁力、加速度、重力、陀螺仪，系统SensorManager列表查询方式，广告投放/能力适配/交互和反作弊。提供方与类型/用途核对官方 https://qzs.gdtimg.com/union/res/union_cdn/page/dev_rules/ylh_sdk_privacy_statement.html。没有把未附调用栈的首条记录归到具体SDK。
+- 位置信息同步Android新版仅主动触发、近似位置、用途确认、会话5分钟城市复用和两次取位至少1分钟；保留旧客户端可能按进页请求的说明及原其他披露。唯一Markdown正文维护，不修改已弃用根HTML；不代表关闭SDK传感器采集。
+- npm run test:legal两项及生产构建/完整HTML预渲染通过；最终HTML核对传感器两类列表、优量汇接口说明、主动取位及最小间隔，无script/app-root。日志/tmp/huangli-sensors-site-build.log。文案最终调整后重建通过，既有qrcode/dijkstra CommonJS警告未新增。
+- 未部署/提交或修改线上法律配置；需先发布政策再用新APK/新MD5送检。Android行为修改及测试另见ChineseAlmanc/.codex/task-log.md，本轮没有改后台/其他产品。
+
+
+## 2026-09-25 — 快手传感器专项说明与首启弹窗同步
+
+- 按用户补充快手联盟读取传感器列表报告，黄历唯一Markdown正文补充表格类型和专项目的/方式/范围/同意后时机，链接快手官方规则；提供方核对官方2026-07-31规则为北京快手广告有限公司。与Android首启摘要同步，未改SDK采集开关，不把披露等同于停止采集。
+- 沿用会话上下文/应用法律页/代码SOP；用户随后明确截图指向本地首启弹窗，客户端整改和版本同意记录另见ChineseAlmanc日志。
+- npm run test:legal两项通过，生产构建与完整HTML预渲染通过，产物包含快手传感器专项段、正确主体及接口说明，无script/app-root；日志/tmp/huangli-kuaishou-policy.log。未部署、提交或修改线上法律配置；发布正文后再用新版APK重新送检。
+
+## 2026-09-25 — iOS 天气主动定位披露同步
+
+- 配合黄历 iOS 城市选择/定位同步，在唯一 `calendar/privacy.md` 正文明确 Android/iOS 新版均只由主动操作触发；补充 iOS Core Location 降低精度、CLGeocoder 可能联网解析、近似位置更新由系统决定及边界不确定性，保留 5 分钟城市复用、60 秒尝试间隔、仅行政字段上传与 WeatherAPI 城市代表点规则。
+- 采用应用法律页/会话上下文 SOP；未改其他 SDK 条款、后台配置或 iOS 首启弹窗布局。本轮 iOS 实现与验证见 chinesealmancios 项目日志。
+- 验证：`npm run test:legal` 2 项通过；`npm run build` 成功，预渲染完整 HTML 含 Core Location/CLGeocoder/近似位置/间隔说明，无 script 或 app-root。仅既有 qrcode/dijkstrajs CommonJS 警告。日志 `/tmp/huangli-ios-location-legal-{tests,build}.log`。
+- 未部署或提交；线上正文需要发布网站产物后才更新。
+
+## 2026-09-25 — Android 新版安装列表控制说明
+
+- 配合黄历16:52复检整改，软件安装列表章节说明Android新版在初始化前通过穿山甲聚合隐私控制将应用列表读取设为不允许、不提供自定义包名列表，保留优量汇安装状态关闭。旧版本及未核实SDK披露保留，不宣称所有SDK均已无采集；快手原有传感器专段保持，与首启分项说明一致。
+- 按应用法律页SOP维护唯一Markdown，未更改iOS行为、其他SDK条款或线上配置。`npm run test:legal`两项及`npm run build`完整预渲染通过；产物含新版限制与原快手传感器专段。日志/tmp/huangli-ad-privacy-legal-{tests,build}.log，仅既有CommonJS提示。
+- 未部署/提交；需发布网站正文，再用新APK重新送检。客户端及共享SDK行为和验证边界分别记ChineseAlmanc/AuthSDK日志。
+
+
+## 2026-09-26 — 快手传感器复检线上差异核查
+
+- 按会话上下文/应用法律页/共享SDK SOP核对：Chrome读取规范线上隐私页，快手SDK表格不含传感器、提供方仍为北京快手科技有限公司，缺少本地已有快手传感器专段。确认一个直接对应报告的线上发布缺口；没有把安装列表关闭误当作传感器关闭。公开legal-info本次访问受阻，未重新确认后台配置；送检MD5仍未知。
+- 本地源Markdown、dist内Markdown逐字一致；静态HTML与当前renderLegalDocument输出一致，专项说明完整且无script/app-root。2项法律页测试通过，无需修改客户端或重复构建未变化的应用。
+- 打包并解压内容校验dist/calendar-privacy-20260926.zip，只含规范privacy/index.html和assets/legal/calendar/privacy.md；更新docs/calendar-legal-prerender.md增量部署与复检说明。未部署/提交/修改生产配置，没有宣称复检通过。
+
+
+## 2026-09-26 — 穿山甲/百度传感器条目与弹窗同步
+
+- 根据当前Android真实接入和官方依据，calendar/privacy.md补穿山甲Android五类传感器（互动广告/反作弊）、百度Android加速度计/旋转向量（互动广告）的表格和专项段，明确各家范围不同，不把测量数据统称完整传感器列表；保留快手/优量汇现有披露和安装列表限制。日期更新2026-09-26。
+- 穿山甲依据https://www.csjdeveloper.com/terms/compliance-guide第2/6项；百度通过Chrome读取https://union.baidu.com/aibqt/legal/policies（2026-08-04），未照抄iOS传感器类型。Android弹窗和同意v4见ChineseAlmanc日志；本轮未修改其他产品或iOS行为。
+- 两项test:legal、npm run build完整预渲染通过；核对四家专项段、静态HTML无script/app-root、源Markdown=产物Markdown且HTML=当前渲染结果。仅既有CommonJS提示，日志/tmp/huangli-all-ad-sensors-site-build.log。
+- 重新生成dist/calendar-privacy-20260926.zip并核对解压字节，只含privacy/index.html及对应Markdown，替代同日先前仅快手版本的更新包。未部署、提交、改生产配置或送检。
+
+
+## 2026-09-26 — 13:16复检线上正文仍旧
+
+Chrome再次读取/legal/calendar/privacy/，含一次独立query复核，返回9月25日旧版快手条目，未出现传感器列表/专项说明。现有dist/calendar-privacy-20260926.zip仍完好且包含9月26日修订。未改正文、部署或生产配置；已请求确认发布分工和部署入口，客户端当前送检MD5待提供，详见ChineseAlmanc本日对应日志。
+
+
+## 2026-10-09 — feat(legal): prerender product policies from shared Markdown
+
+- 提交法律正文统一来源、注册表、预渲染器、阅读器、相关路由及旧正文删除。法律页测试2/2通过，当前完整工作树production构建通过。路由/package按差异块拆分，邀请改动留下一批；上线仍需先部署网站和法律路径配置。
+- 用户授权分批本地提交；保留其他批次改动，未推送或部署。

@@ -38,20 +38,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'privacy/calendar',
-    loadComponent: () =>
-      import(
-        './privacy/calendar-privacy/calendar-privacy.component'
-      ).then((m) => m.CalendarPrivacyComponent),
-  },
-  {
-    path: 'privacy/teleprompter',
-    loadComponent: () =>
-      import(
-        './privacy/vision-cue-privacy/vision-cue-privacy.component'
-      ).then((m) => m.VisionCuePrivacyComponent),
-  },
-  {
     path: 'privacy-policy',
     loadComponent: () =>
       import('./privacy-policy/privacy-policy.component').then(
@@ -101,6 +87,11 @@ export const routes: Routes = [
   },
 
   // ── 法律文档 /legal/:slug ────────────────────────────────────────────────
+  {
+    path: 'legal/:product/:slug',
+    loadComponent: () => import('./pages/legal/legal-doc.component').then((m) => m.LegalDocComponent),
+    data: { showHeader: false, showFooter: false },
+  },
   {
     path: 'legal/:slug',
     loadComponent: () =>

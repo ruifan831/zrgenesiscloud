@@ -19,7 +19,7 @@ const MOCK_APPS: AppEntry[] = [
     tileTheme: 'dark',
     platforms: [{ type: 'android', label: '应用宝', badge: 'tencent-myapp', url: '', available: true }],
     features: [],
-    privacyUrl: '/privacy/calendar',
+    privacyUrl: '/legal/calendar/privacy/',
     updatedAt: '2026-09-13',
   },
   {
@@ -79,7 +79,7 @@ describe('PrivacyIndexPage', () => {
   it('loads detail records so published legal links are visible', () => {
     expect(mockCatalog.getBySlug).toHaveBeenCalledWith('calendar');
     expect(fixture.nativeElement.textContent).toContain('2026-09-13');
-    expect(fixture.nativeElement.querySelector('a[href="/privacy/calendar"]')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('a[href="/legal/calendar/privacy/"]')).toBeTruthy();
   });
 
   it('should create', () => {

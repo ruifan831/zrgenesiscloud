@@ -11,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import productRegistry from '../../../assets/legal/products.json';
+const LEGAL_PRODUCTS: Record<string, { name: string }> = productRegistry;
 import { MetaService } from '../../shared/seo/meta.service';
 
 const SLUG_META: Record<string, { title: string; description: string }> = {
@@ -60,9 +62,11 @@ export class LegalDocComponent implements OnInit {
   isNotFound = false;
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    const slug = this.route.snapshot.data['legalSlug'] ?? this.route.snapshot.paramMap.get('slug') ?? '';
 
-    if (!ALLOWED_SLUGS.includes(slug)) {
+    const product = this.route.snapshot.paramMap.get('product');
+    const registered = !!product && Object.hasOwn(LEGAL_PRODUCTS, product);
+    if ((product && !registered) || !(registered ? ['privacy', 'terms'] : ALLOWED_SLUGS).includes(slug)) {
       this.isLoading = false;
       this.isNotFound = true;
       this.metaService.setForLegal('页面未找到');
@@ -70,7 +74,8 @@ export class LegalDocComponent implements OnInit {
       return;
     }
 
-    const meta = SLUG_META[slug];
+    const productName = registered ? LEGAL_PRODUCTS[product!].name : '';
+    const meta = registered ? { title: `${productName}${slug === 'privacy' ? '隐私政策' : '用户协议'}`, description: `${productName}服务及个人信息处理说明。` } : SLUG_META[slug];
     this.metaService.setForLegal(meta.title, meta.description);
 
     // Add noindex for legal docs
@@ -81,7 +86,7 @@ export class LegalDocComponent implements OnInit {
     document.head.appendChild(robotsMeta);
 
     this.http
-      .get(`/assets/legal/crewpilot/${slug}.md`, { responseType: 'text' })
+      .get(`/assets/legal/${registered ? product : 'crewpilot'}/${slug}.md`, { responseType: 'text' })
       .subscribe({
         next: (markdown) => {
           const lines = markdown.split('\n');
@@ -92,12 +97,12 @@ export class LegalDocComponent implements OnInit {
 
           // Extract "上次更新" date from blockquote lines
           const dateLine = lines.find(
-            (l) => l.includes('上次更新') || l.includes('最后更新') || l.includes('生效日期')
+            (l) => l.includes('上次更新') || l.includes('最后更新') || l.includes('生效日期') || l.includes('版本日期')
           );
           this.docMeta = dateLine ? dateLine.replace(/^>?\s*/, '').trim() : '';
 
-          const rawHtml = marked.parse(markdown) as string;
-          this.docHtml = this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+          const rawHtml = (marked.parse(markdown) as string).replace(/<h1>.*?<\/h1>/s, '');
+          this.docHtml = this.sanitizer.sanitize(SecurityContext.HTML, rawHtml) ?? '';
           this.isLoading = false;
           this.cdr.markForCheck();
         },

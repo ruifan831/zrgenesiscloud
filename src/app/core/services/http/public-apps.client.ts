@@ -15,6 +15,7 @@ import {
 // ---------------------------------------------------------------------------
 
 interface PublicChannelDto {
+  source?: 'manual' | 'app_installer';
   type: string;
   label: string;
   badge: string;
@@ -57,6 +58,9 @@ export interface PublicAppSummaryDto {
 
 export interface PublicAppDetailDto extends PublicAppSummaryDto {
   app_id: string;
+  product_key?: string | null;
+  related_app_ids?: string[];
+  url_aliases?: string[];
   description: string | null;
   hero_aspect: number | null;
   published_at: string | null;
@@ -83,6 +87,7 @@ function mapChannel(c: PublicChannelDto): DownloadChannel {
   const label = c.label?.trim();
   return {
     type: c.type as DownloadChannel['type'],
+    source: c.source ?? 'manual',
     label: !label || label === '新渠道' ? labels[badge] ?? '获取应用' : label,
     badge,
     url: c.url?.trim() ?? '',
@@ -125,6 +130,9 @@ function mapSummaryToEntry(raw: PublicAppSummaryDto): AppEntry {
 function mapDetailToEntry(raw: PublicAppDetailDto): AppEntry {
   return {
     appId: raw.app_id,
+    productKey: raw.product_key ?? undefined,
+    relatedAppIds: raw.related_app_ids ?? [raw.app_id],
+    urlAliases: raw.url_aliases ?? [raw.slug],
     slug: raw.slug,
     name: raw.name,
     tagline: raw.tagline,

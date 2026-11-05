@@ -7,7 +7,7 @@
     "build": "ng build && node scripts/prerender-legal.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:legal": "node --test scripts/prerender-legal.test.mjs"
+    "test:legal": "node --test scripts/prerender-legal.test.mjs scripts/export-crewpilot-legal.test.mjs"
   },
   "private": true,
   "dependencies": {

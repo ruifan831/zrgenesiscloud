@@ -1,4 +1,5 @@
-<div class="invite-page">
+<div class="invite-page"><div class="invite-page__shell">
+  <header class="invite-page__brand-bar"><a href="/" class="invite-page__brand" aria-label="ZRGenesis 首页">ZRGenesis<span>.</span></a><span class="invite-page__official">官方邀请</span></header>
   <section class="invite-page__content" aria-label="好友邀请" [attr.aria-busy]="loading">
     <ng-container *ngIf="loading">
       <div class="invite-page__skeleton invite-page__skeleton--logo"></div>
@@ -17,19 +18,21 @@
     <ng-container *ngIf="data as invite">
       <header class="invite-page__header">
         <img *ngIf="invite.app.logoImage && !logoFailed" [src]="invite.app.logoImage" (error)="logoFailed = true" alt="" width="52" height="52" class="invite-page__logo" />
-        <span class="invite-page__app-name">{{ invite.app.name }}</span>
+        <div><span class="invite-page__app-name">{{ invite.app.name }}</span><p class="invite-page__category">{{ invite.app.tagline }}</p></div>
       </header>
       <div class="invite-page__intro" [attr.role]="result ? 'status' : null">
-        <p class="invite-page__eyebrow" *ngIf="!result">来自 {{ invite.nickname }} 的邀请</p>
-        <h1 class="invite-page__title">{{ result?.title || '和朋友一起开始使用' }}</h1>
-        <p class="invite-page__desc">{{ result?.message || '在 App 内注册或登录，邀请码会自动带入。'  }}</p>
+        <p class="invite-page__eyebrow" *ngIf="!result">你的朋友 <strong>{{ invite.nickname }}</strong> 邀请你</p>
+        <h1 class="invite-page__title" *ngIf="!result; else resultHeading">把好应用，<br /><span>分享给你。</span></h1>
+        <ng-template #resultHeading><h1 class="invite-page__title invite-page__title--result">{{ result?.title }}</h1></ng-template>
+        <p class="invite-page__desc">{{ result?.message || '和朋友一起发现好用的应用，也一起探索应用里的福利。' }}</p>
       </div>
 
       <p *ngIf="error" role="alert" class="invite-page__message invite-page__message--error">{{ error }}</p>
       <p *ngIf="notice" role="status" class="invite-page__message">{{ notice }}</p>
 
+      <ui-reward-callout *ngIf="!result" class="invite-page__rewards"></ui-reward-callout>
       <section class="invite-page__get-app" aria-label="打开或下载应用">
-        <button *ngIf="openUrl" type="button" class="invite-page__submit invite-page__open" (click)="openApp()">{{ result ? '打开 App' : '打开 App 并接受邀请' }}</button>
+        <button *ngIf="openUrl" type="button" class="invite-page__submit invite-page__open" (click)="openApp()">{{ result ? '打开 App' : '打开 App 并接受邀请' }} <span aria-hidden="true">↗</span></button>
         <p *ngIf="isWechat" class="invite-page__hint">请通过右上角菜单选择“在浏览器打开”，再打开 App 接受邀请；也可以使用下方网页验证。</p>
         <div class="invite-page__downloads">
           <a *ngIf="invite.iosDownloadUrl && platform !== 'android'" [href]="invite.iosDownloadUrl" target="_blank" rel="noopener noreferrer">前往 App Store</a>
@@ -73,7 +76,13 @@
       </form>
       </details>
 
-
+      <details *ngIf="!result" class="invite-page__rules"><summary>活动与邀请说明</summary><p>活动仅在支持的 App 中开放。奖励、参与资格及领奖期限以 App 内规则为准。邀请关系建立不等于奖励立即到账，好友满足活动条件后，邀请人可获得相应奖励。</p></details>
+      <nav class="invite-page__support" aria-label="协议与帮助">
+        <a *ngIf="invite.privacyUrl" [href]="invite.privacyUrl" target="_blank" rel="noopener noreferrer">隐私政策</a>
+        <a *ngIf="invite.termsUrl" [href]="invite.termsUrl" target="_blank" rel="noopener noreferrer">用户协议</a>
+        <a [href]="'mailto:' + supportEmail">需要帮助</a>
+      </nav>
     </ng-container>
+    <footer class="invite-page__footer">好用的应用，日常的小惊喜。<br />© {{ currentYear }} ZRGenesis</footer>
   </section>
-</div>
+</div></div>

@@ -13,7 +13,7 @@ describe('ButtonPrimaryComponent', () => {
 
     fixture = TestBed.createComponent(ButtonPrimaryComponent);
     component = fixture.componentInstance;
-    component.label = 'Test Label';
+    fixture.componentRef.setInput('label', 'Test Label');
     fixture.detectChanges();
   });
 
@@ -32,7 +32,7 @@ describe('ButtonPrimaryComponent', () => {
   });
 
   it('should render lg size class when size=lg', () => {
-    component.size = 'lg';
+    fixture.componentRef.setInput('size', 'lg');
     fixture.detectChanges();
     const btn = fixture.nativeElement.querySelector('.btn-primary--lg');
     expect(btn).toBeTruthy();
@@ -47,18 +47,21 @@ describe('ButtonPrimaryComponent', () => {
   });
 
   it('should not emit clicked when disabled', () => {
-    component.disabled = true;
+    fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
     const spy = jasmine.createSpy('clickedSpy');
     component.clicked.subscribe(spy);
-    component.onButtonClick();
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    expect(button.disabled).toBeTrue();
+    button.click();
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('should render an anchor when href is provided', () => {
-    component.href = 'https://example.com';
+    fixture.componentRef.setInput('href', 'https://example.com');
     fixture.detectChanges();
     const anchor = fixture.nativeElement.querySelector('a.btn-primary');
     expect(anchor).toBeTruthy();
+    expect(anchor.getAttribute('href')).toBe('https://example.com');
   });
 });

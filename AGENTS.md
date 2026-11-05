@@ -15,7 +15,7 @@ App 营销内容从后端 HTTP API 拉取，**无静态配置文件**。
 - 后端 API 前缀：`environment.apiBaseUrl + /public/apps`（dev=`http://localhost:8000/api/v1`，prod=`https://www.zrgenesiscloud.com/api/v1`）。
 - **无 fallback 配置**：`src/app/data/apps.config.ts` 已删除（Wave 3 T-22）。若 API 挂掉，首页显示骨架屏 + 错误提示，详情页跳首页。
 
-Admin 编辑入口：`/admin/system/app-registry/:id/marketing`（`zrgenesis-admin` 项目）
+Admin 编辑入口：`/admin/system/products/:productKey/marketing`（旧App入口按归属跳转产品）（`zrgenesis-admin` 项目）
 
 ## Key Routes
 
@@ -25,8 +25,8 @@ Admin 编辑入口：`/admin/system/app-registry/:id/marketing`（`zrgenesis-adm
 - `/legal/<product>/privacy/`, `/legal/<product>/terms/` — 注册产品法律页
 - `/privacy-policy` → 通用隐私声明
 - `/contact` → 极简联系页
-- `/invite/:slug?app_id=...&code=...` → 通用好友邀请页（showHeader=false, showFooter=false）
-- 旧路由 `/products/*` → 301 重定向到 `/apps/*`（见 `docs/nginx/zrgenesiscloud-redirects.conf`）
+- `/invite/:slug?code=<数字邀请码>` → 通用好友邀请页（showHeader=false, showFooter=false）
+- 旧前缀 `/products/:slug` → `/apps/:slug`，仅兼容历史URL；产品列表/slug/别名均取后端，不增加逐产品路由。`/products`、`/about` 只保留到首页的兼容跳转。Angular处理站内导航，Nginx片段负责HTTP301（见 `../docs/nginx/zrgenesiscloud-redirects.conf`，是否部署须另核对）。
 
 ## Source Map
 
@@ -72,10 +72,9 @@ src/
 - `npm run build` — production build（validates all imports）
 - `npm run test` — Karma/Jasmine
 
-## Known Pre-existing Test Failures (P2, not blocking)
+## Test Status
 
-- `AppDetailPage` spec: ActivatedRoute mock incomplete (P2-2)
-- `ButtonPrimaryComponent` spec: Karma SCSS loader issue (P2-3)
+2026-11-04 官网全量 ChromeHeadless 146 项、法律构建脚本 5 项及生产构建通过。此前14项目录定时器、路由依赖、OnPush输入与脚手架断言失败已修复，无跳过用例；旧 AppDetailPage 测试债也已由当前路由测试覆盖。详见 `docs/qa/full-suite-2026-11-04.md`。本地全绿不代表已部署生产。
 
 ## 应用法律页
 
@@ -93,4 +92,4 @@ src/
 
 ## 好友邀请
 
-遵循 [多应用好友邀请页](docs/multi-app-referral.md)。营销详情按 slug 取品牌并核对 app_id，绑定/协议/metadata 始终用显式 App ID；routing 提供唤起及下载，不再维护产品默认 ID 或固定商店地址。旧 `/invite/r/:userId` 精确守卫保留。
+遵循[产品邀请契约](../docs/platform/product-invitation-codes.md)。当前产品 slug + 数字 mask/userId 码确定邀请，URL 不传 App ID；API 使用产品详情返回的发行 App ID。旧 App scoped 链接、旧邀请 slug、/share 与 /invite/r 重定向不再承接。营销展示页别名独立保留。routing 负责当前原生路径及下载，禁止硬编码产品默认 ID 或商店地址。

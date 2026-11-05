@@ -397,11 +397,12 @@ src/app/shared/tokens/
 
 ## 8. 旧 URL 兼容（详细）
 
+> 2026-11-04 当前实现：站内产品入口只使用后端返回的 `/apps/<product.slug>`，不再生成旧 `/products/...`；关于入口为首页 `#about`。三条逐产品 redirect 已合并成一个 `products/:slug → apps/:slug`，后端负责判断有效产品与旧 slug 别名，新增产品无需改路由。`/products`、`/about` 仅保留历史访问入口；未知 slug 按详情页404策略回首页。Nginx参考片段位于工作区 `docs/nginx/zrgenesiscloud-redirects.conf`，保留查询参数，未在本轮部署生产。没有访问日志，不能认定外部旧URL流量为零。
+
+
 | 旧 URL | 处理 | 责任层 |
 |---|---|---|
-| `/products/calendar` | redirectTo `/apps/calendar` | Router + Nginx 301 |
-| `/products/vision-cue` | redirectTo `/apps/vision-cue` | Router + Nginx 301 |
-| `/products/shanying` | redirectTo `/apps/shanying` | Router + Nginx 301 |
+| `/products/:slug` | 通用 redirectTo `/apps/:slug`；示例 calendar / vision-cue / shanying，不维护产品名单 | Router + Nginx 301 |
 | `/products` | redirectTo `/` | Router + Nginx 301 |
 | `/about` | redirectTo `/` | Router + Nginx 301 |
 | `/privacy/calendar` | 保留（内容迁移到新组件，URL 不变） | 组件层 |

@@ -1,5 +1,13 @@
 # 多应用好友邀请页
 
+当前契约（2026-11-04 最新修订）：数字邀请码 = 产品 mask + userId，链接仅含产品 slug 与 code；0095 将现有关系的 app_id 映射为持久 product_key，最早关系生效且历史/奖励保留。不兼容旧链接，不使用 p1 前缀或来源 mask。以[产品邀请契约](../../docs/platform/product-invitation-codes.md)为准。以下各阶段记录仅供历史追溯，不作为当前配置/发布步骤。
+
+## 2026-11-03 产品线共享更新
+
+当前 `/invite/:slug?app_id=...&code=...` 允许同一产品的 iOS/Android 共用路径。营销详情的 `related_app_ids` 由后端注册表确定；页面校验 URL App ID 在该列表内，之后仍以 URL App ID 请求 metadata、法律页、邀请卡、短信和绑定。不同产品不能只换 query 混用品牌；旧后端无新字段时保留精确 App ID 校验。
+
+关系冲突采用最早记录，旧关系与奖励流水保留；页面 `already_bound` 仍说明原关系不变。后端部署、0084 及验证边界见[后端文档](../../doonook_temp/docs/multi-app-referral.md#当前规则产品线共享2026-11-03)。本次未发布网站、修改生产配置或验证真机唤起。以下旧版逐 App ID 归属说明由本节取代。
+
 更新：2026-09-24。按用户纠正保留手机直接唤起 App 的主要流程，网页手机号绑定是独立可选路径。代码已完成，尚未部署或修改生产路由配置。
 
 ## 页面与数据
@@ -47,3 +55,12 @@ Universal Link / App Link 是否自动进入已安装应用，仍依赖关联文
 本轮代码核查中，黄历营销 slug 为 `huangli`，正式两端 App ID `zndhxnav19` 可共用。班管家 Android release 为 `mbueqwtxdv`，iOS 为 `sl85pwpqci`，当前 `crewpilot` 营销对应 iOS；Android 若接入本通用网页，需提供与其 App ID 对应的营销条目；既有 scheduling-web /share 无需迁移。不能直接复用 iOS 身份或按 UA 偷换身份。全链路生产、微信与已安装/未安装真机验收由发布阶段完成。
 
 跨项目方案见 [实施文档](../../docs/platform/arch/multi-app-referral-landing.md)。
+
+
+## 2026-11-03 原生接收补齐
+
+提词器两端已接入 SDK 的产品邀请接收。网页仍原样保留 URL 的来源 App ID/邀请码；平台选择只改变 scheme 或 intent package。新增测试覆盖正式双端 ID 的 canonical 与 scoped `/share` 交接，既有网页可选绑定接口不变。原生使用 `bind-product` 做来源解码与同产品校验，详见[产品验收](../../docs/products/visioncue/qa/invite-flow-20261103.md)。本轮未改生产 routing、静态关联文件或部署；并行官网视觉改动保持原样。
+
+## 2026-11-03 产品公开路径与旧链接
+
+公开响应 slug 取 product_registry，name 为产品展示名；营销不再维护独立主要 slug。可选 url_aliases 列出同产品历史路径。邀请页规范 URL/二维码使用产品 slug，但唤起允许后端登记的同产品旧 referral_path；继续校验唯一且一致的 App ID 与邀请码，不放行其他产品路径。旧别名响应保留来源 App ID，不改 mask。产品法规通过原 privacy_url/terms_url 响应字段投影，数据库已删除营销副本。安装包自动渠道与手动下载渠道均通过原 channels 列表展示；邀请页优先使用自动发布 APK 地址，其次兼容 routing 下载目标或可用 APK 渠道。

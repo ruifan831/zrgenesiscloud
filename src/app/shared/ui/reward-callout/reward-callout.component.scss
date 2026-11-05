@@ -1,0 +1,9 @@
+.reward-callout { position: relative; overflow: hidden; background: #fff0d6; border: 1px solid #f0d9b3; border-radius: 16px; padding: 19px 17px 15px; }
+.reward-callout>img { position: absolute; width: 151px; height: auto; right: -25px; top: 2px; transform: rotate(5deg); pointer-events: none; }
+.reward-callout__copy { position: relative; z-index: 1; max-width: 205px; }
+.reward-callout__label { display: block; font-size: 11px; font-weight: 600; color: #a3402e; margin-bottom: 8px; }
+h2 { font-size: 20px; line-height: 1.5; font-weight: 600; color: #a63529; letter-spacing: -.5px; }
+p { font-size: 11px; color: #78604b; line-height: 1.8; margin-top: 9px; max-width: 190px; }
+ul { display: flex; justify-content: space-between; gap: 8px; margin-top: 18px; padding-top: 12px; border-top: 1px solid #e9d3af; color: #8d4b2e; font-size: 11px; }
+li::before { content: '·'; margin-right: 4px; }
+@media(max-width: 359px) { .reward-callout>img { right: -54px; opacity: .5; } }

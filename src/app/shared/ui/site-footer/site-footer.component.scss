@@ -82,3 +82,11 @@
   color: var(--text-on-light-muted);
   margin: 0;
 }
+
+.site-footer { background: #eef2f7; padding-top: 45px; scroll-margin-top: var(--nav-height); }
+.site-footer__intro { display: flex; justify-content: space-between; gap: 30px; margin-bottom: 36px; }
+.site-footer__brand { font-size: 23px; font-weight: 700; letter-spacing: -.9px; }
+.site-footer__brand span { color: var(--color-accent); }
+.site-footer__intro p { font-size: 13px; line-height: 1.9; color: var(--text-on-light-muted); }
+.site-footer__bottom { border-color: #dbe2eb; }
+@media(max-width: 600px) { .site-footer__intro { display: block; }.site-footer__intro p { margin-top: 14px; } }

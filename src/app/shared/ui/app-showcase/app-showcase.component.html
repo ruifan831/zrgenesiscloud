@@ -1,0 +1,20 @@
+<article class="showcase" [class.showcase--cool]="cool">
+  <header class="showcase__identity">
+    <img *ngIf="app.logoImage && !logoFailed" [src]="app.logoImage" (error)="logoFailed = true" alt="" width="46" height="46" loading="lazy" />
+    <h3>{{ app.name }}</h3>
+  </header>
+  <div class="showcase__body">
+    <div class="showcase__copy">
+      <p class="showcase__tagline">{{ app.tagline || app.name }}</p>
+      <p *ngIf="app.subtitle" class="showcase__description">{{ app.subtitle }}</p>
+      <a [routerLink]="['/apps', app.slug]" [attr.aria-label]="'了解' + app.name" class="showcase__link">了解应用 <span aria-hidden="true">↗</span></a>
+      <p class="showcase__channel" *ngIf="app.platforms[0] as channel">
+        <a *ngIf="channel.available && channel.url; else unavailable" [href]="channel.url" target="_blank" rel="noopener noreferrer">{{ channel.label }} <span aria-hidden="true">↗</span></a>
+        <ng-template #unavailable>下载暂未开放</ng-template>
+      </p>
+    </div>
+    <div class="showcase__visual" *ngIf="image$ | async as image">
+      <img *ngIf="failedImage !== image" [src]="image" [alt]="app.name + '应用预览'" class="showcase__image" [class.showcase__image--portrait]="portrait" (load)="imageLoaded($event)" (error)="failedImage = image" loading="lazy" decoding="async" />
+    </div>
+  </div>
+</article>

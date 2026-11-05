@@ -41,9 +41,9 @@ export class MetaService {
 
   setForHome(): void {
     this.setPageMeta({
-      title: `${this.siteName} · 精心打造每一款应用`,
-      description: 'ZRGenesis 旗下应用：全民万年黄历通、全能提词器、闪映。下载我们精心打造的移动应用。',
-      keywords: '全民万年黄历通,全能提词器,闪映,ZRGenesis,App下载,安卓应用,iOS应用',
+      title: `${this.siteName} · 好用的应用，日常的小惊喜`,
+      description: '发现 ZRGenesis 旗下实用应用，了解广告奖励、每日参与定期开奖及邀请奖励。活动以对应 App 内规则为准。',
+      keywords: 'ZRGenesis,App下载,实用应用,应用福利,好友邀请',
     });
   }
 

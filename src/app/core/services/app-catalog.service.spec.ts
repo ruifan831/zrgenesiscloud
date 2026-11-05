@@ -83,6 +83,7 @@ describe('AppCatalogService', () => {
     expect(result![0].name).toBe('全民万年黄历通');
     expect(result![0].heroImage).toBe('/assets/images/calendar.png');
     expect(result![0].tileTheme).toBe('dark');
+    tick(30_000);
   }));
 
   it('list() within 30s window should not issue a second HTTP request', fakeAsync(() => {
@@ -93,6 +94,7 @@ describe('AppCatalogService', () => {
     // Second subscription — should NOT issue another HTTP request
     service.list().subscribe();
     httpMock.expectNone((r) => r.url.includes('/public/apps') && !r.url.includes('/public/apps/'));
+    tick(30_000);
   }));
 
   it('getBySlug() should return app detail from HTTP', fakeAsync(() => {
@@ -104,6 +106,7 @@ describe('AppCatalogService', () => {
     const req = httpMock.expectOne((r) => r.url.includes('/public/apps/calendar'));
     expect(req.request.method).toBe('GET');
     req.flush({
+      app_id: 'calendar-app',
       slug: 'calendar',
       name: '全民万年黄历通',
       tagline: '一本随身的黄历',
@@ -130,6 +133,7 @@ describe('AppCatalogService', () => {
     expect(result!.slug).toBe('calendar');
     expect(result!.description).toBe('全面的安卓日历应用');
     expect(result!.heroAspect).toBe(1.0);
+    tick(30_000);
   }));
 
   it('getBySlug() should return null on 404', fakeAsync(() => {
@@ -143,6 +147,7 @@ describe('AppCatalogService', () => {
     tick();
 
     expect(result).toBeNull();
+    tick(30_000);
   }));
 
   it('getFeatured() should return same Observable as list()', fakeAsync(() => {
@@ -156,5 +161,32 @@ describe('AppCatalogService', () => {
 
     expect(result).toBeDefined();
     expect(result!.length).toBe(2);
+    tick(30_000);
+  }));
+
+  it('refreshes the server product list after the cache expires', fakeAsync(() => {
+    service.list().subscribe();
+    httpMock.expectOne(r => r.url.endsWith('/public/apps')).flush(MOCK_ITEMS);
+    tick(29_999);
+    service.list().subscribe();
+    httpMock.expectNone(r => r.url.endsWith('/public/apps'));
+    tick(1);
+    let names: string[] = [];
+    service.list().subscribe(apps => names = apps.map(app => app.name));
+    httpMock.expectOne(r => r.url.endsWith('/public/apps')).flush({items: [{...MOCK_ITEMS.items[0], name: '服务器更新的产品名'}]});
+    expect(names).toEqual(['服务器更新的产品名']);
+    tick(30_000);
+  }));
+
+  it('recovers after a server error without substituting a static product list', fakeAsync(() => {
+    let status = 0;
+    service.list().subscribe({error: error => status = error.status});
+    httpMock.expectOne(r => r.url.endsWith('/public/apps')).flush({}, {status: 503, statusText: 'Unavailable'});
+    expect(status).toBe(503);
+    let count = -1;
+    service.list().subscribe(apps => count = apps.length);
+    httpMock.expectOne(r => r.url.endsWith('/public/apps')).flush(MOCK_ITEMS);
+    expect(count).toBe(2);
+    tick(30_000);
   }));
 });

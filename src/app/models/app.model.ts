@@ -16,6 +16,7 @@ export type PlatformBadgeStyle =
   | 'web';           // 通用 Web 入口
 
 export interface DownloadChannel {
+  source?: 'manual' | 'app_installer';
   type: DownloadChannelType;
   label: string;           // 显示文案，如 "App Store"、"应用宝"
   url: string;             // 跳转地址（disabled 时仍需存字段，UI 层 disabled 处理）
@@ -38,6 +39,10 @@ export type AppTileTheme = 'light' | 'parchment' | 'dark';
 export interface AppEntry {
   /** 后端注册表身份，仅详情接口提供，用于邀请品牌与作用域核对。 */
   appId?: string;
+  /** Shared content owner; appId remains the legacy source identity. */
+  productKey?: string;
+  relatedAppIds?: string[];
+  urlAliases?: string[];
   slug: string;          // URL 标识：calendar | vision-cue | shanying
   name: string;          // 全民万年黄历通
   tagline: string;       // ≤10 字

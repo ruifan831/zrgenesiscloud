@@ -5,6 +5,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { EMPTY, Subject, catchError, filter, finalize, merge, startWith, switchMap, takeUntil } from 'rxjs';
+import { RewardCalloutComponent } from '../../shared/ui/reward-callout/reward-callout.component';
+import { environment } from '../../../environments/environment';
 import { MetaService } from '../../shared/seo/meta.service';
 import { InvitePageData, InvitePageError, ReferralInviteService, inviteErrorMessage, parseInviteLocation } from '../../services/referral-invite.service';
 
@@ -12,7 +14,7 @@ import { InvitePageData, InvitePageError, ReferralInviteService, inviteErrorMess
   selector: 'zrgenesiscloud-referral-invite',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RewardCalloutComponent],
   templateUrl: './referral-invite.component.html',
   styleUrl: './referral-invite.component.scss',
 })
@@ -40,6 +42,8 @@ export class ReferralInviteComponent implements OnInit {
   readonly platform: 'ios' | 'android' | 'desktop' = /iPhone|iPad|iPod/i.test(this.userAgent) ||
     (/Macintosh/.test(this.userAgent) && (this.document.defaultView?.navigator.maxTouchPoints ?? 0) > 1)
     ? 'ios' : /Android/i.test(this.userAgent) ? 'android' : 'desktop';
+  readonly supportEmail = environment.contactEmail;
+  readonly currentYear = new Date().getFullYear();
   data: InvitePageData | null = null;
   loading = true;
   loadError = '';

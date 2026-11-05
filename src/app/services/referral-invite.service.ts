@@ -45,7 +45,7 @@ export function parseInviteLocation(params: ParamMap, query: ParamMap): InviteLo
   const ids = query.getAll('app_id');
   const codes = query.getAll('code');
   if (!/^[a-z0-9][a-z0-9-]{0,79}$/.test(slug) || codes.length !== 1 || !/^[1-9]\d{0,19}$/.test(codes[0]) ||
-      ids.length > 1 || (ids.length === 1 && !/^[a-zA-Z0-9_-]{1,64}$/.test(ids[0]))) {
+      ids.length !== 0) {
     throw new InvitePageError('邀请链接不完整或无效，请重新打开朋友分享的完整链接。');
   }
   return { slug, appId: ids[0] ?? null, code: codes[0] };
@@ -62,30 +62,23 @@ export function safeHttpsUrl(value: string | null | undefined, origin?: string):
 
 export function inviteActions(routing: InviteRouting | null | undefined, location: InviteLocation, appId: string, siteOrigin: string) {
   const localUrl = new URL(`/invite/${location.slug}`, siteOrigin);
-  localUrl.searchParams.set('app_id', appId);
+
   localUrl.searchParams.set('code', location.code);
   let canonicalUrl = localUrl.href;
   let linkedUrl: URL | null = null;
   const base = safeHttpsUrl(routing?.base_url);
-  // Only canonical product invitations and the existing numeric /share referral route are open targets.
-  // Legacy targets never replace the current product-page URL used by QR and Smart App Banner.
+  // Open only the configured current product path.
   if (base && routing?.referral_path.startsWith('/') && !routing.referral_path.startsWith('//')) {
     try {
-      const templatePath = routing.referral_path.split('?')[0];
-      const legacyTemplate = /^\/share\/\{(?:inviteCode|userId)\}\/?$/.test(templatePath);
-      const path = routing.referral_path.replaceAll('{inviteCode}', encodeURIComponent(location.code))
-        .replaceAll('{userId}', encodeURIComponent(location.code));
+      const path = routing.referral_path.replaceAll('{inviteCode}', encodeURIComponent(location.code));
       const url = new URL(path, base);
       const ids = url.searchParams.getAll('app_id');
       const validIdentity = url.origin === new URL(base).origin && !url.hash &&
-        !/[{}]/.test(url.href) && ids.length <= 1 && (ids.length === 0 || ids[0] === appId);
-      const canonicalPath = [`/invite/${location.slug}`, `/invite/${location.slug}/`].includes(url.pathname) &&
+        !/[{}]/.test(url.href) && ids.length === 0;
+      const canonicalPath = [location.slug].some(slug => /^[a-z0-9][a-z0-9-]{0,63}$/.test(slug) && [`/invite/${slug}`, `/invite/${slug}/`].includes(url.pathname)) &&
         url.searchParams.getAll('code').length === 1 && url.searchParams.get('code') === location.code;
-      const legacyPath = legacyTemplate && [`/share/${location.code}`, `/share/${location.code}/`].includes(url.pathname) &&
-        Array.from(url.searchParams.keys()).every(key => key === 'app_id');
-      if (validIdentity && (canonicalPath || legacyPath)) {
-        url.searchParams.set('app_id', appId);
-        if (canonicalPath) canonicalUrl = url.href;
+      if (validIdentity && canonicalPath) {
+        if (canonicalPath && url.pathname.replace(/\/$/, "") === `/invite/${location.slug}`) canonicalUrl = url.href;
         linkedUrl = url;
       }
     } catch { /* Misconfigured routing does not become an open redirect. */ }
@@ -136,7 +129,7 @@ export class ReferralInviteService {
     return this.apps.getBySlug(location.slug).pipe(switchMap(app => {
       if (!app) throw new InvitePageError('该应用的邀请页面暂不可用。');
       if (!app.appId || !/^[a-zA-Z0-9_-]{1,64}$/.test(app.appId)) throw new InvitePageError('该应用的邀请资料尚未配置完整。');
-      if (location.appId && app.appId !== location.appId) throw new InvitePageError('邀请链接中的应用信息不一致，请联系分享人重新发送。');
+      if (location.appId || location.slug !== app.slug) throw new InvitePageError('邀请链接已失效，请让朋友重新分享。');
       const appId = app.appId;
       const options = this.scope(appId);
       return combineLatest({
@@ -154,8 +147,14 @@ export class ReferralInviteService {
         const origin = this.document.location.origin;
         const privacyUrl = safeHttpsUrl(legal.info?.privacy_policy_url, origin);
         const termsUrl = safeHttpsUrl(legal.info?.user_agreement_url, origin);
+        const installer = app.platforms.find(channel => channel.source === 'app_installer' && channel.available !== false);
+        const apk = app.platforms.find(channel => channel.type === 'apk' && channel.available !== false);
+        const routing = meta.invite_routing ? {
+          ...meta.invite_routing,
+          android_download_url: installer?.url || meta.invite_routing.android_download_url || apk?.url,
+        } : meta.invite_routing;
         return { app, appId, code: location.code, nickname: card.nickname, privacyUrl, termsUrl, legalLoading: legal.loading,
-          ...inviteActions(meta.invite_routing, location, appId, origin) };
+          ...inviteActions(routing, app.productKey ? { ...location, slug: app.slug } : location, appId, origin) };
       }));
     }));
   }

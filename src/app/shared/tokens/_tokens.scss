@@ -3,7 +3,7 @@
 // Reference: docs/design/zrgenesiscloud-app-showcase/design-tokens.html
 
 :root {
-  --nav-height: 64px;
+  --nav-height: 78px;
   --page-gutter: max(24px, calc((100vw - 1152px) / 2));
   // ─── Brand / Action ───────────────────────────────────────────────────────
   --color-accent:          #0066cc;  // 全站唯一动作色 (CTA / link / focus)
@@ -115,3 +115,5 @@
   --easing-standard:     cubic-bezier(0.4, 0, 0.2, 1);
   --easing-emphasized:   cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+@media (max-width: 740px) { :root { --nav-height: 64px; } }

@@ -6,7 +6,7 @@
 - 原型：`docs/design/zrgenesiscloud-app-showcase/`
 - 任务日志：`zrgenesiscloud/.codex/task-log.md`
 
-**当前状态**：T-1 ~ T-13 已交付，3 项 P0 + P1-1 + P2-4 + P2-5 + P1-6 已修复，构建通过，处于**可上线状态**。下面是 reviewer 复审标注但尚未处理的项。
+**历史清单**：以下为2026-05-18的改版待办，不作为当前可上线结论。2026-11-04已完成官网全量146项、法律5项及生产构建；具体见[本轮验收](../qa/full-suite-2026-11-04.md)，其他条目需按当前代码核对。
 
 > 创建于 2026-05-18。每条都标了优先级、文件、建议改法。修复后请把对应项删掉或迁到「已完成」段。
 
@@ -57,10 +57,9 @@
 ### ~~TODO P2-1：AuthService spec 测试失败~~ ✅ 已消除
 - 2026-09-24 通用好友邀请替换旧 AuthService，删除不可达旧组件/服务和失效测试，新增 scoped HTTP/表单回归。
 
-### TODO P2-2：AppDetailPage spec 5 个测试失败
-- **原因**：`ActivatedRoute` mock 不完整，缺 `provideRouter` 或 `RouterTestingHarness`，导致 SubNavFrostedComponent 的 RouterLink 依赖链断。
-- **文件**：`zrgenesiscloud/src/app/pages/app-detail/app-detail.page.spec.ts`
-- **改法**：用 `RouterTestingHarness` 替代当前直接 mock，或给 `ActivatedRoute` 一个 `{ snapshot: { paramMap: convertToParamMap({slug:'calendar'}) } }` stub。
+### ~~TODO P2-2：AppDetailPage 测试依赖~~ ✅ 已解决
+
+当前详情页测试已使用真实 RouterTestingHarness；2026-11-04全量通过，覆盖复用详情组件导航、下载锚点及外部法规URL。此次同时修复目录定时器、旧路由缺HTTP替身、按钮OnPush输入和根组件旧断言；旧14项失败不再作为未完成事项保留。
 
 ### ~~TODO P2-3：AppCatalogService 同步 vs Observable~~ ✅ 已完成
 - Wave 3 T-20/T-21 已全面切换：`list()` / `getBySlug()` / `getFeatured()` 均返回 `Observable<...>`，所有消费方（HomeComponent / AppDetailPage / PrivacyIndexPage / GlobalNav / SiteFooter）已改用 `async` pipe，详情页用 resolver 处理 loading/404。

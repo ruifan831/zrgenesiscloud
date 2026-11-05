@@ -38,4 +38,16 @@ describe('PublicAppsClient presentation mapping', () => {
     expect(app.updatedAt).toBe('2026-09-13');
     tick(30001);
   }));
+  it('keeps legacy source identity when an old slug resolves to product content', fakeAsync(() => {
+    let result: AppEntry | null = null;
+    client.getBySlug('old-android').subscribe(v => result = v);
+    http.expectOne(req => req.url.endsWith('/public/apps/old-android')).flush({...summary,
+      slug:'ticidashi', product_key:'ticidashi', app_id:'cue-android', related_app_ids:['cue-ios','cue-android'],
+      channels:[],features:[],detail_images:[],privacy_url:'https://example.com/legal/ticidashi/privacy/'});
+    const app = result as unknown as AppEntry;
+    expect(app.productKey).toBe('ticidashi'); expect(app.slug).toBe('ticidashi');
+    expect(app.appId).toBe('cue-android'); expect(app.relatedAppIds).toEqual(['cue-ios','cue-android']);
+    expect(app.privacyUrl).toContain('/legal/ticidashi/privacy/'); tick(30001);
+  }));
+
 });

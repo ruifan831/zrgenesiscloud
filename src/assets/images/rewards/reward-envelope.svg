@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" fill="none">
+  <title>红包、金币与幸运奖券</title>
+  <ellipse cx="279" cy="337" rx="151" ry="17" fill="#F0DFC0"/>
+  <circle cx="283" cy="179" r="153" fill="#FFE9B5"/>
+  <circle cx="283" cy="179" r="172" stroke="#EBD3A2" stroke-dasharray="3 11"/>
+  <g transform="rotate(14 365 155)">
+    <path d="M312 58h108v30c-15 0-15 23 0 23v105H312V111c15 0 15-23 0-23Z" fill="#B77A27"/>
+    <path d="M306 53h108v30c-15 0-15 23 0 23v105H306V106c15 0 15-23 0-23Z" fill="#FFE6A3"/>
+    <path d="M317 65h86v18c-13 7-13 20 0 27v89h-86v-89c13-7 13-20 0-27Z" stroke="#D8AA50" stroke-width="2"/>
+    <path d="m360 87 7 14 16 2-12 12 3 16-14-7-14 7 3-16-12-12 16-2Z" fill="#C88C31"/>
+    <path d="M329 151h63M338 163h45M341 183h38" stroke="#C88C31" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g transform="rotate(-11 260 229)">
+    <path d="M168 122h188v178c0 15-12 27-27 27H195c-15 0-27-12-27-27Z" fill="#A82924"/>
+    <path d="M159 117h188v178c0 15-12 27-27 27H186c-15 0-27-12-27-27Z" fill="#E34B3D"/>
+    <path d="M159 117h188l-79 69c-9 8-21 8-30 0Z" fill="#B93029"/>
+    <path d="M159 117h188l-79 58c-9 7-21 7-30 0Z" fill="#F66650"/>
+    <path d="m159 182 94 62 94-62v113c0 15-12 27-27 27H186c-15 0-27-12-27-27Z" fill="#DD4036"/>
+    <path d="M173 294V168M183 308h55" stroke="#F87965" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="253" cy="225" r="36" fill="#A92D26"/>
+    <circle cx="253" cy="220" r="36" fill="#F6C867"/>
+    <circle cx="253" cy="220" r="28" stroke="#E2A746" stroke-width="2"/>
+    <rect x="237" y="211" width="32" height="10" rx="2" stroke="#9E5725" stroke-width="2.3"/>
+    <path d="M240 221v15h26v-15M253 211v25m0-25c-14 0-13-13-6-10 4 2 6 10 6 10Zm0 0c14 0 13-13 6-10-4 2-6 10-6 10Z" stroke="#9E5725" stroke-width="2.3" stroke-linejoin="round"/>
+  </g>
+  <g transform="rotate(-18 134 83)">
+    <ellipse cx="140" cy="88" rx="40" ry="43" fill="#CB8B2A"/>
+    <ellipse cx="132" cy="81" rx="40" ry="43" fill="#F6C45A"/>
+    <ellipse cx="132" cy="81" rx="31" ry="34" stroke="#FFE9A3" stroke-width="3"/>
+    <path d="m120 65 12 15 12-15m-12 15v22m-14-18h28m-28 9h28" stroke="#A46522" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M111 55c5-5 11-7 17-8" stroke="#FFF2C5" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g>
+    <path d="M344 309h92v14c0 11-92 11-92 0Z" fill="#B9852F"/>
+    <ellipse cx="390" cy="309" rx="46" ry="11" fill="#EDB94E"/>
+    <path d="M349 295h92v14c0 11-92 11-92 0Z" fill="#D29B35"/>
+    <ellipse cx="395" cy="295" rx="46" ry="11" fill="#FFD477"/>
+    <ellipse cx="395" cy="295" rx="33" ry="6" stroke="#E0AB44" stroke-width="2"/>
+    <path d="M361 311v8m12-6v8m14-6v7m15-7v7m15-9v7" stroke="#E9B452" stroke-width="2"/>
+  </g>
+  <g transform="rotate(19 435 221)">
+    <ellipse cx="440" cy="226" rx="28" ry="31" fill="#C58B2D"/>
+    <ellipse cx="434" cy="221" rx="28" ry="31" fill="#F7CA65"/>
+    <ellipse cx="434" cy="221" rx="21" ry="24" stroke="#FFE9AB" stroke-width="2"/>
+    <path d="m426 210 8 10 8-10m-8 10v16m-10-13h20m-20 6h20" stroke="#A56C26" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <path d="m79 180 5 12 12 5-12 5-5 12-5-12-12-5 12-5Zm356-126 4 9 9 4-9 4-4 9-4-9-9-4 9-4Z" fill="#D69B3F"/>
+  <path d="m117 275 10-7m273-244 5 10M479 144l-9 6" stroke="#E86A50" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="70" cy="126" r="4" fill="#E7BA67"/><circle cx="464" cy="290" r="4" fill="#D95640"/>
+</svg>

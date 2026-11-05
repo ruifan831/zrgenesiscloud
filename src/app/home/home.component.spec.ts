@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { HomeComponent } from './home.component';
 import { AppCatalogService } from '../core/services/app-catalog.service';
 import { AppEntry } from '../models/app.model';
@@ -61,6 +61,7 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     mockCatalog = jasmine.createSpyObj('AppCatalogService', ['list', 'getBySlug', 'getFeatured']);
     mockCatalog.list.and.returnValue(of(MOCK_APPS));
+    mockCatalog.getBySlug.and.returnValue(of(null));
     mockCatalog.getFeatured.and.returnValue(of(MOCK_APPS));
 
     await TestBed.configureTestingModule({
@@ -81,19 +82,47 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render hero intro section', () => {
-    const hero = fixture.debugElement.query(By.css('ui-hero-intro'));
-    expect(hero).toBeTruthy();
+  it('shows the rewards hero before API-provided products', () => {
+    const rewards = fixture.nativeElement.querySelector('#benefits');
+    const apps = fixture.nativeElement.querySelector('#apps');
+    expect(rewards.querySelector('h1').textContent).toContain('福利也精彩');
+    expect(rewards.compareDocumentPosition(apps) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(fixture.nativeElement.querySelectorAll('ui-app-showcase').length).toBe(MOCK_APPS.length);
+    expect(rewards.textContent).toContain('每日参与，定期开奖');
   });
 
-  it('apps$ should be an Observable', () => {
-    expect(component.apps$).toBeDefined();
+  it('keeps rewards visible while catalog loads and on retryable errors', () => {
+    const pending = new Subject<ReadonlyArray<AppEntry>>();
+    fixture.destroy();
+    mockCatalog.list.and.returnValue(pending);
+    fixture = TestBed.createComponent(HomeComponent); component = fixture.componentInstance; fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#benefits')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('[aria-label="正在加载应用"]')).toBeTruthy();
+    pending.error(new Error('offline')); fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('暂时无法加载应用');
+    expect(fixture.nativeElement.querySelectorAll('ui-app-showcase').length).toBe(0);
+    mockCatalog.list.and.returnValue(of(MOCK_APPS));
+    fixture.nativeElement.querySelector('.apps-load-error button').click(); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('ui-app-showcase').length).toBe(MOCK_APPS.length);
   });
 
-  it('should alternate tile layout (image-right / image-left)', () => {
-    expect(component.getTileLayout(0)).toBe('image-right');
-    expect(component.getTileLayout(1)).toBe('image-left');
-    expect(component.getTileLayout(2)).toBe('image-right');
+  it('handles an empty catalog without inventing products', () => {
+    fixture.destroy(); mockCatalog.list.and.returnValue(of([]));
+    fixture = TestBed.createComponent(HomeComponent); component = fixture.componentInstance; fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('应用正在准备中');
+    expect(fixture.nativeElement.querySelectorAll('ui-app-showcase').length).toBe(0);
+  });
+
+  it('uses marketing detail imagery and preserves summaries if image lookup fails', () => {
+    fixture.destroy();
+    mockCatalog.getBySlug.and.callFake(slug => slug === 'calendar'
+      ? of({ ...MOCK_APPS[0], detailImages: ['/assets/images/calendar-screen.png'] })
+      : throwError(() => new Error('optional detail unavailable')));
+    fixture = TestBed.createComponent(HomeComponent); component = fixture.componentInstance; fixture.detectChanges();
+    const first = fixture.nativeElement.querySelector('ui-app-showcase');
+    expect(first.querySelector('.showcase__image').getAttribute('src')).toBe('/assets/images/calendar-screen.png');
+    expect(fixture.nativeElement.textContent).toContain('全能提词器');
+    expect(fixture.nativeElement.textContent).not.toContain('暂时无法加载应用');
   });
 
   it('should contain apps section anchor', () => {

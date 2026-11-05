@@ -1,24 +1,52 @@
-<ng-container *ngIf="{ apps: apps$ | async } as state">
-  <ui-hero-intro [apps]="state.apps ?? []" primaryLabel="探索我们的应用" appsAnchor="apps"
-    [featuredAppSlug]="''" [featuredAppLabel]="''"></ui-hero-intro>
-  <section id="apps" class="app-gallery" aria-labelledby="gallery-title">
-    <div class="app-gallery__heading">
-      <h2 id="gallery-title">为日常，认真打磨。</h2>
-      <p>找到适合你的那一款。</p>
+<section id="benefits" class="rewards" aria-labelledby="rewards-title">
+  <div class="home-wrap">
+    <div class="rewards__hero">
+      <div class="rewards__copy">
+        <p class="rewards__eyebrow">ZRGenesis · 应用福利站</p>
+        <h1 id="rewards-title">好用之外，<br /><span>福利也精彩。</span></h1>
+        <p class="rewards__description">看广告领收益，参与抽奖添惊喜。<br />把好应用分享出去，让日常多一份收获。</p>
+        <div class="rewards__actions">
+          <a routerLink="/" fragment="apps" class="home-button home-button--warm">探索我们的应用 <span aria-hidden="true">↗</span></a>
+          <a routerLink="/" fragment="start" class="rewards__more">了解如何参与 <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <img class="rewards__art" src="assets/images/rewards/reward-envelope.svg" alt="" width="520" height="380" fetchpriority="high" />
     </div>
+    <div class="rewards__mechanisms">
+      <article><h2><span aria-hidden="true">01</span>看广告，领收益</h2><p>自主选择观看激励视频，完成后按活动规则获得奖励。</p></article>
+      <article><h2><span aria-hidden="true">02</span>每日参与，定期开奖</h2><p>按规则获取抽奖份额，在固定周期查看结果，让每一天都有期待。</p></article>
+      <article><h2><span aria-hidden="true">03</span>分享好应用，邀请有奖励</h2><p>分享专属链接，好友满足活动条件后，邀请人可获得相应奖励。</p></article>
+    </div>
+    <p class="rewards__note">活动仅在支持的 App 中开放，奖励形式、参与及提现条件以 App 内规则为准。</p>
+  </div>
+</section>
+<section id="apps" class="app-gallery home-wrap" aria-labelledby="gallery-title">
+  <div class="app-gallery__heading"><h2 id="gallery-title">总有一款，<br />让你的日常更顺手。</h2><p>从真实需要出发，<br />把每一件小事做好。</p></div>
+  <ng-container *ngIf="{ apps: apps$ | async } as state">
     <ng-container *ngIf="state.apps as apps; else loadingOrError">
-      <ui-product-tile *ngFor="let app of apps; let i = index" [app]="app"
-        [surface]="i % 2 === 0 ? 'dark' : 'parchment'" [layout]="getTileLayout(i)"></ui-product-tile>
+      <div class="app-gallery__grid"><ui-app-showcase *ngFor="let app of apps; let i = index; trackBy: trackApp" [app]="app" [cool]="i % 2 !== 0"></ui-app-showcase></div>
       <p *ngIf="!apps.length" class="apps-load-error" role="status">应用正在准备中，欢迎稍后再来看看。</p>
     </ng-container>
     <ng-template #loadingOrError>
       <div *ngIf="loadError; else skeletonTpl" class="apps-load-error" role="status">
         <h3>暂时无法加载应用</h3><p>请检查网络连接，或稍后再试。</p>
-        <button type="button" (click)="retry()">重新加载</button>
+        <button type="button" class="home-button" (click)="retry()">重新加载</button>
       </div>
-      <ng-template #skeletonTpl><div role="status" aria-label="正在加载应用">
-        <div class="app-tile-skeleton" *ngFor="let _ of [1,2]" aria-hidden="true"></div>
-      </div></ng-template>
+      <ng-template #skeletonTpl><div class="app-gallery__grid" role="status" aria-label="正在加载应用"><div class="app-tile-skeleton" *ngFor="let _ of [1,2]" aria-hidden="true"></div></div></ng-template>
     </ng-template>
-  </section>
-</ng-container>
+  </ng-container>
+</section>
+<section id="start" class="start home-wrap" aria-labelledby="start-title">
+  <h2 id="start-title">从一款喜欢的应用开始。</h2>
+  <ol class="start__steps">
+    <li><span aria-hidden="true">01</span><div><h3>找到适合你的 App</h3><p>了解功能，选择适合自己的应用。</p></div></li>
+    <li><span aria-hidden="true">02</span><div><h3>下载并登录</h3><p>从对应产品的官方渠道获取应用。</p></div></li>
+    <li><span aria-hidden="true">03</span><div><h3>发现应用内福利</h3><p>查看当前开放的活动与参与规则。</p></div></li>
+  </ol>
+  <div class="home-faq"><h2>你可能想了解</h2><div>
+    <details><summary>每款 App 都有这些福利吗？</summary><p>活动按产品和平台开放，请在对应 App 内查看当前支持的福利项目。</p></details>
+    <details><summary>抽奖是每天开奖吗？</summary><p>每天可以按规则参与、获取抽奖份额，开奖按照活动规定的固定周期进行。</p></details>
+    <details><summary>广告奖励怎样查看和提现？</summary><p>完成符合规则的广告任务后，可在对应 App 的福利或钱包页面查看记录。奖励形式、到账和提现条件以 App 内规则为准。</p></details>
+    <details><summary>收到好友邀请后，怎样继续？</summary><p>打开朋友发来的完整邀请链接，选择打开 App；尚未安装时，可先下载后重新打开该链接，也可以按页面提示验证手机号。</p></details>
+  </div></div>
+</section>

@@ -4,12 +4,12 @@ import { Subject, of, throwError } from 'rxjs';
 import { ReferralInviteComponent } from './referral-invite.component';
 import { InvitePageData, ReferralInviteService } from '../../services/referral-invite.service';
 import { AppEntry } from '../../models/app.model';
-import { legacyReferralRedirectUrl, routes } from '../../app.routes';
+import { routes } from '../../app.routes';
 
 const page = (appId = 'calendar-id'): InvitePageData => ({
   app: { name: appId === 'calendar-id' ? '黄历通' : '班管家', appId } as AppEntry,
   appId, code: '9600123', nickname: '小林', privacyUrl: 'https://example.com/privacy', termsUrl: 'https://example.com/terms',
-  canonicalUrl: `https://example.com/invite/huangli?app_id=${appId}&code=9600123`, iosOpenUrl: `chinesealmanc://invite/huangli?app_id=${appId}&code=9600123`, androidOpenUrl: `intent://www.zrgenesiscloud.com/invite/huangli?app_id=${appId}&code=9600123#Intent;scheme=https;package=com.example.calendar;end`,
+  canonicalUrl: `https://example.com/invite/huangli?code=9600123`, iosOpenUrl: `chinesealmanc://invite/huangli?code=9600123`, androidOpenUrl: `intent://www.zrgenesiscloud.com/invite/huangli?code=9600123#Intent;scheme=https;package=com.example.calendar;end`,
   iosDownloadUrl: 'https://apps.apple.com/app/id12345', androidDownloadUrl: 'https://example.com/app.apk',
 });
 
@@ -26,7 +26,7 @@ describe('ReferralInviteComponent', () => {
     service.sendCode.and.returnValue(of({ success: true }));
     service.accept.and.returnValue(of({ success: true, data: { bound: true, reason: null } }));
     events = new Subject();
-    snapshot = { paramMap: convertToParamMap({ slug: 'huangli' }), queryParamMap: convertToParamMap({ app_id: 'calendar-id', code: '9600123' }) };
+    snapshot = { paramMap: convertToParamMap({ slug: 'huangli' }), queryParamMap: convertToParamMap({ code: '9600123' }) };
     await TestBed.configureTestingModule({ imports: [ReferralInviteComponent], providers: [
       { provide: ReferralInviteService, useValue: service },
       { provide: ActivatedRoute, useValue: { snapshot } },
@@ -154,7 +154,7 @@ describe('ReferralInviteComponent', () => {
     expect(pending.observed).toBeTrue();
     service.load.and.returnValue(of(page('crew-id')));
     snapshot.paramMap = convertToParamMap({ slug: 'crewpilot' });
-    snapshot.queryParamMap = convertToParamMap({ app_id: 'crew-id', code: '9600123' });
+    snapshot.queryParamMap = convertToParamMap({ code: '9600123' });
     events.next(new NavigationEnd(2, '/invite/crewpilot', '/invite/crewpilot'));
     expect(pending.observed).toBeFalse();
     pending.next({ success: true, data: { bound: true } });
@@ -188,18 +188,8 @@ describe('ReferralInviteComponent', () => {
     expect(fixture.nativeElement.textContent).not.toContain('正在读取');
   });
 
-  it('rejects explicit scope on the legacy route and preserves only the original unscoped redirect', () => {
-    for (const values of [['crew-id'], ['first-id', 'other-id'], ['']]) {
-      expect(legacyReferralRedirectUrl({ paramMap: convertToParamMap({ userId: '9600123' }), queryParamMap: convertToParamMap({ app_id: values }) })).toBeNull();
-    }
-    const target = legacyReferralRedirectUrl({ paramMap: convertToParamMap({ userId: '9600123' }), queryParamMap: convertToParamMap({ token: 'never-forward', code: 'other-code' }) });
-    expect(target).toBe('https://crewpilot.zrgenesiscloud.com/share/9600123');
-  });
-
-  it('keeps the old referral redirect before the full-match generic route', () => {
-    const legacy = routes.findIndex(route => route.path === 'invite/r/:userId');
-    const generic = routes.findIndex(route => route.path === 'invite/:slug');
-    expect(legacy).toBeLessThan(generic);
-    expect(routes[generic].pathMatch).toBe('full');
+  it('has only a full-match current product invitation route', () => {
+    expect(routes.some(route => route.path === 'invite/r/:userId')).toBeFalse();
+    expect(routes.find(route => route.path === 'invite/:slug')?.pathMatch).toBe('full');
   });
 });

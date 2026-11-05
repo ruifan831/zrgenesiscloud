@@ -1,10 +1,71 @@
-:host { display: block; }
-.app-gallery { scroll-margin-top: 76px; }
-.app-gallery__heading { max-width: 1200px; margin: auto; padding: 52px 24px 32px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.app-gallery__heading h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 600; }
-.app-gallery__heading p { color: var(--text-on-light-muted); }
-.app-tile-skeleton { background: var(--surface-parchment); min-height: 320px; margin: 0 24px 20px; border-radius: 24px; }
+:host { display: block; background: #fafbfd; }
+.home-wrap { max-width: 1200px; margin-inline: auto; padding-inline: 28px; }
+section { scroll-margin-top: var(--nav-height); }
+.rewards { background: #fff4df; color: #382721; padding: 56px 0 32px; }
+.rewards__hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; min-height: 380px; }
+.rewards__eyebrow { color: #a53729; font-size: 13px; font-weight: 600; }
+.rewards h1 { font-size: clamp(44px, 4.6vw, 64px); line-height: 1.25; letter-spacing: -1.7px; font-weight: 600; margin: 20px 0; text-wrap: balance; }
+.rewards h1 span { color: #b0392b; }
+.rewards__description { color: #79614e; font-size: 16px; line-height: 1.85; }
+.rewards__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 28px; }
+.home-button { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; padding: 12px 22px; border-radius: 999px; background: var(--color-accent); color: #fafbfd; font-size: 14px; font-weight: 600; }
+.home-button--warm { background: #b63a2b; color: #fff8ee; }
+.home-button:hover { filter: brightness(.94); }
+.rewards__more { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 14px; color: #8a392a; }
+.rewards__more:hover { text-decoration: underline; text-underline-offset: 4px; }
+.rewards__art { width: 100%; height: auto; max-width: 500px; justify-self: end; }
+.rewards__mechanisms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; margin-top: 32px; padding-top: 28px; border-top: 1px solid #e8d5b6; }
+.rewards__mechanisms h2 { display: flex; align-items: baseline; gap: 12px; font-size: 19px; line-height: 1.5; font-weight: 600; }
+.rewards__mechanisms h2 span { color: #926d39; font-size: 12px; font-weight: 400; }
+.rewards__mechanisms p { color: #79614e; font-size: 13px; line-height: 1.8; margin-top: 10px; max-width: 310px; }
+.rewards__note { margin-top: 25px; font-size: 11px; color: #79614e; line-height: 1.8; }
+.app-gallery { padding-block: 70px; }
+.app-gallery__heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
+.app-gallery__heading h2 { font-size: 37px; font-weight: 600; line-height: 1.35; letter-spacing: -1px; }
+.app-gallery__heading p { color: var(--text-on-light-muted); font-size: 15px; line-height: 1.8; }
+.app-gallery__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.app-tile-skeleton { background: #edf1f6; min-height: 440px; border-radius: 20px; }
 .apps-load-error { padding: 64px 24px; text-align: center; color: var(--text-on-light-muted); }
 .apps-load-error h3 { color: var(--text-on-light); margin-bottom: 12px; }
-.apps-load-error button { margin-top: 24px; padding: 12px 24px; border: 0; border-radius: 24px; background: var(--color-accent); color: var(--text-on-dark); cursor: pointer; }
-@media(max-width: 640px) { .app-gallery__heading { display: block; padding-top: 36px; } .app-gallery__heading p { margin-top: 10px; } }
+.apps-load-error button { margin-top: 24px; }
+.start { padding-block: 14px 70px; }
+.start>h2 { font-size: 31px; line-height: 1.4; font-weight: 600; letter-spacing: -.5px; }
+.start__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; margin: 34px 0 58px; }
+.start__steps li { display: flex; gap: 17px; align-items: start; }
+.start__steps li>span { color: #7c8a9b; font-size: 27px; line-height: 1.3; font-weight: 300; }
+.start__steps h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.start__steps p { font-size: 13px; line-height: 1.8; color: var(--text-on-light-muted); }
+.home-faq { display: grid; grid-template-columns: 1fr 1.6fr; gap: 70px; border-top: 1px solid #e1e6ed; padding-top: 42px; }
+.home-faq h2 { font-size: 22px; font-weight: 600; }
+.home-faq details { border-bottom: 1px solid #e1e6ed; padding-bottom: 14px; margin-bottom: 14px; }
+.home-faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 44px; list-style: none; cursor: pointer; font-size: 14px; }
+.home-faq summary::-webkit-details-marker { display: none; }
+.home-faq summary::after { content: '+'; font-size: 20px; color: #6b7788; }
+.home-faq details[open] summary::after { content: '−'; }
+.home-faq details p { color: var(--text-on-light-muted); font-size: 13px; line-height: 1.85; margin-top: 10px; }
+summary:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }
+@media(max-width: 900px) { .rewards__hero { gap: 15px; }.rewards__mechanisms { gap: 20px; }.rewards__mechanisms h2 { font-size: 17px; } }
+@media(max-width: 740px) {
+  .home-wrap { padding-inline: 22px; }
+  .rewards { padding-block: 36px 28px; }
+  .rewards__hero { grid-template-columns: 1fr; gap: 6px; min-height: 0; }
+  .rewards h1 { font-size: 43px; letter-spacing: -1.2px; margin: 16px 0; }
+  .rewards__description { font-size: 14px; }
+  .rewards__actions { gap: 12px; margin-top: 22px; }
+  .home-button { padding-inline: 18px; }
+  .rewards__more { font-size: 13px; }
+  .rewards__art { max-width: 340px; justify-self: center; }
+  .rewards__mechanisms { grid-template-columns: 1fr; gap: 20px; margin-top: 6px; padding-top: 23px; }
+  .rewards__mechanisms h2 { font-size: 18px; }
+  .rewards__mechanisms p { font-size: 12px; margin: 5px 0 0 28px; }
+  .rewards__note { font-size: 10px; }
+  .app-gallery { padding-block: 44px; }
+  .app-gallery__heading { display: block; margin-bottom: 26px; }
+  .app-gallery__heading h2 { font-size: 30px; }
+  .app-gallery__heading p { margin-top: 12px; font-size: 14px; }
+  .app-gallery__grid { grid-template-columns: 1fr; gap: 18px; }
+  .start { padding-block: 12px 44px; }
+  .start>h2 { font-size: 27px; }
+  .start__steps { grid-template-columns: 1fr; gap: 24px; margin-block: 28px 40px; }
+  .home-faq { grid-template-columns: 1fr; gap: 18px; padding-top: 30px; }
+}

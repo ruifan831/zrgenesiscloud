@@ -1109,3 +1109,9 @@ Chrome再次读取/legal/calendar/privacy/，含一次独立query复核，返回
 - 发布本地 `86eaeeb974bbd4150b435e74f4b49a82fcc61c7e` 加本次未提交邀请修复；先前营销维护入口仅文档修改。ZIP SHA256 `0923119fce3cff05b73cee094c7fabc6cae5fce01b96d89b4480371c4df3156a`，54 文件，入口 `main-27ACIY4Q.js`。目标 `/www/wwwroot/zrgenesiscloud.com/browser/`，备份 `/www/backup/zr-frontend-deploy/zrgenesiscloud/release-20261106T035641Z-nRQXuGt2`（UTC）。保留旧哈希资源、验证文件和其他业务文件；未改 Nginx。
 - 源站与公网各 30 个入口/JS/CSS/法律/邀请路径 SHA 全部一致，六份法律全文保持，未知法律页 404。独立 Chrome 公网打开原链接，URL 不变、邀请人和表单正常、桌面二维码出现、无运行时异常；iPhone UA 显示「打开 App 并接受邀请」。黄历产品 Scheme 的运营修正记后端日志。无真实短信、注册、绑定或真机唤起；App Store ID 未配置，页面如实提示无 iOS 下载入口。
 - 证据：../../output/qa/huangli-invite-product-ios-20261105。源码未提交/推送。
+
+
+## 2026-11-05 — 产品配置提交与生产发布
+
+- 将此前已上线邀请修复与营销入口文档提交并推送为bcb390a，本轮未重发browser。按产品API同步官网静态AASA/assetlinks黄历条目并保留旧凭据关联，备份 /www/backup/zr-config-updates/android-product-20261105。实际浏览器原链接正常显示邀请人/二维码/Android下载且不追加app_id。未发送短信或真实绑定。详见../../doonook_temp/docs/qa/product-release-20261105.md。
+- 最终验收通过：后台源站/公网各3路由与69运行资源一致；双节点/公网邀请数据一致。本次临时上传和本地校验安装包已清理，服务器备份保留。

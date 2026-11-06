@@ -96,11 +96,6 @@ export class ReferralInviteComponent implements OnInit {
       this.cdr.markForCheck();
       if (!firstPageData) return;
       this.seo.setPageMeta({ title: `朋友邀请你使用${data.app.name}`, description: '打开应用注册或登录，邀请码会自动带入。也可以在网页验证手机号并接受邀请。' });
-      if (!this.route.snapshot.queryParamMap.has('app_id')) {
-        // Only a marketing response can supply identity for a legacy link; never use an environment default.
-        void this.router.navigate([], { relativeTo: this.route, queryParams: { app_id: data.appId, code: data.code }, replaceUrl: true });
-        return;
-      }
       if (data.iosDownloadUrl) {
         this.meta.updateTag({ name: 'apple-itunes-app', content: `app-id=${data.iosDownloadUrl.split('/id')[1]}, app-argument=${data.canonicalUrl}` });
       }

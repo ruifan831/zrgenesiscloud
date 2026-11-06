@@ -1091,3 +1091,21 @@ Chrome再次读取/legal/calendar/privacy/，含一次独立query复核，返回
 - 用户要求提交官网、管理后台和班管家Web。核对本仓库main既有改动，将产品展厅/福利视觉、当前产品数字邀请码、动态产品路由/渠道、法律正文统一与导出、相关回归及设计/验收文档一起整理为本地提交。采用会话上下文、编码、后端/API与法律页SOP；本轮不增加功能或改动法律内容。
 - 沿用已有官网全量147项及production构建通过记录；本次重新执行法律脚本5项全通过，CrewPilot生成模板--check一致，差异检查通过。没有重新执行浏览器全量或发布验收，也未访问真实邀请或发送验证码。
 - 仅提交源码、生产SVG资源、测试和文档；不包含dist、私有配置、备份或工作区外截图。未推送、未部署。
+
+## 2026-11-04 — 腾讯云生产发布（86eaeeb）
+- 使用 deploy-zrgenesis-frontends 与前端服务器更新 SOP 发布本地干净 main 的提交 `86eaeeb974bbd4150b435e74f4b49a82fcc61c7e`。生产构建通过，ZIP SHA256 `d6f5388fc52624bec04d02f1175e1bd7d67cec5e77dc824d9a88681c1c6b6250`，54 个文件。远端校验 ZIP、备份旧 browser/ 与许可证，先同步资源，最后原子切换入口。
+- 目标 /www/wwwroot/zrgenesiscloud.com/browser/。法律测试 5/5，生成 calendar、crewpilot、ticidashi 的 privacy/terms 六页。源站和公网均核对 main-2PBVA4PJ.js 等入口资源的 SHA，六份法律 HTML 与 ZIP 逐字节相同，公开产品 API 返回 2 项，独立 Chrome 实际渲染两张产品卡。
+- 发布前发现未知法律文档回落 200，公网还会被 Cloudflare 插入邮箱解码脚本。新增仅官网法律路径的 Nginx 扩展 /www/server/panel/vhost/nginx/extension/zrgenesiscloud.com/static-legal-documents.conf，未知文档 404，法律 HTML 带 no-cache, no-transform。nginx -t、平滑重载与真实公网复测通过。发布目录 nginx/ 留原 vhost 快照与实际扩展内容。
+- 私有备份、ZIP 和 verification.json 在腾讯云 `/www/backup/zr-frontend-deploy/zrgenesiscloud/release-20261105T033758Z-O8HyA1Eo`。已清理本次上传临时目录。
+
+## 2026-11-04 — 修正官网营销维护入口
+
+- README 与运营待办中的营销审核入口指向「产品线 → 营销内容」。核对后台产品编辑路由；本次仅更新操作文档，官网公开 API 与站点代码无需变更。
+
+## 2026-11-05 — 修复黄历分享链接并发布官网
+
+- 用户从 iPhone/iPad 黄历分享 `/invite/huangli?code=9600001`，公网重现：数据加载成功后页面自动加上旧 `app_id`，NavigationEnd 再次解析时按新契约拒绝自身。删除该残留重写；API 身份仍来自产品详情，URL/二维码/原生交接仅保留产品与数字邀请码。
+- 新增黄历、班管家、提词器三个真实 Angular Router 回归；修复前全部失败，修复后官网全量 150 项、法律脚本 5 项、生产构建及六份法律预渲染通过。仅既有 qrcode/dijkstra CommonJS 提示。采用会话、产品配置、后端/API、前端发布及法律页 SOP，使用 deploy-zrgenesis-frontends。
+- 发布本地 `86eaeeb974bbd4150b435e74f4b49a82fcc61c7e` 加本次未提交邀请修复；先前营销维护入口仅文档修改。ZIP SHA256 `0923119fce3cff05b73cee094c7fabc6cae5fce01b96d89b4480371c4df3156a`，54 文件，入口 `main-27ACIY4Q.js`。目标 `/www/wwwroot/zrgenesiscloud.com/browser/`，备份 `/www/backup/zr-frontend-deploy/zrgenesiscloud/release-20261106T035641Z-nRQXuGt2`（UTC）。保留旧哈希资源、验证文件和其他业务文件；未改 Nginx。
+- 源站与公网各 30 个入口/JS/CSS/法律/邀请路径 SHA 全部一致，六份法律全文保持，未知法律页 404。独立 Chrome 公网打开原链接，URL 不变、邀请人和表单正常、桌面二维码出现、无运行时异常；iPhone UA 显示「打开 App 并接受邀请」。黄历产品 Scheme 的运营修正记后端日志。无真实短信、注册、绑定或真机唤起；App Store ID 未配置，页面如实提示无 iOS 下载入口。
+- 证据：../../output/qa/huangli-invite-product-ios-20261105。源码未提交/推送。

@@ -126,7 +126,7 @@
 
 以下条目需要**业务方/运营**在 admin 后台完成，无需开发介入：
 
-1. **首次内容审核**：登录 admin `/admin/system/app-registry`，逐一进入三款 App 的「营销内容」子页，检查 seed 数据文案是否准确。
+1. **首次内容审核**：登录 admin `/admin/system/products`，逐一进入产品的「营销内容」，检查 seed 数据文案是否准确。
 2. **替换图片资产**：
    - calendar：当前 logo / hero 均为 `/assets/images/calendar.png`（方形 512×512），建议替换为专业 hero 图（16:9 或 4:3，2MB 以内 PNG/JPG/WebP）。
    - vision-cue：logo 与 hero 均缺失，需在「基础信息」Tab 上传。

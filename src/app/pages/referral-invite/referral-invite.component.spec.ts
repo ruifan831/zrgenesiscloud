@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ActivatedRoute, NavigationEnd, Router, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { Subject, of, throwError } from 'rxjs';
 import { ReferralInviteComponent } from './referral-invite.component';
 import { InvitePageData, ReferralInviteService } from '../../services/referral-invite.service';
 import { AppEntry } from '../../models/app.model';
 import { routes } from '../../app.routes';
+import { RouterTestingHarness } from '@angular/router/testing';
 
 const page = (appId = 'calendar-id'): InvitePageData => ({
   app: { name: appId === 'calendar-id' ? '黄历通' : '班管家', appId } as AppEntry,
@@ -192,4 +193,32 @@ describe('ReferralInviteComponent', () => {
     expect(routes.some(route => route.path === 'invite/r/:userId')).toBeFalse();
     expect(routes.find(route => route.path === 'invite/:slug')?.pathMatch).toBe('full');
   });
+});
+
+
+describe('Product invitation URLs through the real router', () => {
+  for (const slug of ['huangli', 'crewpilot', 'ticidashi']) {
+    it(`keeps /invite/${slug}?code=9600001 valid after data loads`, async () => {
+      const url = `/invite/${slug}?code=9600001`;
+      const data = { ...page(), code: '9600001', canonicalUrl: `https://www.zrgenesiscloud.com${url}` };
+      const service = jasmine.createSpyObj('ReferralInviteService', ['load']);
+      service.load.and.returnValue(of(data));
+      const qr = spyOn(ReferralInviteComponent.prototype, 'generateQr').and.resolveTo();
+      await TestBed.configureTestingModule({
+        providers: [provideRouter(routes), { provide: ReferralInviteService, useValue: service }],
+      }).compileComponents();
+      const harness = await RouterTestingHarness.create();
+      const component = await harness.navigateByUrl(url, ReferralInviteComponent);
+      await harness.fixture.whenStable();
+      harness.detectChanges();
+
+      expect(TestBed.inject(Router).url).toBe(url);
+      expect(component.loadError).toBe('');
+      expect(harness.routeNativeElement?.querySelector('form')).not.toBeNull();
+      expect(service.load).toHaveBeenCalledWith({ slug, appId: null, code: '9600001' });
+      expect(qr).toHaveBeenCalledWith(data.canonicalUrl);
+      expect(document.querySelector('meta[name="apple-itunes-app"]')?.getAttribute('content'))
+        .toContain(`app-argument=${data.canonicalUrl}`);
+    });
+  }
 });

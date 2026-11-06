@@ -1,6 +1,8 @@
 # 多应用好友邀请页
 
-当前契约（2026-11-04 最新修订）：数字邀请码 = 产品 mask + userId，链接仅含产品 slug 与 code；0095 将现有关系的 app_id 映射为持久 product_key，最早关系生效且历史/奖励保留。不兼容旧链接，不使用 p1 前缀或来源 mask。以[产品邀请契约](../../docs/platform/product-invitation-codes.md)为准。以下各阶段记录仅供历史追溯，不作为当前配置/发布步骤。
+当前契约（2026-11-05 核验）：数字邀请码 = 产品 mask + userId，链接仅含产品 slug 与 code；0086 将现有关系的 app_id 映射为持久 product_key，最早关系生效且历史/奖励保留。不兼容旧链接，不使用 p1 前缀或来源 mask。以[产品邀请契约](../../docs/platform/product-invitation-codes.md)为准。以下各阶段记录仅供历史追溯，不作为当前配置/发布步骤。
+
+2026-11-05 修复邀请页成功加载后自行补写 `app_id` 的残留逻辑。原链接 `/invite/huangli?code=9600001` 保持不变，不再被自身解析器拒绝；API 请求身份仍从产品公开详情取得。iOS Scheme/商店/Team/Bundle 配置由后端产品配置投影到 metadata，统一在后台产品邀请页编辑。浏览器验证包含桌面二维码及 iPhone UA 的打开按钮；不代表真实安装设备唤起或邀请绑定已验收。
 
 ## 2026-11-03 产品线共享更新
 

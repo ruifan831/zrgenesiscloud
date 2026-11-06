@@ -23,8 +23,8 @@ ZRGenesis 公开 App 宣传与下载门户（Angular 17, standalone, Apple-style
 
 **不再有静态配置文件**（`apps.config.ts` 已删除，Wave 3 T-22）。
 
-新增 / 修改 App 信息的操作入口：
-- admin 后台 `/admin/system/app-registry/:id/marketing`（营销内容编辑，6 Tab）
+官网产品内容和发行应用分别在管理后台维护。
+- admin 后台 `/admin/system/products/:productKey/marketing`（产品介绍、亮点、截图、渠道和可见性）
 - admin 后台 `/admin/system/app-registry`（基础信息：名称、平台、状态）
 
 ## 开发
